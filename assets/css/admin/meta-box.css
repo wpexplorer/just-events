@@ -1,0 +1,14 @@
+.just-events-meta-box-table tr:not(:first-child) {
+	border-top: 1px solid #eee;
+}
+
+.just-events-meta-box-table th {
+	width: 240px;
+	padding: 15px 30px 15px 0;
+}
+
+.just-events-meta-box-table th label {
+	font-size: 14px;
+	color: #444;
+	font-weight: bold;
+}

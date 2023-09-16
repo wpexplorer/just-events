@@ -1,0 +1,11 @@
+<wpml-config>
+    <custom-fields>
+        <custom-field action="copy">_just_events_start_date</custom-field>
+        <custom-field action="copy">_just_events_end_date</custom-field>
+        <custom-field action="copy">_just_events_link</custom-field>
+        <custom-field action="copy">_just_events_all_day</custom-field>
+    </custom-fields>
+    <custom-types>
+        <custom-type translate="1">just_events</custom-type>
+    </custom-types>
+</wpml-config>

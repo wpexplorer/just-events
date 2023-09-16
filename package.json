@@ -1,0 +1,29 @@
+{
+  "name": "just-events",
+  "version": "1.0.0",
+  "description": "Event plugin for WordPress.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wpexplorer/just-events.git"
+  },
+  "keywords": [
+    "WordPress",
+    "events",
+    "plugin",
+    "WPExplorer",
+    "free"
+  ],
+  "author": "WPExplorer",
+  "license": "GPL-2.0-or-later",
+  "bugs": {
+    "url": "https://github.com/wpexplorer/just-events/issues"
+  },
+  "homepage": "https://github.com/wpexplorer/just-events#readme",
+  "devDependencies": {
+    "@wordpress/scripts": "26.12.0"
+  }
+}
