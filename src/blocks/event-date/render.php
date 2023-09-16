@@ -2,11 +2,9 @@
 
 namespace WPExplorer\Just_Events;
 
-$event_id = \absint( $_GET['postId'] ?? $block->context['postId'] ?? $attributes['event'] ?? 0 );
-
-if ( ! $event_id ) {
-    return;
-}
+$is_gutenberg =  defined( 'REST_REQUEST' ) && REST_REQUEST;
+$event_id     = \absint( $_GET['postId'] ?? $block->context['postId'] ?? $attributes['event'] ?? 0 );
+$event_id     = $event_id ?: \get_the_ID();
 
 $args = [
     'format'    => $attributes['format'] ?? '',
@@ -16,13 +14,18 @@ $args = [
     'show_time' => $attributes['showTime'] ?? true,
 ];
 
-$date = get_event_formatted_date( $event_id, (array) \array_filter( $args ) );
+if ( ! $event_id && $is_gutenberg ) {
+    $format    = $args['format'] ?: get_default_date_format( $args['show_time'] );
+    $date      = (string) \wp_date( $format, current_time( 'timestamp' ) );
+} else {
+    $date = get_event_formatted_date( $event_id, (array) \array_filter( $args ) );
+}
 
 if ( ! $date ) {
     $date = \esc_html__( 'Event date undefined', 'just-events' );
 }
 
-if ( defined( 'REST_REQUEST' ) && REST_REQUEST ) {
+if ( $is_gutenberg ) {
    echo $date;
 } else {
     $wrapper_attributes = [];

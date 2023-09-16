@@ -62,41 +62,35 @@ export default function Edit( { context, attributes, setAttributes } ) {
 						onChange= { startEnd => { setAttributes( { startEnd } ) } }
 					/>
 				</PanelRow>
-				<PanelRow>
-					<TextControl
-						label={ __( 'Prefix', 'just-events' ) }
-						onChange={ ( prefix ) => setAttributes( { prefix } ) }
-						value={ prefix }
-						help={ __( 'Custom text to display before the date.', 'just-events' ) }
-					/>
-				</PanelRow>
-				<PanelRow>
-					<TextControl
-						label={ __( 'Custom Format', 'just-events' ) }
-						onChange={ ( format ) => setAttributes( { format } ) }
-						value={ format }
-						help={
-							<>
-								<ExternalLink
-									href={ __(
-										'https://wordpress.org/documentation/article/customize-date-and-time-format/'
-									) }
-								>
-									{ __( 'Documentation', 'just-events' ) }
-								</ExternalLink>
-							</>
-						}
-					/>
-				</PanelRow>
-				<PanelRow>
-					<TextControl
-						label={ __( 'Custom Separator', 'just-events' ) }
-						onChange={ ( separator ) => setAttributes( { separator } ) }
-						value={ separator }
-						placeholder= ' - '
-						help={ __( 'Separator used in the formatted event date between the start and end dates (include empty spaces if needed). Enter <br> to place the start and end dates on different lines.', 'just-events' ) }
-					/>
-				</PanelRow>
+				<TextControl
+					label={ __( 'Prefix', 'just-events' ) }
+					onChange={ ( prefix ) => setAttributes( { prefix } ) }
+					value={ prefix }
+					help={ __( 'Custom text to display before the date.', 'just-events' ) }
+				/>
+				<TextControl
+					label={ __( 'Custom Format', 'just-events' ) }
+					onChange={ ( format ) => setAttributes( { format } ) }
+					value={ format }
+					help={
+						<>
+							<ExternalLink
+								href={ __(
+									'https://wordpress.org/documentation/article/customize-date-and-time-format/'
+								) }
+							>
+								{ __( 'Documentation', 'just-events' ) }
+							</ExternalLink>
+						</>
+					}
+				/>
+				<TextControl
+					label={ __( 'Custom Separator', 'just-events' ) }
+					onChange={ ( separator ) => setAttributes( { separator } ) }
+					value={ separator }
+					placeholder= ' - '
+					help={ __( 'Separator used in the formatted event date between the start and end dates (include empty spaces if needed). Enter <br> to place the start and end dates on different lines.', 'just-events' ) }
+				/>
 			</PanelBody>
 		</InspectorControls>
 
