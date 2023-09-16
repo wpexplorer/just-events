@@ -35,9 +35,8 @@ class Plugin {
 
 		// Hooks.
 		\register_activation_hook( JUST_EVENTS_PLUGIN_FILE, [ self::class, 'on_activation' ] );
-
-		// Shortcodes.
-		self::register_shortcodes();
+		\add_filter( 'block_categories_all', [ self::class, 'filter_block_categories_all' ], 10, 2 );
+		\add_action( 'init', [ self::class, 'on_init' ] );
 	}
 
 	/**
@@ -53,12 +52,54 @@ class Plugin {
 	}
 
 	/**
+	 * Runs on the "init" hook.
+	 */
+	public static function on_init(): void {
+		self::register_shortcodes();
+		self::register_blocks();
+	}
+
+	/**
 	 * Register shortcodes.
 	 */
 	public static function register_shortcodes(): void {
 		require_once self::dir_path() . 'inc/shortcode-abstract.php';
-		require_once self::dir_path() . 'inc/shortcodes/formatted-event-date.php';
-		require_once self::dir_path() . 'inc/shortcodes/formatted-event-time.php';
+		require_once self::dir_path() . 'inc/shortcodes/event-date.php';
+		require_once self::dir_path() . 'inc/shortcodes/event-time.php';
+	}
+
+	/**
+	 * Register blocks.
+	 */
+	public static function register_blocks(): void {
+		$blocks = [
+			'event-date',
+			'event-time',
+		];
+		foreach ( $blocks as $block ) {
+			$path = self::dir_path();
+			$file = "{$path}build/blocks/{$block}/block.json";
+			if ( \file_exists( $file ) ) {
+				\register_block_type( $file );
+			}
+		}
+	}
+
+	/**
+	 * Register blocks.
+	 */
+	public static function filter_block_categories_all( $block_categories, $editor_context ) {
+		if ( \is_array( $block_categories ) ) {
+			\array_push(
+				$block_categories,
+				[
+					'slug'  => 'just-events',
+					'title' => 'Just Events',
+					'icon'  => '',
+				]
+			);
+		}
+		return $block_categories;
 	}
 
 	/**

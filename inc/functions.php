@@ -18,8 +18,9 @@ function get_option( string $key, $default_value = '' ) {
  */
 function get_default_date_format( $display_time = true ): string {
 	if ( $display_time ) {
+		$time_prefix = get_option( 'time_prefix', ' @ ' );
 		$format = \sprintf(
-			'%s \\@\\ %s',
+			'%s \\' . $time_prefix . '\\ %s',
 			get_option( 'date_format', \get_option( 'date_format', 'F j, Y' ) ),
 			get_default_time_format()
 		);
@@ -42,6 +43,10 @@ function get_default_time_format(): string {
  */
 function get_event_date( string $start_end, int $event = 0, bool $display_time = true, string $format = '' ): string {
 	$date = Custom_Fields::get_field_value( $event, "{$start_end}_date", false );
+
+	if ( ! $date ) {
+		return '';
+	}
 
 	if ( is_all_day_event( $event ) ) {
 		$display_time = false; // never display time for all day events.
@@ -119,11 +124,11 @@ function is_same_day_event( int $event = 0 ): bool {
  */
 function get_event_formatted_date( int $event = 0, array $args = [] ): string {
 	$default_args = [
-		'show_time'   => true,
-		'separator'   => get_option( 'date_separator', ' - ' ),
-		'separator_2' => ' @ ', // !!!rename!!!
-		'date_format' => '',
-		'time_format' => '',
+		'prefix'    => '',
+		'start_end' => '',
+		'format'    => '',
+		'show_time' => true,
+		'separator' => (string) get_option( 'date_separator', ' - ' ),
 	];
 
 	\extract( \wp_parse_args( $args, $default_args ) );
@@ -132,53 +137,50 @@ function get_event_formatted_date( int $event = 0, array $args = [] ): string {
 		$event = \get_the_ID();
 	}
 
-	// Sanitize vars.
-	$show_time = \wp_validate_boolean( $show_time );
+	if ( ! $event ) {
+		return '';
+	}
 
-	// Define output strings.
-	$start_date_string = '';
-	$end_date_string = '';
+	$show_time  = \wp_validate_boolean( $show_time );
+	$start_date = '';
+	$end_date   = '';
 
 	// Get event data.
 	$is_all_day  = is_all_day_event( $event );
 	$is_same_day = is_same_day_event( $event );
 
 	if ( $is_same_day ) {
-		$start_date_string = get_event_start_date( $event, false, $date_format );
+		$start_date = get_event_start_date( $event, false, $format );
 		if ( $is_all_day ) {
 			$separator = '';
 		} else {
 			if ( $show_time ) {
-				$start_date_string = get_event_start_date( $event, true, $date_format );
-				$end_date_string = get_event_end_time( $event );
+				$start_date = get_event_start_date( $event, true, $format );
+				$end_date = get_event_end_time( $event );
 			} else {
 				$separator = '';
 			}
 		}
 	} else {
-		$start_date_string = get_event_start_date( $event, $show_time, $date_format );
-		$end_date_string   = get_event_end_date( $event, $show_time, $date_format );
-	}
-
-	if ( $start_date_string ) {
-		$start_date_string = esc_html( $start_date_string );
-	}
-
-	if ( $end_date_string ) {
-		$end_date_string = esc_html( $end_date_string );
-	}
-
-	if ( $separator ) {
-		if ( 'br' === $separator || '<br>' === $separator ) {
-			$separator = '<br>';
-		} else {
-			$separator = esc_html( $separator );
+		if ( 'end' !== $start_end ) {
+			$start_date = get_event_start_date( $event, $show_time, $format );
+		}
+		if ( 'start' !== $start_end ) {
+			$end_date = get_event_end_date( $event, $show_time, $format );
 		}
 	}
 
+	if ( $start_date && $end_date ) {
+		$end_date = $separator . $end_date;
+	}
+
+	if ( $prefix ) {
+		$prefix = "{$prefix} ";
+	}
+
 	$allowed_html = [
-		'br',
-		'strong',
+		'br'     => [],
+		'strong' => [],
 		'div' => [
 			'class' => [],
 			'title' => [],
@@ -191,26 +193,51 @@ function get_event_formatted_date( int $event = 0, array $args = [] ): string {
 		],
 	];
 
-	return \wp_kses( $start_date_string . $separator . $end_date_string, $allowed_html );
+	return \wp_kses( $prefix . $start_date . $end_date, $allowed_html );
 }
 
 /**
  * Returns the formatted event time for frontend use.
  */
-function get_event_formatted_time( int $event = 0, $separator = '' ): string {
-	$start_time = get_event_start_time( $event );
-	$end_time   = get_event_end_time( $event );
+function get_event_formatted_time( int $event = 0, array $args = [] ): string {
+	$default_args = [
+		'prefix'    => '',
+		'format'    => '',
+		'start_end' => '',
+		'separator' => (string) get_option( 'time_separator', ' - ' ),
+	];
+
+	\extract( \wp_parse_args( $args, $default_args ) );
+
+	if ( ! $event ) {
+		$event = \get_the_ID();
+	}
+
+	if ( ! $event ) {
+		return '';
+	}
+
+	$start_time = '';
+	$end_time = '';
+
+	if ( 'end' !== $start_end ) {
+		$start_time = get_event_start_time( $event, $format );
+	}
 	
-	if ( $end_time ) {
-		if ( ! $separator ) {
-			$separator = (string) get_option( 'time_separator', ' - ' );
+	if ( 'start' !== $start_end ) {
+		$end_time = get_event_end_time( $event, $format );
+		if ( $end_time && 'end' !== $start_end ) {
+			$end_time = $separator . $end_time;
 		}
-		$end_time = $separator . $end_time;
+	}
+
+	if ( $prefix ) {
+		$prefix = "{$prefix} ";
 	}
 
 	$allowed_html = [
-		'br',
-		'strong',
+		'br'     => [],
+		'strong' => [],
 		'div' => [
 			'class' => [],
 			'title' => [],
@@ -223,5 +250,5 @@ function get_event_formatted_time( int $event = 0, $separator = '' ): string {
 		],
 	];
 
-	return \wp_kses( $start_time . $end_time, $allowed_html );
+	return \wp_kses( $prefix . $start_time . $end_time, $allowed_html );
 }

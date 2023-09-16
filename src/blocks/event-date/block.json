@@ -1,0 +1,30 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "just-events/event-date",
+    "version": "1.0",
+    "title": "Event Date",
+    "category": "just-events",
+    "description": "Displays the current event date.",
+    "keywords": [ "event", "date" ],
+    "usesContext": [ "postId" ],
+    "attributes": {
+        "event": {
+            "type": "integer"
+        },
+        "show_time": {
+            "type": "boolean",
+            "default": "true"
+        },
+        "start_end": {
+            "type": "string"
+        }
+    },
+    "supports": {
+        "customClassName": false
+    },
+	"textdomain": "just-events",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+    "render": "file:./render.php"
+}

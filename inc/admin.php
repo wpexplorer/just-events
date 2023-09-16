@@ -71,14 +71,14 @@ final class Admin {
 				'id'          => 'date_format',
 				'label'       => \__( 'Date Format', 'just-events' ),
 				'type'        => 'text',
-				'description' => \sprintf( \__( 'Enter a custom date format to use for your formatted event date. Leave empty to use your WordPress defined date format. %sDocumentation on date and time formatting%s', 'just-events' ), '<br><a href="https://wordpress.org/documentation/article/customize-date-and-time-format/" target="_blank" rel="noopener noreferrer">', ' &#8599;</a>' ),
+				'description' => \__( 'Enter a custom date format to use for your formatted event date. Leave empty to use your WordPress defined date format.', 'just-events' ) . '<br>' . \sprintf( \__( '%sDocumentation on date and time formatting%s', 'just-events' ), '<a href="https://wordpress.org/documentation/article/customize-date-and-time-format/" target="_blank" rel="noopener noreferrer">', ' &#8599;</a>' ),
 				'tab'         => \__( 'General', 'just-events' ),
 			],
 			[
 				'id'          => 'time_format',
 				'label'       => \__( 'Time Format', 'just-events' ),
 				'type'        => 'text',
-				'description' => \__( 'Enter a custom date format to use for your formatted event time. Leave empty to use your WordPress defined time format.', 'just-events' ),
+				'description' => \__( 'Enter a custom date format to use for your formatted event time. Leave empty to use your WordPress defined time format.', 'just-events' ) . '<br>' . \sprintf( \__( '%sDocumentation on date and time formatting%s', 'just-events' ), '<a href="https://wordpress.org/documentation/article/customize-date-and-time-format/" target="_blank" rel="noopener noreferrer">', ' &#8599;</a>' ),
 				'tab'         => \__( 'General', 'just-events' ),
 			],
 			[
@@ -90,11 +90,19 @@ final class Admin {
 				'tab'         => \__( 'General', 'just-events' ),
 			],
 			[
+				'id'          => 'time_prefix',
+				'label'       => \__( 'Date Time Prefix', 'just-events' ),
+				'type'        => 'text',
+				'placeholder' => ' @ ',
+				'description' => \__( 'Prefix shown before the event date time. Important: Value must use proper string formatting.', 'just-events' ) . '<br>' . \sprintf( \__( '%sDocumentation on date and time formatting%s', 'just-events' ), '<a href="https://wordpress.org/documentation/article/customize-date-and-time-format/" target="_blank" rel="noopener noreferrer">', ' &#8599;</a>' ),
+				'tab'         => \__( 'General', 'just-events' ),
+			],
+			[
 				'id'          => 'time_separator',
 				'label'       => \__( 'Time Separator', 'just-events' ),
 				'type'        => 'text',
 				'placeholder' => ' - ',
-				'description' => \__( 'Separator used in the formatted event date between the start and end times (include empty spaces if needed).', 'just-events' ),
+				'description' => \__( 'Separator used when displaying only the event time between the start and end times (include empty spaces if needed).', 'just-events' ),
 				'tab'         => \__( 'General', 'just-events' ),
 			],
 		];
@@ -182,21 +190,12 @@ final class Admin {
 	/**
 	 * Returns sanitize callback based on field type.
 	 */
-	private static function get_sanitize_callback_by_type( $field_type ): string {
-		switch ( $field_type ) {
-			case 'select':
-				return self::class . '::sanitize_select_field';
-				break;
-			case 'textarea':
-				return 'wp_kses_post';
-				break;
-			case 'checkbox':
-				return self::class . '::sanitize_checkbox_field';
-				break;
-			case 'text':
-			default:
-				return 'sanitize_text_field';
-				break;
+	private static function get_sanitize_callback_by_type( $field_type ) {
+		$method_name = "sanitize_{$field_type}_field";
+		if ( \method_exists( self::class, $method_name ) ) {
+			return self::class . "::{$method_name}";
+		} else {
+			return 'sanitize_text_field';
 		}
 	}
 
@@ -321,9 +320,52 @@ final class Admin {
 	}
 
 	/**
+	 * Sanitizes the text field.
+	 * 
+	 * Note: We don't use the core sanitize_text_field() function
+	 * 		 because it strips out whitespace via trim().
+	 */
+	private static function sanitize_text_field( string $value = '' ): string {
+		$filtered = wp_check_invalid_utf8( $value );
+
+		if ( ! $filtered ) {
+			return '';
+		}
+
+		if ( str_contains( $filtered, '<' ) ) {
+			$filtered = wp_pre_kses_less_than( $filtered );
+			// This will strip extra whitespace for us.
+			$filtered = wp_strip_all_tags( $filtered, false );
+	
+			/*
+			 * Use HTML entities in a special case to make sure that
+			 * later newline stripping stages cannot lead to a functional tag.
+			 */
+			$filtered = str_replace( "<\n", "&lt;\n", $filtered );
+		}
+
+		// Remove newlines.
+		$filtered = preg_replace( '/[\r\n\t ]+/', ' ', $filtered );
+
+		// Remove percent-encoded characters.
+		$found = false;
+		while ( preg_match( '/%[a-f0-9]{2}/i', $filtered, $match ) ) {
+			$filtered = str_replace( $match[0], '', $filtered );
+			$found    = true;
+		}
+
+		if ( $found ) {
+			// Strip out the whitespace that may now exist after removing percent-encoded characters.
+			$filtered = preg_replace( '/ +/', ' ', $filtered );
+		}
+
+		return $filtered;
+	}
+
+	/**
 	 * Sanitizes the checkbox field.
 	 */
-	private static function sanitize_checkbox_field( $value = '', $field_args = [] ): int {
+	private static function sanitize_checkbox_field( $value = '' ): int {
 		return ( 'on' === $value ) ? 1 : 0;
 	}
 

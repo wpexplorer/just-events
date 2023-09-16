@@ -7,12 +7,12 @@ use function WPExplorer\Just_Events\get_event_formatted_date;
 
 \defined( 'ABSPATH' ) || exit;
 
-class Formatted_Event_Date extends Shortcode_Abstract {
+class Event_Date extends Shortcode_Abstract {
 
 	/**
 	 * Shortcode tag (name).
 	 */
-	public const TAG = 'just_events_formatted_event_date';
+	public const TAG = 'je_event_date';
 
 	/**
 	 * Static-only class.
@@ -23,7 +23,8 @@ class Formatted_Event_Date extends Shortcode_Abstract {
 	 * Callback function for the shortcode (aka the output).
 	 */
 	public static function callback( $atts = [] ): string {
-		if ( $date = get_event_formatted_date( $atts['event'] ?? get_the_ID(), (array) $atts ) ) {
+		$event_id = absint( $atts['event'] ?? get_the_ID() );
+		if ( $event_id && $date = get_event_formatted_date( $event_id, (array) $atts ) ) {
 			return '<div class="just-events-date">' . $date . '</div>';
 		}
 		return '';
@@ -31,4 +32,4 @@ class Formatted_Event_Date extends Shortcode_Abstract {
 
 }
 
-Formatted_Event_Date::register();
+Event_Date::register();

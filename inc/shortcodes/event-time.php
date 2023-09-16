@@ -7,12 +7,12 @@ use function WPExplorer\Just_Events\get_event_formatted_time;
 
 \defined( 'ABSPATH' ) || exit;
 
-class Formatted_Event_Time extends Shortcode_Abstract {
+class Event_Time extends Shortcode_Abstract {
 
 	/**
 	 * Shortcode tag (name).
 	 */
-	public const TAG = 'just_events_formatted_event_time';
+	public const TAG = 'je_event_time';
 
 	/**
 	 * Static-only class.
@@ -23,7 +23,8 @@ class Formatted_Event_Time extends Shortcode_Abstract {
 	 * Callback function for the shortcode (aka the output).
 	 */
 	public static function callback( $atts = [] ): string {
-		if ( $time = get_event_formatted_time( $atts['event'] ?? get_the_ID(), $atts['separator'] ?? '' ) ) {
+		$event_id = absint( $atts['event'] ?? get_the_ID() );
+		if ( $event_id && $time = get_event_formatted_time( $event_id, (array) $atts ) ) {
 			return '<div class="just-events-time">' . $time . '</div>';
 		}
 		return '';
@@ -31,4 +32,4 @@ class Formatted_Event_Time extends Shortcode_Abstract {
 
 }
 
-Formatted_Event_Time::register();
+Event_Time::register();
