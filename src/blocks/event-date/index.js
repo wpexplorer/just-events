@@ -35,10 +35,16 @@ registerBlockType( metadata.name, {
 						return 'true' === show_time;
 					},
 				},
-				separator: {
+				start_end: {
 					type: 'string',
-					shortcode: ( { named: { separator } } ) => {
-						return separator;
+					shortcode: ( { named: { start_end } } ) => {
+						return start_end;
+					},
+				},
+				format: {
+					type: 'string',
+					shortcode: ( { format: { format } } ) => {
+						return format;
 					},
 				},
 				separator: {
@@ -46,7 +52,7 @@ registerBlockType( metadata.name, {
 					shortcode: ( { named: { separator } } ) => {
 						return separator;
 					},
-				}
+				},
 			}
 		} ]
 	}

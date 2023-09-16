@@ -156,7 +156,11 @@ function get_event_formatted_date( int $event = 0, array $args = [] ): string {
 		} else {
 			if ( $show_time ) {
 				$start_date = get_event_start_date( $event, true, $format );
-				$end_date = get_event_end_time( $event );
+				if ( '<br>' === $separator ) {
+					$end_date = get_event_end_date( $event, true, $format );
+				} else {
+					$end_date = get_event_end_time( $event );
+				}
 			} else {
 				$separator = '';
 			}

@@ -86,7 +86,7 @@ final class Admin {
 				'label'       => \__( 'Date Separator', 'just-events' ),
 				'type'        => 'text',
 				'placeholder' => ' - ',
-				'description' => \__( 'Separator used in the formatted event date between the start and end dates (include empty spaces if needed).', 'just-events' ),
+				'description' => \__( 'Separator used in the formatted event date between the start and end dates (include empty spaces if needed). Enter &lt;br&gt; to place the start and end dates on different lines.', 'just-events' ),
 				'tab'         => \__( 'General', 'just-events' ),
 			],
 			[
