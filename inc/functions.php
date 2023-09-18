@@ -25,7 +25,7 @@ function get_default_date_format( $display_time = true ): string {
 			get_default_time_format()
 		);
 	} else {
-		$format = get_option( 'date_format', \get_option( 'date_format', 'H:i:s' ) );
+		$format = get_option( 'date_format', \get_option( 'date_format', 'g:i a' ) );
 	}
 
 	return $format;
@@ -35,7 +35,7 @@ function get_default_date_format( $display_time = true ): string {
  * Returns the default time format.
  */
 function get_default_time_format(): string {
-	return get_option( 'time_format', \get_option( 'time_format', 'H:i:s' ) );
+	return get_option( 'time_format', \get_option( 'time_format', 'g:i a' ) );
 }
 
 /**
@@ -155,10 +155,10 @@ function get_event_formatted_date( int $event = 0, array $args = [] ): string {
 			$separator = '';
 		} else {
 			if ( $show_time ) {
-				$start_date = get_event_start_date( $event, true, $format );
+				$start_date = get_event_start_date( $event, $show_time, $format );
 				if ( '<br>' === $separator ) {
-					$end_date = get_event_end_date( $event, true, $format );
-				} else {
+					$end_date = get_event_end_date( $event, $show_time, $format );
+				} elseif ( $show_time ) {
 					$end_date = get_event_end_time( $event );
 				}
 			} else {

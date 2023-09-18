@@ -1,14 +1,15 @@
 {
   "$schema": "https://schemas.wp.org/trunk/block.json",
   "apiVersion": 3,
-  "name": "just-events/event-date",
+  "name": "just-events/event-time",
   "version": "1.0",
-  "title": "Event Date",
+  "title": "Event Time",
   "category": "just-events",
-  "description": "Displays the current event date.",
+  "description": "Displays the current event time.",
   "keywords": [
     "event",
-    "date"
+    "date",
+    "time"
   ],
   "usesContext": [
     "postId"

@@ -7,15 +7,14 @@ $event_id	  = \absint( $_GET['postId'] ?? $block->context['postId'] ?? $attribut
 $event_id	  = $event_id ?: \get_the_ID();
 
 $args = [
-	'format'	=> $attributes['format'] ?? '',
-	'prefix'	=> $attributes['prefix'] ?? '',
+	'format'    => $attributes['format'] ?? '',
+	'prefix'    => $attributes['prefix'] ?? '',
 	'separator' => $attributes['separator'] ?? '',
 	'start_end' => $attributes['startEnd'] ?? '',
-	'show_time' => $attributes['showTime'] ?? true,
 ];
 
 if ( ! $event_id && $is_gutenberg ) {
-	$date = (string) \wp_date( $args['format'] ?: get_default_date_format( $args['show_time'] ), current_time( 'timestamp' ) );
+	$date = (string) \wp_date( $args['format'] ?: get_default_time_format(), current_time( 'timestamp' ) );
 	if ( $args['prefix'] ) {
 		$date = $args['prefix'] . ' ' . $date;
 	}
@@ -26,7 +25,7 @@ if ( ! $event_id && $is_gutenberg ) {
 			unset( $args[ $k ] );
 		}
 	}
-	$date = get_event_formatted_date( $event_id, $args ?: [] );
+	$date = get_event_formatted_time( $event_id, $args ?: [] );
 }
 
 if ( ! $date ) {
@@ -34,7 +33,7 @@ if ( ! $date ) {
 }
 
 if ( $is_gutenberg ) {
-	echo $date;
+   echo $date;
 } else {
 	$wrapper_attributes = [];
 

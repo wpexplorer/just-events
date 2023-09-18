@@ -68,9 +68,9 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
 
 /***/ }),
 
-/***/ "./src/blocks/event-date/edit.js":
+/***/ "./src/blocks/event-time/edit.js":
 /*!***************************************!*\
-  !*** ./src/blocks/event-date/edit.js ***!
+  !*** ./src/blocks/event-time/edit.js ***!
   \***************************************/
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
@@ -91,8 +91,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _wordpress_server_side_render__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @wordpress/server-side-render */ "@wordpress/server-side-render");
 /* harmony import */ var _wordpress_server_side_render__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_wordpress_server_side_render__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./editor.scss */ "./src/blocks/event-date/editor.scss");
-/* harmony import */ var _block_json__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./block.json */ "./src/blocks/event-date/block.json");
+/* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./editor.scss */ "./src/blocks/event-time/editor.scss");
+/* harmony import */ var _block_json__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./block.json */ "./src/blocks/event-time/block.json");
 
 /**
  * External dependencies
@@ -119,7 +119,6 @@ function Edit({
 }) {
   const {
     textAlign,
-    showTime,
     startEnd,
     format,
     separator,
@@ -137,24 +136,16 @@ function Edit({
     var _context$contextName;
     urlQueryArgs[contextName] = (_context$contextName = context[contextName]) !== null && _context$contextName !== void 0 ? _context$contextName : null;
   });
-  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.InspectorControls, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.PanelBody, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.PanelRow, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", {
-    htmlFor: "just-events__event-date[showTime]"
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Show Time', 'just-events')), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.FormToggle, {
-    id: "just-events__event-date[showTime]",
-    checked: showTime,
-    onChange: () => setAttributes({
-      showTime: !showTime
-    })
-  })), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.PanelRow, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.SelectControl, {
+  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.InspectorControls, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.PanelBody, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.PanelRow, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.SelectControl, {
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Display', 'just-events'),
     options: [{
-      label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Start & End Dates', 'just-events'),
+      label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Start & End Time', 'just-events'),
       value: ''
     }, {
-      label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Start Date Only', 'just-events'),
+      label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Start Time Only', 'just-events'),
       value: 'start'
     }, {
-      label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('End Date Only', 'just-events'),
+      label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('End Time Only', 'just-events'),
       value: 'end'
     }],
     value: startEnd,
@@ -195,7 +186,7 @@ function Edit({
       textAlign: newAlign
     })
   })), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)((_wordpress_server_side_render__WEBPACK_IMPORTED_MODULE_5___default()), {
-    block: "just-events/event-date",
+    block: "just-events/event-time",
     attributes: attributes,
     urlQueryArgs: urlQueryArgs
   })));
@@ -203,9 +194,9 @@ function Edit({
 
 /***/ }),
 
-/***/ "./src/blocks/event-date/editor.scss":
+/***/ "./src/blocks/event-time/editor.scss":
 /*!*******************************************!*\
-  !*** ./src/blocks/event-date/editor.scss ***!
+  !*** ./src/blocks/event-time/editor.scss ***!
   \*******************************************/
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
@@ -282,14 +273,14 @@ module.exports = window["wp"]["serverSideRender"];
 
 /***/ }),
 
-/***/ "./src/blocks/event-date/block.json":
+/***/ "./src/blocks/event-time/block.json":
 /*!******************************************!*\
-  !*** ./src/blocks/event-date/block.json ***!
+  !*** ./src/blocks/event-time/block.json ***!
   \******************************************/
 /***/ (function(module) {
 
 "use strict";
-module.exports = JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"just-events/event-date","version":"1.0","title":"Event Date","category":"just-events","description":"Displays the current event date.","keywords":["event","date"],"usesContext":["postId"],"attributes":{"textAlign":{"type":"string"},"showTime":{"type":"boolean","default":"true"},"startEnd":{"type":"string"},"format":{"type":"string"},"separator":{"type":"string"},"prefix":{"type":"string"}},"supports":{"customClassName":true,"__experimentalBorder":{"color":true,"radius":true,"style":true,"width":true},"position":{"sticky":true},"color":{"gradients":true,"background":true,"text":true,"__experimentalDefaultControls":{"background":true,"text":true}},"typography":{"fontSize":true,"__experimentalFontFamily":true,"__experimentalFontWeight":true,"__experimentalFontStyle":true,"__experimentalTextTransform":true,"__experimentalLetterSpacing":true,"__experimentalDefaultControls":{"fontSize":true}},"spacing":{"margin":true,"padding":true}},"textdomain":"just-events","editorScript":"file:./index.js","editorStyle":"file:./index.css","render":"file:./render.php"}');
+module.exports = JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"just-events/event-time","version":"1.0","title":"Event Time","category":"just-events","description":"Displays the current event time.","keywords":["event","date","time"],"usesContext":["postId"],"attributes":{"textAlign":{"type":"string"},"showTime":{"type":"boolean","default":"true"},"startEnd":{"type":"string"},"format":{"type":"string"},"separator":{"type":"string"},"prefix":{"type":"string"}},"supports":{"customClassName":true,"__experimentalBorder":{"color":true,"radius":true,"style":true,"width":true},"position":{"sticky":true},"color":{"gradients":true,"background":true,"text":true,"__experimentalDefaultControls":{"background":true,"text":true}},"typography":{"fontSize":true,"__experimentalFontFamily":true,"__experimentalFontWeight":true,"__experimentalFontStyle":true,"__experimentalTextTransform":true,"__experimentalLetterSpacing":true,"__experimentalDefaultControls":{"fontSize":true}},"spacing":{"margin":true,"padding":true}},"textdomain":"just-events","editorScript":"file:./index.js","editorStyle":"file:./index.css","render":"file:./render.php"}');
 
 /***/ })
 
@@ -366,15 +357,15 @@ var __webpack_exports__ = {};
 !function() {
 "use strict";
 /*!****************************************!*\
-  !*** ./src/blocks/event-date/index.js ***!
+  !*** ./src/blocks/event-time/index.js ***!
   \****************************************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/blocks */ "@wordpress/blocks");
 /* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _edit__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./edit */ "./src/blocks/event-date/edit.js");
-/* harmony import */ var _block_json__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./block.json */ "./src/blocks/event-date/block.json");
+/* harmony import */ var _edit__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./edit */ "./src/blocks/event-time/edit.js");
+/* harmony import */ var _block_json__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./block.json */ "./src/blocks/event-time/block.json");
 
 /**
  * Registers a new block provided a unique name and an object defining its behavior.
@@ -406,7 +397,7 @@ __webpack_require__.r(__webpack_exports__);
       d: "M0 0h24v24H0V0z",
       fill: "none"
     }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("path", {
-      d: "M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V9h14v10zm0-12H5V5h14v2zM7 11h5v5H7z"
+      d: "M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"
     }))
   },
   /**
@@ -416,18 +407,8 @@ __webpack_require__.r(__webpack_exports__);
   transforms: {
     from: [{
       type: 'shortcode',
-      tag: 'je_event_date',
+      tag: 'je_event_time',
       attributes: {
-        showTime: {
-          type: 'boolean',
-          shortcode: ({
-            named: {
-              show_time
-            }
-          }) => {
-            return 'true' === show_time;
-          }
-        },
         startEnd: {
           type: 'string',
           shortcode: ({

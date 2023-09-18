@@ -91,7 +91,7 @@ final class Admin {
 			],
 			[
 				'id'          => 'time_prefix',
-				'label'       => \__( 'Date Time Prefix', 'just-events' ),
+				'label'       => \__( 'Time Prefix', 'just-events' ),
 				'type'        => 'text',
 				'placeholder' => ' @ ',
 				'description' => \__( 'Prefix shown before the event date time. Important: Value must use proper string formatting.', 'just-events' ) . '<br>' . \sprintf( \__( '%sDocumentation on date and time formatting%s', 'just-events' ), '<a href="https://wordpress.org/documentation/article/customize-date-and-time-format/" target="_blank" rel="noopener noreferrer">', ' &#8599;</a>' ),
