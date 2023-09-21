@@ -43,8 +43,8 @@ function get_default_time_format(): string {
  */
 function get_event_date( string $start_end, int $event = 0, bool $display_time = true, string $format = '' ): string {
 	$date = Custom_Fields::get_field_value( $event, "{$start_end}_date", false );
-
-	if ( ! $date ) {
+	
+	if ( ! $date || false === strtotime( $date ) ) {
 		return '';
 	}
 
