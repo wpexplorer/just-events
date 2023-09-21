@@ -100,11 +100,6 @@ class Custom_Fields {
 		);
 
 		// @todo Show notice if end date is before start date.
-
-		// Get default time zone and set UTC timezone to prevent issues.
-		$default_timezone = \date_default_timezone_get();
-		\date_default_timezone_set( 'UTC' );
-
 		?>
 
 		<table class="form-table just-events-meta-box-table">
@@ -122,9 +117,6 @@ class Custom_Fields {
 		</table>
 
 		<?php
-
-		// Restore the default timezone.
-		\date_default_timezone_set( $default_timezone );
 	}
 
 	/**
@@ -298,34 +290,24 @@ class Custom_Fields {
 		// Check if it's an all day event (aka no times).
 		$all_day = \array_key_exists( 'just_events_all_day', $_POST );
 
-		// Change the default time zone to UTC for saving the start/end dates.
-		$default_timezone = \date_default_timezone_get();
-		\date_default_timezone_set( 'UTC' );
-
 		// Get start date.
 		$start_date = isset( $_POST['just_events_start_date'] ) ? \sanitize_text_field( $_POST['just_events_start_date'] ) : '';
 
 		// Save dates.
 		if ( $start_date ) {
 
-			// Save start date.
-			$start_time = ( ! $all_day && isset( $_POST['just_events_start_time'] ) ) ? \sanitize_text_field( $_POST['just_events_start_time'] ) : '';
+			// Get start date.
+			$start_time = ( ! $all_day && isset( $_POST['just_events_start_time'] ) ) ? \sanitize_text_field( $_POST['just_events_start_time'] ) : '00:00';
+
+			// Get end date.
+			$end_date = ! empty( $_POST['just_events_end_date'] ) ? \sanitize_text_field( $_POST['just_events_end_date'] ) : $start_date;
+			$end_time = ! empty( $_POST['just_events_end_time'] ) ? \sanitize_text_field( $_POST['just_events_end_time'] ) : '23:59';
+
+			// Save dates.
 			\update_post_meta( $post_id, '_just_events_start_date', self::sanitize_date_for_db( $start_date . $start_time ) );
-
-			// Save end date.
-			$end_date = isset( $_POST['just_events_end_date'] ) ? \sanitize_text_field( $_POST['just_events_end_date'] ) : '';
-
-			if ( ! $end_date ) {
-				$end_date = $start_date; // end date should fallback to the start date if empty.
-			}
-
-			$end_time = ( ! $all_day && isset( $_POST['just_events_end_time'] ) ) ? \sanitize_text_field( $_POST['just_events_end_time'] ) : '';
 			\update_post_meta( $post_id, '_just_events_end_date', self::sanitize_date_for_db( $end_date . $end_time ) );
 
 		}
-
-		// Restore the default timezone.
-		\date_default_timezone_set( $default_timezone );
 
 		// Save link field.
 		if ( \array_key_exists( 'just_events_link', $_POST ) ) {
@@ -348,9 +330,11 @@ class Custom_Fields {
 
 	/**
 	 * Sanitize date for db.
+	 *
+	 * @note We use date() instead of wp_date() for a consistent timezone across all sites.
 	 */
 	public static function sanitize_date_for_db( string $date ) {
-		return \sanitize_text_field( \date( 'Y-m-d H:i:s', \strtotime( $date ) ) );
+		return $date ? \sanitize_text_field( \date( 'Y-m-d H:i:s', \strtotime( $date ) ) ) : '';
 	}
 }
 
