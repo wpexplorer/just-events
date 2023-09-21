@@ -52,11 +52,9 @@ function get_event_date( string $start_end, int $event = 0, bool $display_time =
 		$display_time = false; // never display time for all day events.
 	}
 
-	$timestamp = \strtotime( $date );
-
-	if ( ! $format ) {
-		$format = get_default_date_format( $display_time );
-	}
+	$date      = new \DateTime( $date, wp_timezone() );
+	$timestamp = $date->format( 'U' );
+	$format    = $format ?: get_default_date_format( $display_time );
 
 	return (string) \wp_date( $format, $timestamp );
 }
