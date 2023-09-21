@@ -8,6 +8,7 @@
 
 		document.querySelectorAll( '#just-events-start_time,#just-events-end_time' ).forEach( ( input ) => {
 			if ( allDayCheckbox.checked ) {
+				input.value = '';
 				input.closest( 'tr' ).classList.add( 'hidden' );
 			} else {
 				input.closest( 'tr' ).classList.remove( 'hidden' );
