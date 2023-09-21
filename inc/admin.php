@@ -52,6 +52,14 @@ final class Admin {
 				'tab'         => \__( 'General', 'just-events' ),
 			],
 			[
+				'id'          => 'hide_past_events',
+				'label'       => \__( 'Hide Past Events', 'just-events' ),
+				'type'        => 'checkbox',
+				'default'     => true,
+				'description' => \sprintf( \__( 'Check to hide all past events from archives.%sImportant%s: This option will only hide past events from the event archives and search results. It will not hide any events displayed by 3rd party themes or plugins.', 'just-events' ), '<br><strong>', '</strong>' ),
+				'tab'         => \__( 'General', 'just-events' ),
+			],
+			[
 				'id'          => 'post_type_archive_slug',
 				'label'       => \__( 'Archive Slug', 'just-events' ),
 				'type'        => 'text',
@@ -82,12 +90,13 @@ final class Admin {
 				'tab'         => \__( 'General', 'just-events' ),
 			],
 			[
-				'id'          => 'date_separator',
-				'label'       => \__( 'Date Separator', 'just-events' ),
-				'type'        => 'text',
-				'placeholder' => ' - ',
-				'description' => \__( 'Separator used in the formatted event date between the start and end dates (include empty spaces if needed). Enter &lt;br&gt; to place the start and end dates on different lines.', 'just-events' ),
-				'tab'         => \__( 'General', 'just-events' ),
+				'id'                => 'date_separator',
+				'label'             => \__( 'Date Separator', 'just-events' ),
+				'type'              => 'text',
+				'placeholder'       => ' - ',
+				'description'       => \__( 'Separator used in the formatted event date between the start and end dates (include empty spaces if needed). Enter &lt;br&gt; to place the start and end dates on different lines.', 'just-events' ),
+				'tab'               => \__( 'General', 'just-events' ),
+				'sanitize_callback' => [ self::class, 'sanitize_date_separator_field' ],
 			],
 			[
 				'id'          => 'time_prefix',
@@ -363,6 +372,17 @@ final class Admin {
 	}
 
 	/**
+	 * Sanitizes the "separator" fields.
+	 */
+	private static function sanitize_date_separator_field( string $value = '' ): string {
+		if ( '<br>' === $value ) {
+			return '<br>';
+		} else {
+			return self::sanitize_text_field( $value );
+		}
+	}
+
+	/**
 	 * Sanitizes the checkbox field.
 	 */
 	private static function sanitize_checkbox_field( $value = '' ): int {
@@ -444,7 +464,7 @@ final class Admin {
 		?>
 			<textarea type="text" id="<?php echo \esc_attr( $args['label_for'] ); ?>" rows="<?php echo \esc_attr( absint( $rows ) ); ?>" cols="<?php echo \esc_attr( absint( $cols ) ); ?>" name="<?php echo \esc_attr( self::OPTION_NAME ); ?>[<?php echo \esc_attr( $args['setting_id'] ); ?>]"><?php echo \esc_attr( $value ); ?></textarea>
 			<?php if ( $description ) { ?>
-				<p class="description"><?php echo \esc_html( $description ); ?></p>
+				<p class="description"><?php echo \wp_kses_post( $description ); ?></p>
 			<?php } ?>
 		<?php
 	}
@@ -459,7 +479,7 @@ final class Admin {
 		?>
 			<input type="checkbox" id="<?php echo \esc_attr( $args['label_for'] ); ?>" name="<?php echo \esc_attr( self::OPTION_NAME ); ?>[<?php echo \esc_attr( $args['setting_id'] ); ?>]" <?php checked( $value, 1, true ); ?>>
 			<?php if ( $description ) { ?>
-				<p class="description"><?php echo \esc_html( $description ); ?></p>
+				<p class="description"><?php echo \wp_kses_post( $description ); ?></p>
 			<?php } ?>
 		<?php
 	}

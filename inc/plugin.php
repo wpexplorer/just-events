@@ -27,6 +27,7 @@ class Plugin {
 	public static function init(): void {
 		require_once self::dir_path() . 'inc/functions.php';
 		require_once self::dir_path() . 'inc/custom-fields.php';
+		require_once self::dir_path() . 'inc/modify-queries.php';
 		require_once self::dir_path() . 'inc/register-post-type.php';
 
 		if ( \is_admin() ) {

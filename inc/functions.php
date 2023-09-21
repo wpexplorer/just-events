@@ -14,6 +14,23 @@ function get_option( string $key, $default_value = '' ) {
 }
 
 /**
+ * Returns true if currently viewing an event archive.
+ *
+ * @todo add support to check for taxonomies assigned to the post type.
+ */
+function is_archive(): bool {
+	return (bool) \is_post_type_archive( 'just_event' );
+}
+
+/**
+ * Returns todays date.
+ */
+function get_today(): string {
+	$datetime = new \DateTime( 'now', \wp_timezone() );
+	return $datetime->format( 'Y-m-d H:i:s' );
+}
+
+/**
  * Returns the default date format.
  */
 function get_default_date_format( $display_time = true ): string {
@@ -179,6 +196,7 @@ function get_event_formatted_date( int $event = 0, array $args = [] ): string {
 	if ( $prefix ) {
 		$prefix = "{$prefix} ";
 	}
+	
 
 	$allowed_html = [
 		'br'     => [],
