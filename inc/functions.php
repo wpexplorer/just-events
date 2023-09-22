@@ -56,6 +56,23 @@ function get_default_time_format(): string {
 }
 
 /**
+ * Returns the event link.
+ */
+function get_event_link( int $event = 0 ): string {
+	if ( ! $event ) {
+		$event = get_the_ID();
+	}
+	return (string) Custom_Fields::get_field_value( $event, 'link', false );
+}
+
+/**
+ * Returns the event link text.
+ */
+function get_event_link_text(): string {
+	return get_option( 'link_text' ) ?: \__( 'View Event', 'just-events' );
+}
+
+/**
  * Returns the event date.
  */
 function get_event_date( int $event = 0, string $start_end = 'start', bool $display_time = true, string $format = '' ): string {
