@@ -55,8 +55,8 @@ final class Admin {
 				'id'          => 'hide_past_events',
 				'label'       => \__( 'Hide Past Events', 'just-events' ),
 				'type'        => 'checkbox',
-				'default'     => true,
-				'description' => \sprintf( \__( 'Check to hide all past events from archives.%sImportant%s: This option will only hide past events from the event archives and search results. It will not hide any events displayed by 3rd party themes or plugins.', 'just-events' ), '<br><strong>', '</strong>' ),
+				'default'     => false,
+				'description' => \sprintf( \__( 'Check to hide all past events from archives.%sImportant%s: This option will only hide past events from the event archives and event based search results. It will not hide any events displayed by 3rd party themes or plugins.', 'just-events' ), '<br><strong>', '</strong>' ),
 				'tab'         => \__( 'General', 'just-events' ),
 			],
 			[

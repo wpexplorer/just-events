@@ -23,10 +23,10 @@ function is_archive(): bool {
 }
 
 /**
- * Returns todays date.
+ * Returns the current date & time.
  */
-function get_today(): string {
-	$datetime = new \DateTime( 'now', \wp_timezone() );
+function get_current_date_time( string $timezone = '' ): string {
+	$datetime = new \DateTime( 'now', $timezone ?: \wp_timezone() );
 	return $datetime->format( 'Y-m-d H:i:s' );
 }
 
@@ -58,8 +58,16 @@ function get_default_time_format(): string {
 /**
  * Returns the event date.
  */
-function get_event_date( string $start_end, int $event = 0, bool $display_time = true, string $format = '' ): string {
+function get_event_date( int $event = 0, string $start_end = 'start', bool $display_time = true, string $format = '' ): string {
+	if ( ! $event ) {
+		$event = get_the_ID();
+	}
+
 	$date = Custom_Fields::get_field_value( $event, "{$start_end}_date", false );
+
+	if ( 'raw' === $format ) {
+		return $date;
+	}
 	
 	if ( ! $date || false === strtotime( $date ) ) {
 		return '';
@@ -69,7 +77,7 @@ function get_event_date( string $start_end, int $event = 0, bool $display_time =
 		$display_time = false; // never display time for all day events.
 	}
 
-	$date      = new \DateTime( $date, wp_timezone() );
+	$date      = new \DateTime( $date, get_event_timezone( $event ) );
 	$timestamp = $date->format( 'U' );
 	$format    = $format ?: get_default_date_format( $display_time );
 
@@ -80,7 +88,7 @@ function get_event_date( string $start_end, int $event = 0, bool $display_time =
  * Returns the event start date.
  */
 function get_event_start_date( int $event = 0, bool $display_time = true, string $format = '' ): string {
-	return get_event_date( 'start', $event, $display_time, $format );
+	return get_event_date( $event, 'start', $display_time, $format );
 }
 
 /**
@@ -92,32 +100,49 @@ function get_event_end_date( int $event = 0, bool $display_time = true, string $
 	if ( ! Custom_Fields::get_field_value( $event, 'end_date', false ) ) {
 		return get_event_start_date( $event, $display_time, $format );
 	}
-	return get_event_date( 'end', $event, $display_time, $format );
+	return get_event_date( $event, 'end', $display_time, $format );
 }
 
 /**
  * Returns the event time.
  */
-function get_event_time( string $start_end, int $event = 0, string $format = '' ): string {
+function get_event_time( int $event = 0, string $start_end = 'start', string $format = '' ): string {
 	if ( ! $format ) {
 		$format = get_default_time_format();
 	}
 
-	return get_event_date( $start_end, $event, true, $format );
+	return get_event_date( $event, $start_end, true, $format );
+}
+
+/**
+ * Returns the timezone of an event as a string.
+ *
+ * The plugin currently doesn't support multi-timezone events so this function
+ * returns the user defined timezone in WP.
+ */
+function get_event_timezone_string(): string {
+	return wp_timezone_string();
+}
+
+/**
+ * Returns the timezone of an event as a DateTimeZone object.
+ */
+function get_event_timezone(): \DateTimeZone {
+	return new \DateTimeZone( get_event_timezone_string() );
 }
 
 /**
  * Returns the event start time.
  */
 function get_event_start_time( int $event = 0, string $format = '' ): string {
-	return get_event_time( 'start', $event, $format );
+	return get_event_time( $event, 'start', $format );
 }
 
 /**
  * Returns the event end time.
  */
 function get_event_end_time( int $event = 0, string $format = '' ): string {
-	return get_event_time( 'end', $event, $format );
+	return get_event_time( $event, 'end', $format );
 }
 
 /**
@@ -132,6 +157,13 @@ function is_all_day_event( int $event = 0 ): bool {
  */
 function is_same_day_event( int $event = 0 ): bool {
 	return get_event_start_date( $event, false ) === get_event_end_date( $event, false );
+}
+
+/**
+ * Checks if an event is all day event.
+ */
+function is_past_event( int $event = 0 ): bool {
+	return get_event_end_date( $event ) < get_current_date_time();
 }
 
 /**

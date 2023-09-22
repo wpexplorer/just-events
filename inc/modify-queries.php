@@ -40,8 +40,8 @@ class Modify_Queries {
 			}
 			
 			// Hide past events from archives.
-			if ( true === (bool) get_option( 'hide_past_events', true ) ) {
-				$today = get_today();
+			if ( true === (bool) get_option( 'hide_past_events', false ) ) {
+				$today = get_current_date_time();
 				$meta_query = $query->get( 'meta_query' ) ?: [];
 				$clause = [
 					[
