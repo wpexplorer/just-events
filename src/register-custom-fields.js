@@ -8,7 +8,7 @@ import { registerPlugin } from '@wordpress/plugins';
 /**
  * Internal dependencies.
  */
-import customFields from './components/custom-fields';
+import CustomFields from './components/custom-fields';
 
 registerPlugin( 'just-events-custom-fields', {
     render: CustomFields

@@ -56,12 +56,12 @@ export default function Edit( { context, attributes, setAttributes } ) {
 				</ToggleGroupControl>
 				<PanelRow>
 					<label
-						htmlFor="just-events-link-form[target_blank]"
+						htmlFor="just-events-link-block-target-blank"
 					>
-						{ 'Open in New Tab?' }
+						{ __( 'Open in New Tab', 'just-events' ) }
 					</label>
 					<FormToggle
-						id="just-events-link[target_blank]"
+						id="just-events-link-block-target-blank"
 						checked={ targetBlank }
 						onChange={() => setAttributes({ targetBlank: !targetBlank })}
 					/>

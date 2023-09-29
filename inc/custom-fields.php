@@ -27,11 +27,15 @@ class Custom_Fields {
 	 */
 	public static function register_post_meta(): void {
 		foreach ( self::get_fields() as $field ) {
-			\register_post_meta( Plugin::POST_TYPE, $field['id'], [
+			if ( ! isset( $field['sanitize_callback'] ) ) {
+				continue;
+			}
+			\register_post_meta( Plugin::POST_TYPE, '_just_events_' . $field['id'], [
+				'object_subtype'    => Plugin::POST_TYPE,
 				'show_in_rest'      => true,
 				'single'            => true,
 				'type'              => 'checkbox' === $field['type'] ? 'boolean' : 'string',
-				'sanitize_callback' => 'sanitize_text_field',
+				'sanitize_callback' => $field['sanitize_callback'],
 			] );
 		}
 	}
@@ -40,13 +44,13 @@ class Custom_Fields {
 	 * Runs on the "on_enqueue_block_editor_assets" hook.
 	 */
 	public static function on_enqueue_block_editor_assets(): void {
-		$plugin_dir = \untrailingslashit( \plugin_dir_url( JUST_EVENTS_PLUGIN_FILE ) );
+		$assets = require plugin_dir_path( JUST_EVENTS_PLUGIN_FILE ) . 'build/custom-fields.asset.php';
+
 		wp_enqueue_script(
 			'just-events-custom-fields-plugin', 
-			"{$plugin_dir}/build/custom-fields.js",
-			[],
-			false,
-			false
+			\untrailingslashit( \plugin_dir_url( JUST_EVENTS_PLUGIN_FILE ) ) . '/build/custom-fields.js',
+			$assets['dependencies'] ?? [ 'wp-edit-post' ],
+			$assets['version'] ?? Plugin::VERSION
 		);
 	}
 
@@ -83,7 +87,7 @@ class Custom_Fields {
 			'advanced',
 			'high',
 			[
-			//	'__back_compat_meta_box' => true, // this hides the metabox when using Gutenberg.
+				'__back_compat_meta_box' => true, // this hides the metabox when using Gutenberg.
 			]
 		);
 	}
@@ -174,19 +178,22 @@ class Custom_Fields {
 	private static function get_fields(): array {
 		$fields = [
 			[
-				'label' => \__( 'All Day Event?', 'just-events' ),
-				'id'    => 'all_day',
-				'type'  => 'checkbox',
+				'label'             => \__( 'All Day Event?', 'just-events' ),
+				'id'                => 'all_day',
+				'type'              => 'checkbox',
+				'sanitize_callback' => [ self::class, 'sanitize_checkbox_for_db' ],
 			],
 			[
-				'label' => \__( 'Start Date', 'just-events' ),
-				'id'    => 'start_date',
-				'type'  => 'date',
+				'label'             => \__( 'Start Date', 'just-events' ),
+				'id'                => 'start_date',
+				'type'              => 'date',
+				'sanitize_callback' => [ self::class, 'sanitize_date_for_db' ],
 			],
 			[
-				'label' => \__( 'End Date', 'just-events' ),
-				'id'    => 'end_date',
-				'type'  => 'date',
+				'label'             => \__( 'End Date', 'just-events' ),
+				'id'                => 'end_date',
+				'type'              => 'date',
+				'sanitize_callback' => [ self::class, 'sanitize_date_for_db' ],
 			],
 			[
 				'label' => \__( 'Start Time', 'just-events' ),
@@ -199,9 +206,10 @@ class Custom_Fields {
 				'type'  => 'time',
 			],
 			[
-				'label' => \__( 'External Link', 'just-events' ),
-				'id'    => 'link',
-				'type'  => 'url',
+				'label'             => \__( 'External Link', 'just-events' ),
+				'id'                => 'link',
+				'type'              => 'url',
+				'sanitize_callback' => [ self::class, 'sanitize_url_for_db' ],
 			],
 		];
 
@@ -355,11 +363,25 @@ class Custom_Fields {
 	}
 
 	/**
+	 * Sanitize URL for db.
+	 */
+	public static function sanitize_url_for_db( $input ) {
+		return $input ? \esc_url( \sanitize_text_field( $input ) ) : '';
+	}
+
+	/**
+	 * Sanitize checkbox for db.
+	 */
+	public static function sanitize_checkbox_for_db( $input ) {
+		return $input ? 1 : 0;
+	}
+
+	/**
 	 * Sanitize date for db.
 	 *
 	 * @note We use date() instead of wp_date() for a consistent timezone across all sites.
 	 */
-	public static function sanitize_date_for_db( string $date ) {
+	public static function sanitize_date_for_db( $date ) {
 		return $date ? \sanitize_text_field( \date( 'Y-m-d H:i:s', \strtotime( $date ) ) ) : '';
 	}
 }

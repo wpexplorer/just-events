@@ -33,5 +33,8 @@
     "@wordpress/compose": "^6.19.0",
     "@wordpress/plugins": "^6.10.0",
     "@wordpress/scripts": "26.13.0"
+  },
+  "dependencies": {
+    "@wordpress/date": "^4.42.0"
   }
 }

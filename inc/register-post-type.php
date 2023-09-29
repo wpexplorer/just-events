@@ -78,7 +78,7 @@ class Register_Post_Type {
 			'has_archive'     => $archive_slug ?? false,
 			'menu_position'   => null,
 			'menu_icon'       => 'dashicons-calendar-alt',
-			'supports'        => [ 'title', 'editor', 'author', 'thumbnail', 'excerpt' ],
+			'supports'        => [ 'title', 'editor', 'author', 'thumbnail', 'excerpt', 'custom-fields' ],
 		];
 
 		return $args;

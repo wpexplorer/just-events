@@ -79,9 +79,9 @@ function Edit({
     value: "button",
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Button', 'just-events')
   })), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.PanelRow, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", {
-    htmlFor: "just-events-link-form[target_blank]"
-  }, 'Open in New Tab?'), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.FormToggle, {
-    id: "just-events-link[target_blank]",
+    htmlFor: "just-events-link-block-target-blank"
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Open in New Tab', 'just-events')), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.FormToggle, {
+    id: "just-events-link-block-target-blank",
     checked: targetBlank,
     onChange: () => setAttributes({
       targetBlank: !targetBlank
