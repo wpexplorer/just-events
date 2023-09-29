@@ -46,7 +46,7 @@ class Modify_Queries {
 			 * @param object $query The WordPress query object.
 			 */
 			$orderby_check = $is_event_archive || ( $query->is_search() && 'just_event' === \get_query_var( 'post_type' ) );
-			$orderby_check = (bool) apply_filters( 'just_events/modify_queries/frontend/check', $orderby_check, $query );
+			$orderby_check = (bool) apply_filters( 'just_events/modify_queries/sort_events', $orderby_check, $query );
 
 			if ( $orderby_check ) {
 				self::sort_events( $query, 'start', ! (bool) get_option( 'hide_past_events', false ) );

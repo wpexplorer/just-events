@@ -39,6 +39,7 @@ class Plugin {
 		\register_activation_hook( JUST_EVENTS_PLUGIN_FILE, [ self::class, 'on_activation' ] );
 		\add_filter( 'block_categories_all', [ self::class, 'filter_block_categories_all' ], 10, 2 );
 		\add_action( 'init', [ self::class, 'on_init' ] );
+		\add_action( 'plugins_loaded', [ self::class, 'integrations' ] );
 	}
 
 	/**
@@ -60,6 +61,16 @@ class Plugin {
 		self::register_shortcodes();
 		self::register_blocks();
 	}
+
+	/**
+	 * Provices support for 3rd party scripts.
+	 */
+	public static function integrations(): void {
+		if ( \class_exists( 'Post_Types_Unlimited', false ) ) {
+			require_once self::dir_path() . 'inc/integration/post-types-unlimited.php';
+		}
+	}
+
 
 	/**
 	 * Register shortcodes.

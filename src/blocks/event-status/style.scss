@@ -1,20 +1,31 @@
+.wp-block-just-events-event-status {
+	font-size: 0.75em;
+	letter-spacing: 0.025em;
+	text-transform: uppercase;
+	font-weight: 500;
+}
+
 .just-events-status-badge {
 	display: inline-block;
-	background: #616161;
-	color: #fff;
 	border-radius: 4px;
 	line-height: normal;
-	padding: 0.25em 0.375em;
+	padding: 0.375em 0.5em;
 
 	&--ongoing {
-		background-color: #43A047;
+	//	background-color: #43A047;
+		background: #BAF7D0;
+		color: #14532D;
 	}
 
 	&--upcoming {
-		background-color: #FFB300;
+	//	background-color: #FFB300;
+		background: #FFEF89;
+    	color: #713F11;
 	}
 
 	&--past {
-		background-color: #E53935;
+	//	background-color: #FECACA;
+		background: #FECACA;
+		color: #7F1D1E;
 	}
 }

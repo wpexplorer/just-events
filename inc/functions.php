@@ -15,11 +15,21 @@ function get_option( string $key, $default_value = '' ) {
 
 /**
  * Returns true if currently viewing an event archive.
- *
- * @todo add support to check for taxonomies assigned to the post type.
+ * 
+ * This is useful if you are registering custom taxonomies and want to apply
+ * the same sorting and hiding of past events to your archive.
  */
 function is_archive(): bool {
-	return (bool) \is_post_type_archive( 'just_event' );
+	$check = \is_post_type_archive( 'just_event' );
+	
+	/**
+	 * Filters whether the current page is a Just Events archive.
+	 * 
+	 * @param bool $check Is the current page a Just Events archive.
+	 */
+	$check = apply_filters( 'just_events/is_archive', $check );
+
+	return (bool) $check;
 }
 
 /**
