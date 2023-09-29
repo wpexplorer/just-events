@@ -42,9 +42,9 @@ class Custom_Fields {
 	public static function on_enqueue_block_editor_assets(): void {
 		$plugin_dir = \untrailingslashit( \plugin_dir_url( JUST_EVENTS_PLUGIN_FILE ) );
 		wp_enqueue_script(
-			'just-events-', 
+			'just-events-custom-fields-plugin', 
 			"{$plugin_dir}/build/custom-fields.js",
-			[ 'wp-edit-post' ],
+			[],
 			false,
 			false
 		);

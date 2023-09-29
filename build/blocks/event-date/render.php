@@ -39,7 +39,7 @@ if ( $is_gutenberg ) {
 	$wrapper_attributes = [];
 
 	if ( isset( $attributes['textAlign'] ) ) {
-		$wrapper_attributes[ 'class' ] = 'has-text-align-' . $attributes['textAlign'];
+		$wrapper_attributes['class'] = 'has-text-align-' . \sanitize_html_class( $attributes['textAlign'] );
 	}
 
 	\printf( '<div %s>%s</div>', \get_block_wrapper_attributes( $wrapper_attributes ), $date );

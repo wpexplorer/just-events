@@ -8,7 +8,14 @@ import classnames from 'classnames';
  */
 import { __ } from '@wordpress/i18n';
 import { useBlockProps, InspectorControls, BlockControls, AlignmentToolbar } from '@wordpress/block-editor';
-import { SelectControl, TextControl, FormToggle, PanelBody, PanelRow, ExternalLink } from '@wordpress/components';
+import {
+	PanelRow,
+	TextControl,
+	PanelBody,
+	FormToggle,
+	__experimentalToggleGroupControl as ToggleGroupControl,
+    __experimentalToggleGroupControlOption as ToggleGroupControlOption,
+} from '@wordpress/components';
 import ServerSideRender from '@wordpress/server-side-render';
 
 /**
@@ -18,13 +25,9 @@ import './editor.scss';
 import metadata from './block.json';
 
 export default function Edit( { context, attributes, setAttributes } ) {
-	const { textAlign, startEnd, format, separator, prefix } = attributes;
+	const { text, style, targetBlank } = attributes;
 
-	const blockProps = useBlockProps( {
-		className: classnames( {
-			[ `has-text-align-${ textAlign }` ]: textAlign,
-		} ),
-	} );
+	const blockProps = useBlockProps();
 
 	// Provides fix for known issue: https://github.com/WordPress/gutenberg/issues/34882
 	let urlQueryArgs = {};
@@ -36,63 +39,46 @@ export default function Edit( { context, attributes, setAttributes } ) {
 		<>
 		<InspectorControls>
 			<PanelBody>
+				<ToggleGroupControl
+					label={ __( 'Style', 'just-events' ) }
+					value={ style }
+					onChange={ style => { setAttributes( { style } ) } }
+					isBlock
+				>
+					<ToggleGroupControlOption
+						value="none"
+						label={ __( 'Default', 'just-events' ) }
+					/>
+					<ToggleGroupControlOption
+						value="button"
+						label={ __( 'Button', 'just-events' ) }
+					/>
+				</ToggleGroupControl>
 				<PanelRow>
-					<SelectControl
-						label= { __( 'Display', 'just-events' ) }
-						options= {
-							[
-								{ label: __( 'Start & End Time', 'just-events' ), value: '' },
-								{ label: __( 'Start Time Only', 'just-events' ), value: 'start' },
-								{ label: __( 'End Time Only', 'just-events' ), value: 'end' },
-							]
-						}
-						value= { startEnd }
-						onChange= { startEnd => { setAttributes( { startEnd } ) } }
+					<label
+						htmlFor="just-events-link-form[target_blank]"
+					>
+						{ 'Open in New Tab?' }
+					</label>
+					<FormToggle
+						id="just-events-link[target_blank]"
+						checked={ targetBlank }
+						onChange={() => setAttributes({ targetBlank: !targetBlank })}
 					/>
 				</PanelRow>
-				<TextControl
-					label={ __( 'Prefix', 'just-events' ) }
-					onChange={ ( prefix ) => setAttributes( { prefix } ) }
-					value={ prefix }
-					help={ __( 'Custom text to display before the date.', 'just-events' ) }
-				/>
-				<TextControl
-					label={ __( 'Custom Format', 'just-events' ) }
-					onChange={ ( format ) => setAttributes( { format } ) }
-					value={ format }
-					help={
-						<>
-							<ExternalLink
-								href={ __(
-									'https://wordpress.org/documentation/article/customize-date-and-time-format/'
-								) }
-							>
-								{ __( 'Documentation', 'just-events' ) }
-							</ExternalLink>
-						</>
-					}
-				/>
-				<TextControl
-					label={ __( 'Custom Separator', 'just-events' ) }
-					onChange={ ( separator ) => setAttributes( { separator } ) }
-					value={ separator }
-					placeholder= ' - '
-					help={ __( 'Separator used in the formatted event date between the start and end dates (include empty spaces if needed). Enter <br> to place the start and end dates on different lines.', 'just-events' ) }
-				/>
+				<PanelRow>
+					<TextControl
+						label={ __( 'Custom Text', 'just-events' ) }
+						onChange={ ( text ) => setAttributes( { text } ) }
+						value={ text }
+					/>
+				</PanelRow>
 			</PanelBody>
 		</InspectorControls>
 
 		<div { ...blockProps }>
-			<BlockControls>
-				<AlignmentToolbar
-					value={ textAlign }
-					onChange={ ( newAlign ) =>
-						setAttributes( { textAlign: newAlign } )
-					}
-				/>
-			</BlockControls>
 			<ServerSideRender
-				block="just-events/event-time"
+				block="just-events/event-link"
 				attributes={ attributes }
 				urlQueryArgs={ urlQueryArgs }
 			/>

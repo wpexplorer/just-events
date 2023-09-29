@@ -14,34 +14,20 @@
     "postId"
   ],
   "attributes": {
+    "style": {
+      "type": "string",
+      "default": "none"
+    },
     "text": {
       "type": "string"
     },
-    "target_blank": {
+    "targetBlank": {
       "type": "boolean",
       "default": "false"
     }
   },
   "supports": {
     "customClassName": true,
-    "__experimentalBorder": {
-      "color": true,
-      "radius": true,
-      "style": true,
-      "width": true
-    },
-    "position": {
-      "sticky": true
-    },
-    "color": {
-      "gradients": true,
-      "background": true,
-      "text": true,
-      "__experimentalDefaultControls": {
-        "background": true,
-        "text": true
-      }
-    },
     "typography": {
       "fontSize": true,
       "__experimentalFontFamily": true,
@@ -52,14 +38,11 @@
       "__experimentalDefaultControls": {
         "fontSize": true
       }
-    },
-    "spacing": {
-      "margin": true,
-      "padding": true
     }
   },
   "textdomain": "just-events",
   "editorScript": "file:./index.js",
   "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css",
   "render": "file:./render.php"
 }

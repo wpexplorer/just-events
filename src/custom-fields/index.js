@@ -8,8 +8,8 @@ import { registerPlugin } from '@wordpress/plugins';
 /**
  * Internal dependencies.
  */
-import MetaBox from './components/metabox';
+import CustomFields from './render';
 
-registerPlugin( 'just-events-meta-box', {
-    render: MetaBox
+registerPlugin( 'just-events-custom-fields', {
+    render: CustomFields
 } );
