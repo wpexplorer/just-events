@@ -4,7 +4,7 @@ import { withSelect, withDispatch } from '@wordpress/data';
 import { PluginDocumentSettingPanel } from '@wordpress/edit-post';
 import { PanelRow, TextControl, DateTimePicker } from '@wordpress/components';
 
-const MetaBox = ( { postType, metaFields, setMetaFields } ) => {
+const customFields = ( { postType, metaFields, setMetaFields } ) => {
 
 	if ( 'just_event' !== postType ) {
 		return null;
@@ -69,4 +69,4 @@ const applyWithDispatch = withDispatch( ( dispatch ) => {
 export default compose( [
 	applyWithSelect,
 	applyWithDispatch
-] )( MetaBox );
+] )( customFields );
