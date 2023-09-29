@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Just Events WordPress Plugin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-29 13:27-0700\n"
+"POT-Creation-Date: 2023-09-29 13:09-0700\n"
 "PO-Revision-Date: 2016-08-09 12:06-0800\n"
 "Last-Translator: AJ Clarke <wpexplorer@gmail.com>\n"
 "Language-Team: WPExplorer.com\n"
@@ -20,130 +20,267 @@ msgstr ""
 "X-Generator: Poedit 3.2.2\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: src\n"
+"X-Poedit-SearchPathExcluded-1: node_modules\n"
 
-#: inc/custom-fields.php:43
+#: build/blocks/event-date copy/render.php:33
+#: build/blocks/event-date/render.php:33
+#: build/blocks/event-status/render.php:33
+#: build/blocks/event-time/render.php:32
+msgid "Event date undefined"
+msgstr ""
+
+#: inc/admin.php:48
+msgid "Enable Archive"
+msgstr ""
+
+#: inc/admin.php:51
+msgid "Enables the automatic archive page for the Events post type."
+msgstr ""
+
+#: inc/admin.php:52 inc/admin.php:60 inc/admin.php:68 inc/admin.php:76
+#: inc/admin.php:83 inc/admin.php:90 inc/admin.php:98 inc/admin.php:107
+#: inc/admin.php:115 inc/admin.php:123
+msgid "General"
+msgstr ""
+
+#: inc/admin.php:56
+msgid "Hide Past Events"
+msgstr ""
+
+#: inc/admin.php:59
+#, php-format
+msgid ""
+"Check to hide all past events from archives.%sImportant%s: This option will "
+"only hide past events from the event archives and event based search "
+"results. It will not hide any events displayed by 3rd party themes or "
+"plugins."
+msgstr ""
+
+#: inc/admin.php:64
+msgid "Archive Slug"
+msgstr ""
+
+#: inc/admin.php:67
+msgid "The custom slug for the archive page if enabled."
+msgstr ""
+
+#: inc/admin.php:72
+msgid "Single Slug"
+msgstr ""
+
+#: inc/admin.php:75
+msgid "The custom slug for your single events."
+msgstr ""
+
+#: inc/admin.php:80
+msgid "Date Format"
+msgstr ""
+
+#: inc/admin.php:82
+msgid ""
+"Enter a custom date format to use for your formatted event date. Leave empty "
+"to use your WordPress defined date format."
+msgstr ""
+
+#: inc/admin.php:82 inc/admin.php:89 inc/admin.php:106
+#, php-format
+msgid "%sDocumentation on date and time formatting%s"
+msgstr ""
+
+#: inc/admin.php:87
+msgid "Time Format"
+msgstr ""
+
+#: inc/admin.php:89
+msgid ""
+"Enter a custom date format to use for your formatted event time. Leave empty "
+"to use your WordPress defined time format."
+msgstr ""
+
+#: inc/admin.php:94
+msgid "Date Separator"
+msgstr ""
+
+#: inc/admin.php:97
+msgid ""
+"Separator used in the formatted event date between the start and end dates "
+"(include empty spaces if needed). Enter &lt;br&gt; to place the start and "
+"end dates on different lines."
+msgstr ""
+
+#: inc/admin.php:103
+msgid "Time Prefix"
+msgstr ""
+
+#: inc/admin.php:106
+msgid ""
+"Prefix shown before the event date time. Important: Value must use proper "
+"string formatting."
+msgstr ""
+
+#: inc/admin.php:111
+msgid "Time Separator"
+msgstr ""
+
+#: inc/admin.php:114
+msgid ""
+"Separator used when displaying only the event time between the start and end "
+"times (include empty spaces if needed)."
+msgstr ""
+
+#: inc/admin.php:119
+msgid "Default Link Text"
+msgstr ""
+
+#: inc/admin.php:121 inc/functions.php:72 inc/register-post-type.php:48
+msgid "View Event"
+msgstr ""
+
+#: inc/admin.php:122
+msgid "Enter the default text for the event link block."
+msgstr ""
+
+#: inc/admin.php:142
+msgid "Settings"
+msgstr ""
+
+#: inc/admin.php:231
+msgid "Settings Saved"
+msgstr ""
+
+#: inc/custom-fields.php:88
 msgid "Event Settings"
 msgstr ""
 
-#: inc/custom-fields.php:145
+#: inc/custom-fields.php:186 inc/posts-columns.php:47
 msgid "All Day Event?"
 msgstr ""
 
-#: inc/custom-fields.php:150
+#: inc/custom-fields.php:192 inc/posts-columns.php:48
 msgid "Start Date"
 msgstr ""
 
-#: inc/custom-fields.php:155
+#: inc/custom-fields.php:198 inc/posts-columns.php:49
 msgid "End Date"
 msgstr ""
 
-#: inc/custom-fields.php:160
+#: inc/custom-fields.php:204 inc/posts-columns.php:50
 msgid "Start Time"
 msgstr ""
 
-#: inc/custom-fields.php:165
+#: inc/custom-fields.php:209 inc/posts-columns.php:51
 msgid "End Time"
 msgstr ""
 
-#: inc/custom-fields.php:170
+#: inc/custom-fields.php:214
 msgid "External Link"
 msgstr ""
 
-#: inc/functions.php:15
-#, php-format
-msgctxt "Default date format: {{date}} at {{time}}"
-msgid "%s \\a\\t %s"
+#: inc/functions.php:198
+msgctxt "Adverb: Event Status"
+msgid "Past"
 msgstr ""
 
-#: inc/register-post-type.php:28
+#: inc/functions.php:200
+msgctxt "Adverb: Event Status"
+msgid "Ongoin"
+msgstr ""
+
+#: inc/functions.php:202
+msgctxt "Adverb: Event Status"
+msgid "Upcoming"
+msgstr ""
+
+#: inc/posts-columns.php:46
+msgid "Status"
+msgstr ""
+
+#: inc/register-post-type.php:40
 msgctxt "Post type general name"
 msgid "Events"
 msgstr ""
 
-#: inc/register-post-type.php:29
+#: inc/register-post-type.php:41
 msgctxt "Post type singular name"
 msgid "Event"
 msgstr ""
 
-#: inc/register-post-type.php:30
+#: inc/register-post-type.php:42
 msgctxt "Admin Menu text"
 msgid "Events"
 msgstr ""
 
-#: inc/register-post-type.php:31
+#: inc/register-post-type.php:43
 msgctxt "Add New on Toolbar"
 msgid "Event"
 msgstr ""
 
-#: inc/register-post-type.php:32
+#: inc/register-post-type.php:44
 msgid "Add New"
 msgstr ""
 
-#: inc/register-post-type.php:33
+#: inc/register-post-type.php:45
 msgid "Add New Event"
 msgstr ""
 
-#: inc/register-post-type.php:34
+#: inc/register-post-type.php:46
 msgid "New Event"
 msgstr ""
 
-#: inc/register-post-type.php:35
+#: inc/register-post-type.php:47
 msgid "Edit Event"
 msgstr ""
 
-#: inc/register-post-type.php:36
-msgid "View Event"
-msgstr ""
-
-#: inc/register-post-type.php:37
+#: inc/register-post-type.php:49
 msgid "All Events"
 msgstr ""
 
-#: inc/register-post-type.php:38
+#: inc/register-post-type.php:50
 msgid "Search Events"
 msgstr ""
 
-#: inc/register-post-type.php:39
+#: inc/register-post-type.php:51
 msgid "Parent Events:"
 msgstr ""
 
-#: inc/register-post-type.php:40
+#: inc/register-post-type.php:52
 msgid "No events found."
 msgstr ""
 
-#: inc/register-post-type.php:41
+#: inc/register-post-type.php:53
 msgid "No events found in Trash."
 msgstr ""
 
-#: inc/register-post-type.php:42
+#: inc/register-post-type.php:54
 msgctxt ""
 "The post type archive label used in nav menus. Default \"Post Archives\". "
 "Added in 4.4"
 msgid "Event archives"
 msgstr ""
 
-#: inc/register-post-type.php:43
+#: inc/register-post-type.php:55
 msgctxt ""
 "Overrides the \"Insert into post\"/\"Insert into page\" phrase (used when "
 "inserting media into a post). Added in 4.4"
 msgid "Insert into event"
 msgstr ""
 
-#: inc/register-post-type.php:44
+#: inc/register-post-type.php:56
 msgctxt ""
 "Overrides the \"Uploaded to this post\"/\"Uploaded to this page\" phrase "
 "(used when viewing media attached to a post). Added in 4.4"
 msgid "Uploaded to this event"
 msgstr ""
 
-#: inc/register-post-type.php:45
+#: inc/register-post-type.php:57
 msgctxt ""
 "Screen reader text for the filter links heading on the post type listing "
 "screen. Default \"Filter posts list\"/\"Filter pages list\". Added in 4.4"
 msgid "Filter events list"
 msgstr ""
 
-#: inc/register-post-type.php:46
+#: inc/register-post-type.php:58
 msgctxt ""
 "Screen reader text for the pagination heading on the post type listing "
 "screen. Default \"Posts list navigation\"/\"Pages list navigation\". Added "
@@ -151,7 +288,7 @@ msgctxt ""
 msgid "Events list navigation"
 msgstr ""
 
-#: inc/register-post-type.php:47
+#: inc/register-post-type.php:59
 msgctxt ""
 "Screen reader text for the items list heading on the post type listing "
 "screen. Default \"Posts list\"/\"Pages list\". Added in 4.4"

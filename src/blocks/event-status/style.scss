@@ -1,0 +1,20 @@
+.just-events-status-badge {
+	display: inline-block;
+	background: #616161;
+	color: #fff;
+	border-radius: 4px;
+	line-height: normal;
+	padding: 0.25em 0.375em;
+
+	&--ongoing {
+		background-color: #43A047;
+	}
+
+	&--upcoming {
+		background-color: #FFB300;
+	}
+
+	&--past {
+		background-color: #E53935;
+	}
+}

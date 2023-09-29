@@ -1,0 +1,22 @@
+/*!***********************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[4].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].use[3]!./src/blocks/event-status/style.scss ***!
+  \***********************************************************************************************************************************************************************************************************************************************************/
+.just-events-status-badge {
+  display: inline-block;
+  background: #616161;
+  color: #fff;
+  border-radius: 4px;
+  line-height: normal;
+  padding: 0.25em 0.375em;
+}
+.just-events-status-badge--ongoing {
+  background-color: #43A047;
+}
+.just-events-status-badge--upcoming {
+  background-color: #FFB300;
+}
+.just-events-status-badge--past {
+  background-color: #E53935;
+}
+
+/*# sourceMappingURL=style-index.css.map*/

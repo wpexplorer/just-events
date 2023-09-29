@@ -81,6 +81,7 @@ const customFields = ({
       _just_events_start_date: value
     });
     if (!postMeta._just_events_end_date || postMeta._just_events_start_date === postMeta._just_events_end_date) {
+      // @note we don't set the end date equal to the start but 11:59pm because then when they change the date it won't update.
       setPostMeta({
         _just_events_end_date: value
       });

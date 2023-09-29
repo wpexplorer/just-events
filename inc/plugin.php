@@ -32,6 +32,7 @@ class Plugin {
 
 		if ( \is_admin() ) {
 			require_once self::dir_path() . 'inc/admin.php';
+			require_once self::dir_path() . 'inc/posts-columns.php';
 		}
 
 		// Hooks.
@@ -74,6 +75,7 @@ class Plugin {
 	 */
 	public static function register_blocks(): void {
 		$blocks = [
+			'event-status',
 			'event-date',
 			'event-time',
 			'event-link',

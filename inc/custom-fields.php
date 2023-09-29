@@ -18,7 +18,7 @@ class Custom_Fields {
 	 */
 	public static function init(): void {
 		\add_action( 'init', [ self::class, 'register_post_meta' ] );
-		\add_action( 'enqueue_block_editor_assets', [ self::class, 'on_enqueue_block_editor_assets' ] );
+		\add_action( 'enqueue_block_editor_assets', [ self::class, 'enqueue_block_editor_assets' ] );
 		\add_action( 'admin_init', [ self::class, 'on_admin_init' ] );
 	}
 
@@ -41,9 +41,13 @@ class Custom_Fields {
 	}
 
 	/**
-	 * Runs on the "on_enqueue_block_editor_assets" hook.
+	 * Runs on the "enqueue_block_editor_assets" hook.
 	 */
-	public static function on_enqueue_block_editor_assets(): void {
+	public static function enqueue_block_editor_assets(): void {
+		if ( ! post_type_supports( Plugin::POST_TYPE, 'custom-fields' ) ) {
+			return;
+		}
+	
 		$assets = require plugin_dir_path( JUST_EVENTS_PLUGIN_FILE ) . 'build/custom-fields.asset.php';
 
 		wp_enqueue_script(
@@ -87,7 +91,8 @@ class Custom_Fields {
 			'advanced',
 			'high',
 			[
-				'__back_compat_meta_box' => true, // this hides the metabox when using Gutenberg.
+				// Hides the metabox when using Gutenberg.
+				'__back_compat_meta_box' => post_type_supports( Plugin::POST_TYPE, 'custom-fields' ),
 			]
 		);
 	}
@@ -217,7 +222,7 @@ class Custom_Fields {
 		 * Filters the meta box fields.
 		 *
 		 * This filter is intended for removing fields only. If you use the filter to add new fields
-		 * they won't be saved.
+		 * they won't be saved or displayed in Gutenberg.
 		 *
 		 * @param array $fields
 		 */
@@ -358,8 +363,6 @@ class Custom_Fields {
 		} else {
 			\delete_post_meta( $post_id, '_just_events_all_day' );
 		}
-
-		\do_action( 'just_events/custom_fields/save_meta_box', $post_id );
 	}
 
 	/**
@@ -384,6 +387,7 @@ class Custom_Fields {
 	public static function sanitize_date_for_db( $date ) {
 		return $date ? \sanitize_text_field( \date( 'Y-m-d H:i:s', \strtotime( $date ) ) ) : '';
 	}
+
 }
 
 Custom_Fields::init();

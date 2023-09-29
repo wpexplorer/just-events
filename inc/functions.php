@@ -60,7 +60,7 @@ function get_default_time_format(): string {
  */
 function get_event_link( int $event = 0 ): string {
 	if ( ! $event ) {
-		$event = get_the_ID();
+		$event = \get_the_ID();
 	}
 	return (string) Custom_Fields::get_field_value( $event, 'link', false );
 }
@@ -73,11 +73,28 @@ function get_event_link_text(): string {
 }
 
 /**
+ * Returns the timezone of an event as a string.
+ *
+ * The plugin currently doesn't support multi-timezone events so this function
+ * returns the user defined timezone in WP.
+ */
+function get_event_timezone_string(): string {
+	return wp_timezone_string();
+}
+
+/**
+ * Returns the timezone of an event as a DateTimeZone object.
+ */
+function get_event_timezone(): \DateTimeZone {
+	return new \DateTimeZone( get_event_timezone_string() );
+}
+
+/**
  * Returns the event date.
  */
 function get_event_date( int $event = 0, string $start_end = 'start', bool $display_time = true, string $format = '' ): string {
 	if ( ! $event ) {
-		$event = get_the_ID();
+		$event = \get_the_ID();
 	}
 
 	$date = Custom_Fields::get_field_value( $event, "{$start_end}_date", false );
@@ -109,6 +126,13 @@ function get_event_start_date( int $event = 0, bool $display_time = true, string
 }
 
 /**
+ * Returns the raw event start date.
+ */
+function get_event_start_date_raw( int $event = 0 ) {
+	return get_event_date( $event, 'start', true, 'raw' );
+}
+
+/**
  * Returns the event end date.
  *
  * Note: Will return the start date if an end date is not defined.
@@ -118,6 +142,13 @@ function get_event_end_date( int $event = 0, bool $display_time = true, string $
 		return get_event_start_date( $event, $display_time, $format );
 	}
 	return get_event_date( $event, 'end', $display_time, $format );
+}
+
+/**
+ * Returns the raw event end date.
+ */
+function get_event_end_date_raw( int $event = 0 ) {
+	return get_event_date( $event, 'end', true, 'raw' );
 }
 
 /**
@@ -132,20 +163,22 @@ function get_event_time( int $event = 0, string $start_end = 'start', string $fo
 }
 
 /**
- * Returns the timezone of an event as a string.
- *
- * The plugin currently doesn't support multi-timezone events so this function
- * returns the user defined timezone in WP.
+ * Returns the raw event start time.
  */
-function get_event_timezone_string(): string {
-	return wp_timezone_string();
-}
+function get_event_time_raw( int $event = 0, string $start_end = 'start' ): string {
+	if ( ! $event ) {
+		$event = \get_the_ID();
+	}
+	
+	$date = Custom_Fields::get_field_value( $event, "{$start_end}_date", false );
 
-/**
- * Returns the timezone of an event as a DateTimeZone object.
- */
-function get_event_timezone(): \DateTimeZone {
-	return new \DateTimeZone( get_event_timezone_string() );
+	if ( ! $date || false === strtotime( $date ) ) {
+		return '';
+	}
+
+	$array = explode( ' ', $date, 2 );
+
+	return $array[1] ?? '00:00:00';
 }
 
 /**
@@ -156,10 +189,24 @@ function get_event_start_time( int $event = 0, string $format = '' ): string {
 }
 
 /**
+ * Returns the raw event start time.
+ */
+function get_event_start_time_raw( int $event = 0 ): string {
+	return get_event_time_raw( $event, 'start' );
+}
+
+/**
  * Returns the event end time.
  */
 function get_event_end_time( int $event = 0, string $format = '' ): string {
 	return get_event_time( $event, 'end', $format );
+}
+
+/**
+ * Returns the raw event end time.
+ */
+function get_event_end_time_raw( int $event = 0 ): string {
+	return get_event_time_raw( $event, 'end' );
 }
 
 /**
@@ -173,14 +220,62 @@ function is_all_day_event( int $event = 0 ): bool {
  * Checks if an event is a single day event.
  */
 function is_same_day_event( int $event = 0 ): bool {
-	return get_event_start_date( $event, false ) === get_event_end_date( $event, false );
+	return get_event_start_date_raw( $event, false ) === get_event_end_date_raw( $event, false );
 }
 
 /**
  * Checks if an event is all day event.
  */
 function is_past_event( int $event = 0 ): bool {
-	return get_event_end_date( $event ) < get_current_date_time();
+	return 'past' === get_event_status( $event );
+}
+
+/**
+ * Returns an array of supported event statuses.
+ */
+function get_event_statuses(): array {
+	return [
+		'past'      => \_x( 'Past', 'Adverb: Event Status', 'just-events' ),
+		'ongoing'   => \_x( 'Ongoing', 'Adverb: Event Status', 'just-events' ),
+		'upcoming'  => \_x( 'Upcoming', 'Adverb: Event Status', 'just-events' ),
+		'undefined' => \_x( 'Undefined', 'Adverb: Event Status', 'just-events' ),
+	];
+}
+
+/**
+ * Returns the status.
+ */
+function get_event_status( int $event = 0 ): string {
+	if ( ! $event ) {
+		$event = \get_the_ID();
+	}
+
+	$end_date = get_event_end_date_raw( $event );
+
+	if ( ! $end_date ) {
+		return 'undefined';
+	}
+
+	$current_date_time = get_current_date_time();
+
+	if ( $end_date < $current_date_time ) {
+		return 'past';
+	} elseif ( $end_date >= $current_date_time && get_event_start_date_raw( $event ) <= $current_date_time ) {
+		return 'ongoing';
+	} else {
+		return 'upcoming';
+	}
+}
+
+/**
+ * Returns the status label
+ */
+function get_event_status_label( int $event = 0 ): string {
+	if ( ! $event ) {
+		$event = \get_the_ID();
+	}
+
+	return get_event_statuses()[ get_event_status( $event ) ];
 }
 
 /**
