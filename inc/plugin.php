@@ -7,7 +7,7 @@ namespace WPExplorer\Just_Events;
 class Plugin {
 
 	/**
-	 * Holds the plugin version.
+	 * The plugin version.
 	 */
 	public const VERSION = '1.0.0';
 
@@ -76,6 +76,7 @@ class Plugin {
 		$blocks = [
 			'event-date',
 			'event-time',
+			'event-link',
 		];
 		foreach ( $blocks as $block ) {
 			$path = self::dir_path();

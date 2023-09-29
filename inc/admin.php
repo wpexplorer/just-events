@@ -114,6 +114,14 @@ final class Admin {
 				'description' => \__( 'Separator used when displaying only the event time between the start and end times (include empty spaces if needed).', 'just-events' ),
 				'tab'         => \__( 'General', 'just-events' ),
 			],
+			[
+				'id'          => 'link_text',
+				'label'       => \__( 'Default Link Text', 'just-events' ),
+				'type'        => 'text',
+				'placeholder' => \__( 'View Event', 'just-events' ),
+				'description' => \__( 'Enter the default text for the event link block.', 'just-events' ),
+				'tab'         => \__( 'General', 'just-events' ),
+			],
 		];
 
 		/**

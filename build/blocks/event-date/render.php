@@ -2,7 +2,7 @@
 
 namespace WPExplorer\Just_Events;
 
-$is_gutenberg =  defined( 'REST_REQUEST' ) && REST_REQUEST;
+$is_gutenberg = \defined( '\REST_REQUEST' ) && \REST_REQUEST;
 $event_id	  = \absint( $_GET['postId'] ?? $block->context['postId'] ?? $attributes['event'] ?? 0 );
 $event_id	  = $event_id ?: \get_the_ID();
 
@@ -42,5 +42,5 @@ if ( $is_gutenberg ) {
 		$wrapper_attributes[ 'class' ] = 'has-text-align-' . $attributes['textAlign'];
 	}
 
-	printf( '<div %s>%s</div>', get_block_wrapper_attributes( $wrapper_attributes ), $date );
+	\printf( '<div %s>%s</div>', \get_block_wrapper_attributes( $wrapper_attributes ), $date );
 }

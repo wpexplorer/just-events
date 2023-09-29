@@ -17,11 +17,41 @@ class Custom_Fields {
 	 * Initialize.
 	 */
 	public static function init(): void {
+		\add_action( 'init', [ self::class, 'register_post_meta' ] );
+		\add_action( 'enqueue_block_editor_assets', [ self::class, 'on_enqueue_block_editor_assets' ] );
 		\add_action( 'admin_init', [ self::class, 'on_admin_init' ] );
 	}
 
 	/**
-	 * Runs on the admin_init hook.
+	 * Register the meta fields.
+	 */
+	public static function register_post_meta(): void {
+		foreach ( self::get_fields() as $field ) {
+			\register_post_meta( Plugin::POST_TYPE, $field['id'], [
+				'show_in_rest'      => true,
+				'single'            => true,
+				'type'              => 'checkbox' === $field['type'] ? 'boolean' : 'string',
+				'sanitize_callback' => 'sanitize_text_field',
+			] );
+		}
+	}
+
+	/**
+	 * Runs on the "on_enqueue_block_editor_assets" hook.
+	 */
+	public static function on_enqueue_block_editor_assets(): void {
+		$plugin_dir = \untrailingslashit( \plugin_dir_url( JUST_EVENTS_PLUGIN_FILE ) );
+		wp_enqueue_script(
+			'just-events-', 
+			"{$plugin_dir}/build/custom-fields.js",
+			[ 'wp-edit-post' ],
+			false,
+			false
+		);
+	}
+
+	/**
+	 * Runs on the "admin_init" hook.
 	 */
 	public static function on_admin_init(): void {
 		if ( ! self::get_fields() ) {
@@ -51,7 +81,10 @@ class Custom_Fields {
 			[ self::class, 'render_meta_box' ],
 			Plugin::POST_TYPE,
 			'advanced',
-			'high'
+			'high',
+			[
+			//	'__back_compat_meta_box' => true, // this hides the metabox when using Gutenberg.
+			]
 		);
 	}
 
@@ -71,11 +104,11 @@ class Custom_Fields {
 	 * Enqueues the meta box scripts.
 	 */
 	private static function enqueue_meta_box_scripts(): void {
-		$asset_dir = \untrailingslashit( \plugin_dir_url( JUST_EVENTS_PLUGIN_FILE ) );
+		$plugin_dir = \untrailingslashit( \plugin_dir_url( JUST_EVENTS_PLUGIN_FILE ) );
 
 		\wp_enqueue_script(
 			'just-events-meta-box',
-			"{$asset_dir}/assets/js/admin/meta-box.js",
+			"{$plugin_dir}/assets/js/admin/meta-box.js",
 			[],
 			Plugin::VERSION,
 			true
@@ -83,7 +116,7 @@ class Custom_Fields {
 
 		\wp_enqueue_style(
 			'just-events-meta-box',
-			"{$asset_dir}/assets/css/admin/meta-box.css",
+			"{$plugin_dir}/assets/css/admin/meta-box.css",
 			[],
 			Plugin::VERSION,
 			'all'
@@ -124,7 +157,7 @@ class Custom_Fields {
 	 */
 	private static function render_meta_box_field( array $field, int $post_id ): void {
 		$field_id   = self::get_field_id( $field );
-		$input_type = self::get_field_type( $field_id );
+		$input_type = self::get_field_input_type( $field );
 		$value      = self::get_field_value( $post_id, $field_id );
 
 		if ( 'all_day' === $field_id ) {
@@ -195,15 +228,8 @@ class Custom_Fields {
 	/**
 	 * Returns a field type.
 	 */
-	private static function get_field_type( string $field_id ): string {
-		$type = 'text';
-		foreach ( self::get_fields() as $field ) {
-			if ( $field['id'] === $field_id ) {
-				$type = $field['type'] ?? 'text';
-				break;
-			}
-		}
-		return $type;
+	private static function get_field_input_type( array $field ): string {
+		return $field['type'] ?? 'text';
 	}
 
 	/**

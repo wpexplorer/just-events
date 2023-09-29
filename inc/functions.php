@@ -23,10 +23,10 @@ function is_archive(): bool {
 }
 
 /**
- * Returns the current date & time.
+ * Returns the formatted current date & time.
  */
 function get_current_date_time( string $timezone = '' ): string {
-	$datetime = new \DateTime( 'now', $timezone ?: \wp_timezone() );
+	$datetime = new \DateTimeImmutable( 'now', $timezone ?: \wp_timezone() );
 	return $datetime->format( 'Y-m-d H:i:s' );
 }
 
