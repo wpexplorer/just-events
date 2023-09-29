@@ -13,6 +13,8 @@
   border-radius: 4px;
   line-height: normal;
   padding: 0.375em 0.5em;
+  background: #999;
+  color: #fff;
 }
 .just-events-status-badge--ongoing {
   background: #BAF7D0;

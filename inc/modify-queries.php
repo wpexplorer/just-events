@@ -72,8 +72,16 @@ class Modify_Queries {
 	 */
 	private static function sort_events( $query, string $start_end = 'start', bool $addClause = true ): void {
 		$meta_key = "_just_events_{$start_end}_date";
+		$orderby = $query->get( 'orderby' );
 
-		$query->set( 'order', 'DESC' );
+		if ( $orderby && ! \in_array( $orderby, [ 'start_date', 'end_date' ] ) ) {
+			return;
+		}
+
+		if ( ! $query->get( 'orderby' ) ) {
+			$query->set( 'order', 'DESC' );
+		}
+
 		$query->set( 'orderby', 'meta_value date' );
 	//	$query->set( 'meta_key', $meta_key ); 
 

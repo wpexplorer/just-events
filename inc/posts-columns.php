@@ -19,6 +19,7 @@ final class Posts_Columns {
 	public static function init(): void {
 		\add_action( 'admin_enqueue_scripts', [ self::class, 'enqueue_admin_columns_css' ] );
 		\add_filter( 'manage_' . Plugin::POST_TYPE . '_posts_columns', [ self::class, 'register_admin_columns' ] );
+		\add_filter( 'manage_edit-' . Plugin::POST_TYPE . '_sortable_columns', [ self::class, 'sortable_columns' ], 10, 2 );
 		\add_filter( 'manage_' . Plugin::POST_TYPE . '_posts_custom_column', [ self::class, 'display_admin_columns' ], 10, 2 );
 	}
 
@@ -51,6 +52,16 @@ final class Posts_Columns {
 			'end_time'   => esc_html__( 'End Time', 'just-events' ),
 		] );
 	}
+	
+	/**
+	 * Register sortable admin columns.
+	 */
+	public static function sortable_columns( $columns ): array {
+		return \array_merge( $columns, [
+			'start_date' => 'start_date',
+			'end_date'   => 'end_date',
+		] );
+	}
 
 	/**
 	 * Display admin columns.
@@ -71,7 +82,8 @@ final class Posts_Columns {
 				break;
 			case 'all_day':
 				$dashicon = is_all_day_event( $post_id ) ? 'yes' : 'no-alt';
-				echo "<span class='dashicons dashicons-{$dashicon}'></span>";
+				$screen_text = 'yes' === $dashicon ? \esc_html__( 'yes', 'just-events' ) : \esc_html__( 'no', 'just-events' );
+				echo "<span class='dashicons dashicons-{$dashicon}' aria-hidden'true'></span><span class='screen-reader-text'>{$screen_text}</span>";
 				break;
 			case 'start_date':
 				echo ( $start_date = get_event_start_date( $post_id ) ) ? \esc_html( $start_date ) : '&dash;';
