@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Just Events WordPress Plugin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-29 13:09-0700\n"
+"POT-Creation-Date: 2023-09-29 15:00-0700\n"
 "PO-Revision-Date: 2016-08-09 12:06-0800\n"
 "Last-Translator: AJ Clarke <wpexplorer@gmail.com>\n"
 "Language-Team: WPExplorer.com\n"
@@ -23,10 +23,7 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-0: src\n"
 "X-Poedit-SearchPathExcluded-1: node_modules\n"
 
-#: build/blocks/event-date copy/render.php:33
-#: build/blocks/event-date/render.php:33
-#: build/blocks/event-status/render.php:33
-#: build/blocks/event-time/render.php:32
+#: build/blocks/event-date/render.php:33 build/blocks/event-time/render.php:32
 msgid "Event date undefined"
 msgstr ""
 
@@ -133,7 +130,7 @@ msgstr ""
 msgid "Default Link Text"
 msgstr ""
 
-#: inc/admin.php:121 inc/functions.php:72 inc/register-post-type.php:48
+#: inc/admin.php:121 inc/functions.php:82 inc/register-post-type.php:48
 msgid "View Event"
 msgstr ""
 
@@ -153,23 +150,23 @@ msgstr ""
 msgid "Event Settings"
 msgstr ""
 
-#: inc/custom-fields.php:186 inc/posts-columns.php:47
+#: inc/custom-fields.php:186 inc/posts-columns.php:48
 msgid "All Day Event?"
 msgstr ""
 
-#: inc/custom-fields.php:192 inc/posts-columns.php:48
+#: inc/custom-fields.php:192 inc/posts-columns.php:49
 msgid "Start Date"
 msgstr ""
 
-#: inc/custom-fields.php:198 inc/posts-columns.php:49
+#: inc/custom-fields.php:198 inc/posts-columns.php:50
 msgid "End Date"
 msgstr ""
 
-#: inc/custom-fields.php:204 inc/posts-columns.php:50
+#: inc/custom-fields.php:204 inc/posts-columns.php:51
 msgid "Start Time"
 msgstr ""
 
-#: inc/custom-fields.php:209 inc/posts-columns.php:51
+#: inc/custom-fields.php:209 inc/posts-columns.php:52
 msgid "End Time"
 msgstr ""
 
@@ -177,23 +174,46 @@ msgstr ""
 msgid "External Link"
 msgstr ""
 
-#: inc/functions.php:198
+#: inc/functions.php:248
 msgctxt "Adverb: Event Status"
 msgid "Past"
 msgstr ""
 
-#: inc/functions.php:200
+#: inc/functions.php:249
 msgctxt "Adverb: Event Status"
-msgid "Ongoin"
+msgid "Ongoing"
 msgstr ""
 
-#: inc/functions.php:202
+#: inc/functions.php:250
 msgctxt "Adverb: Event Status"
 msgid "Upcoming"
 msgstr ""
 
-#: inc/posts-columns.php:46
+#: inc/functions.php:251
+msgctxt "Adverb: Event Status"
+msgid "Undefined"
+msgstr ""
+
+#: inc/integration/post-types-unlimited.php:33
+msgid "Is an Event Archive?"
+msgstr ""
+
+#: inc/integration/post-types-unlimited.php:34
+msgid ""
+"Enable to apply the same sorting and hiding of past events to your taxonomy "
+"archives."
+msgstr ""
+
+#: inc/posts-columns.php:47
 msgid "Status"
+msgstr ""
+
+#: inc/posts-columns.php:85
+msgid "yes"
+msgstr ""
+
+#: inc/posts-columns.php:85
+msgid "no"
 msgstr ""
 
 #: inc/register-post-type.php:40

@@ -18,6 +18,7 @@ class Modify_Queries {
 	 */
 	public static function init(): void {
 		\add_action( 'pre_get_posts', [ self::class, 'on_pre_get_posts' ] );
+		\add_action( 'parse_query', [ self::class, 'on_parse_query' ] );
 	}
 
 	/**
@@ -65,6 +66,64 @@ class Modify_Queries {
 				self::hide_past_events( $query );
 			}
 		}
+	}
+
+	/**
+	 * This function runs on the "parse_query" hook.
+	 */
+	public static function on_parse_query( $query ) {
+		if ( ! is_admin()
+			|| ! $query->is_main_query()
+			|| Plugin::POST_TYPE !== $query->query['post_type']
+		) {
+			return $query;
+		}
+
+		if ( ! empty( $_REQUEST['event_status'] ) ) {
+			switch ( $_REQUEST['event_status'] ) {
+				case 'ongoing':
+					$clause = [
+						[
+							'key'     => '_just_events_start_date',
+							'value'   => get_current_date_time(),
+							'compare' => '<=',
+							'type'    => 'CHAR'
+						],
+						[
+							'key'     => '_just_events_end_date',
+							'value'   => get_current_date_time(),
+							'compare' => '>=',
+							'type'    => 'CHAR'
+						],
+					];
+					break;
+				case 'upcoming':
+					$clause = [
+						[
+							'key'     => '_just_events_start_date',
+							'value'   => get_current_date_time(),
+							'compare' => '>',
+							'type'    => 'CHAR'
+						],
+					];
+					break;
+				case 'past':
+					$clause = [
+						[
+							'key'     => '_just_events_end_date',
+							'value'   => get_current_date_time(),
+							'compare' => '<',
+							'type'    => 'CHAR'
+						],
+					];
+					break;
+			}
+			if ( isset( $clause ) ) {
+				self::add_meta_query_clause( $query, 'just_events_status_clause', $clause );
+			}
+		}
+
+		return $query;
 	}
 
 	/**

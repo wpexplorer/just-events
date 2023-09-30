@@ -21,6 +21,7 @@ final class Posts_Columns {
 		\add_filter( 'manage_' . Plugin::POST_TYPE . '_posts_columns', [ self::class, 'register_admin_columns' ] );
 		\add_filter( 'manage_edit-' . Plugin::POST_TYPE . '_sortable_columns', [ self::class, 'sortable_columns' ], 10, 2 );
 		\add_filter( 'manage_' . Plugin::POST_TYPE . '_posts_custom_column', [ self::class, 'display_admin_columns' ], 10, 2 );
+		\add_filter( 'restrict_manage_posts', [ self::class, 'admin_filters' ] );
 	}
 
 	/**
@@ -98,6 +99,26 @@ final class Posts_Columns {
 				echo ( $end_time = get_event_end_time( $post_id ) ) ? \esc_html( $end_time ) : '&dash;';
 				break;
 		}
+	}
+
+	/**
+	 * Custom admin filters.
+	 */
+	public static function admin_filters( $post_type ): void {
+		if( Plugin::POST_TYPE !== $post_type ){
+			return;
+		}
+
+		if ( isset( $_REQUEST['event_status'] ) ) {
+			$selected = $_REQUEST['event_status'];
+		}
+
+		echo '<select name="event_status">';
+			echo '<option value="">' . \esc_html__( 'All Event Statuses', 'just-events' ) . ' </option>';
+			foreach( get_event_statuses() as $k => $v ) {
+				echo '<option value="' . \esc_attr( $k ) . '"' . \selected( $k, $selected, false ) . '>' . \esc_html( $v ). ' </option>';
+			}
+		echo '</select>';
 	}
 
 }

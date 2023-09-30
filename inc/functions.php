@@ -245,10 +245,9 @@ function is_past_event( int $event = 0 ): bool {
  */
 function get_event_statuses(): array {
 	return [
-		'past'      => \_x( 'Past', 'Adverb: Event Status', 'just-events' ),
-		'ongoing'   => \_x( 'Ongoing', 'Adverb: Event Status', 'just-events' ),
-		'upcoming'  => \_x( 'Upcoming', 'Adverb: Event Status', 'just-events' ),
-		'undefined' => \_x( 'Undefined', 'Adverb: Event Status', 'just-events' ),
+		'past'     => \_x( 'Past', 'Adverb: Event Status', 'just-events' ),
+		'ongoing'  => \_x( 'Ongoing', 'Adverb: Event Status', 'just-events' ),
+		'upcoming' => \_x( 'Upcoming', 'Adverb: Event Status', 'just-events' ),
 	];
 }
 
@@ -263,7 +262,7 @@ function get_event_status( int $event = 0 ): string {
 	$end_date = get_event_end_date_raw( $event );
 
 	if ( ! $end_date ) {
-		return 'undefined';
+		return 'upcoming';
 	}
 
 	$current_date_time = get_current_date_time();
