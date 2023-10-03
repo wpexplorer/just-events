@@ -87,10 +87,10 @@ final class Posts_Columns {
 				echo "<span class='dashicons dashicons-{$dashicon}' aria-hidden'true'></span><span class='screen-reader-text'>{$screen_text}</span>";
 				break;
 			case 'start_date':
-				echo ( $start_date = get_event_start_date( $post_id ) ) ? \esc_html( $start_date ) : '&dash;';
+				echo ( $start_date = get_event_start_date( $post_id, false ) ) ? \esc_html( $start_date ) : '&dash;';
 				break;
 			case 'end_date':
-				echo ( $start_date = get_event_end_date( $post_id ) ) ? \esc_html( $start_date ) : '&dash;';
+				echo ( $start_date = get_event_end_date( $post_id, false ) ) ? \esc_html( $start_date ) : '&dash;';
 				break;
 			case 'start_time':
 				echo ( $start_time = get_event_start_time( $post_id ) ) ? \esc_html( $start_time ) : '&dash;';
