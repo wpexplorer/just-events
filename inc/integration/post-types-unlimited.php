@@ -31,7 +31,7 @@ final class Post_Types_Unlimited {
 			'fields' => [
 				[
 					'name' => \esc_html__( 'Is an Event Archive?', 'just-events' ),
-					'description' => \esc_html__( 'Enable to apply the same sorting and hiding of past events to your taxonomy archives.', 'just-events' ),
+					'desc' => \esc_html__( 'Enable to apply the same sorting and hiding of past events to your taxonomy archives.', 'just-events' ),
 					'id'   => 'just_events_is_archive',
 					'type' => 'checkbox',
 				]
