@@ -36,5 +36,6 @@
   },
   "dependencies": {
     "@wordpress/date": "^4.42.0"
-  }
+  },
+  "files": [ "*" ]
 }

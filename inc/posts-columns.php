@@ -45,12 +45,13 @@ final class Posts_Columns {
 	 */
 	public static function register_admin_columns( $columns ): array {
 		return \array_merge( $columns, [
-			'status'     => esc_html__( 'Status', 'just-events' ),
-			'all_day'    => esc_html__( 'All Day Event?', 'just-events' ),
-			'start_date' => esc_html__( 'Start Date', 'just-events' ),
-			'end_date'   => esc_html__( 'End Date', 'just-events' ),
-			'start_time' => esc_html__( 'Start Time', 'just-events' ),
-			'end_time'   => esc_html__( 'End Time', 'just-events' ),
+			'just_events_thumbnail'  => esc_html__( 'Thumbnail', 'just-events' ),
+			'just_events_status'     => esc_html__( 'Status', 'just-events' ),
+			'just_events_all_day'    => esc_html__( 'All Day Event?', 'just-events' ),
+			'just_events_start_date' => esc_html__( 'Start Date', 'just-events' ),
+			'just_events_end_date'   => esc_html__( 'End Date', 'just-events' ),
+			'just_events_start_time' => esc_html__( 'Start Time', 'just-events' ),
+			'just_events_end_time'   => esc_html__( 'End Time', 'just-events' ),
 		] );
 	}
 	
@@ -59,8 +60,8 @@ final class Posts_Columns {
 	 */
 	public static function sortable_columns( $columns ): array {
 		return \array_merge( $columns, [
-			'start_date' => 'start_date',
-			'end_date'   => 'end_date',
+			'just_events_start_date' => 'just_events_start_date',
+			'just_events_end_date'   => 'just_events_end_date',
 		] );
 	}
 
@@ -69,7 +70,7 @@ final class Posts_Columns {
 	 */
 	public static function display_admin_columns( $column_name, $post_id ): void {
 		switch ( $column_name ) {
-			case 'status':
+			case 'just_events_status':
 				$status = get_event_status_label( $post_id );
 				if ( \WP_Block_Type_Registry::get_instance()->is_registered( 'just-events/event-status' ) ) {
 					$parsed_block = [
@@ -81,21 +82,30 @@ final class Posts_Columns {
 					echo \render_block( $parsed_block );
 				}
 				break;
-			case 'all_day':
+			case 'just_events_thumbnail':
+				if ( \has_post_thumbnail( $post_id ) ) {
+					\the_post_thumbnail(
+						[ 60, 60 ],
+					);
+				} else {
+					echo '&#8212;';
+				}
+				break;
+			case 'just_events_all_day':
 				$dashicon = is_all_day_event( $post_id ) ? 'yes' : 'no-alt';
 				$screen_text = 'yes' === $dashicon ? \esc_html__( 'yes', 'just-events' ) : \esc_html__( 'no', 'just-events' );
 				echo "<span class='dashicons dashicons-{$dashicon}' aria-hidden'true'></span><span class='screen-reader-text'>{$screen_text}</span>";
 				break;
-			case 'start_date':
+			case 'just_events_start_date':
 				echo ( $start_date = get_event_start_date( $post_id, false ) ) ? \esc_html( $start_date ) : '&dash;';
 				break;
-			case 'end_date':
+			case 'just_events_end_date':
 				echo ( $start_date = get_event_end_date( $post_id, false ) ) ? \esc_html( $start_date ) : '&dash;';
 				break;
-			case 'start_time':
+			case 'just_events_start_time':
 				echo ( $start_time = get_event_start_time( $post_id ) ) ? \esc_html( $start_time ) : '&dash;';
 				break;
-			case 'end_time':
+			case 'just_events_end_time':
 				echo ( $end_time = get_event_end_time( $post_id ) ) ? \esc_html( $end_time ) : '&dash;';
 				break;
 		}

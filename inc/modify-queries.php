@@ -29,10 +29,10 @@ class Modify_Queries {
 			if ( isset( $_GET['post_type'] ) && Plugin::POST_TYPE === $_GET['post_type'] ) {
 				$orderby = $query->get( 'orderby' );
 				switch ( $orderby ) {
-					case 'end_date':
+					case 'just_events_end_date':
 						self::sort_events( $query, 'end' );
 						break;
-					case 'start_date':
+					case 'just_events_start_date':
 						self::sort_events( $query );
 						break;
 				}
@@ -131,13 +131,13 @@ class Modify_Queries {
 	 */
 	private static function sort_events( $query, string $start_end = 'start', bool $addClause = true ): void {
 		$meta_key = "_just_events_{$start_end}_date";
-		$orderby = $query->get( 'orderby' );
+		$orderby  = $query->get( 'orderby' );
 
-		if ( $orderby && ! \in_array( $orderby, [ 'start_date', 'end_date' ] ) ) {
+		if ( $orderby && ! \in_array( $orderby, [ 'just_events_start_date', 'just_events_end_date' ], true ) ) {
 			return;
 		}
 
-		if ( ! $query->get( 'orderby' ) ) {
+		if ( ! $query->get( 'order' ) ) {
 			$query->set( 'order', 'DESC' );
 		}
 
