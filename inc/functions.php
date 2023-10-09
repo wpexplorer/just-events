@@ -109,12 +109,12 @@ function get_event_date( int $event = 0, string $start_end = 'start', bool $disp
 
 	$date = Custom_Fields::get_field_value( $event, "{$start_end}_date", false );
 
-	if ( 'raw' === $format ) {
-		return $date;
-	}
-	
 	if ( ! $date || false === strtotime( $date ) ) {
 		return '';
+	}
+
+	if ( 'raw' === $format ) {
+		return $display_time ? $date : strtok( $date, ' ' );
 	}
 
 	if ( is_all_day_event( $event ) ) {
@@ -138,8 +138,8 @@ function get_event_start_date( int $event = 0, bool $display_time = true, string
 /**
  * Returns the raw event start date.
  */
-function get_event_start_date_raw( int $event = 0 ) {
-	return get_event_date( $event, 'start', true, 'raw' );
+function get_event_start_date_raw( int $event = 0, bool $include_time = true ) {
+	return get_event_date( $event, 'start', $include_time, 'raw' );
 }
 
 /**
@@ -157,8 +157,8 @@ function get_event_end_date( int $event = 0, bool $display_time = true, string $
 /**
  * Returns the raw event end date.
  */
-function get_event_end_date_raw( int $event = 0 ) {
-	return get_event_date( $event, 'end', true, 'raw' );
+function get_event_end_date_raw( int $event = 0, bool $include_time = true ) {
+	return get_event_date( $event, 'end', $include_time, 'raw' );
 }
 
 /**
@@ -313,13 +313,9 @@ function get_event_formatted_date( int $event = 0, array $args = [] ): string {
 	$start_date = '';
 	$end_date   = '';
 
-	// Get event data.
-	$is_all_day  = is_all_day_event( $event );
-	$is_same_day = is_same_day_event( $event );
-
-	if ( $is_same_day ) {
+	if ( is_same_day_event( $event ) ) {
 		$start_date = get_event_start_date( $event, false, $format );
-		if ( $is_all_day ) {
+		if ( is_all_day_event( $event ) ) {
 			$separator = '';
 		} else {
 			if ( $show_time ) {

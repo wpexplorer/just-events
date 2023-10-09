@@ -44,7 +44,7 @@ const customFields = ( { postType, postMeta, setPostMeta } ) => {
 	};
 
 	const onStartDateChange = ( value ) => {
-		if ( undefined !== postMeta._just_events_link && postMeta._just_events_all_day ) {
+		if ( undefined !== postMeta._just_events_all_day && postMeta._just_events_all_day ) {
 			value = setAllDayDate( 'start', value );
 		}
 		setPostMeta( { _just_events_start_date: value } );
@@ -56,10 +56,17 @@ const customFields = ( { postType, postMeta, setPostMeta } ) => {
 	};
 
 	const onEndDateChange = ( value ) => {
-		if ( undefined !== postMeta._just_events_link && postMeta._just_events_all_day ) {
+		if ( undefined !== postMeta._just_events_all_day && postMeta._just_events_all_day ) {
 			value = setAllDayDate( 'end', value );
+		} else {
+			const startDate = postMeta._just_events_start_date;
+			if ( ! startDate ) {
+				return;
+			} else if ( dateFormat( 'Y-m-d H:i:s', value ) < dateFormat( 'Y-m-d H:i:s', startDate ) ) {
+				value = startDate;
+			}
+			setPostMeta( { _just_events_end_date: value } );
 		}
-		setPostMeta( { _just_events_end_date: value } );
 	};
 
 	return(

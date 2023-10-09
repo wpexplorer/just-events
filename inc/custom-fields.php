@@ -36,8 +36,16 @@ class Custom_Fields {
 				'single'            => true,
 				'type'              => 'checkbox' === $field['type'] ? 'boolean' : 'string',
 				'sanitize_callback' => $field['sanitize_callback'],
+				'auth_callback'     => [ self::class, 'post_meta_auth_callback' ],
 			] );
 		}
+	}
+
+	/**
+	 * Callback function for th register_post_meta "auth_callback" argument.
+	 */
+	public static function post_meta_auth_callback(): bool {
+		return (bool) current_user_can( 'edit_posts' );
 	}
 
 	/**

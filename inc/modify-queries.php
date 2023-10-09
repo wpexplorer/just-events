@@ -50,7 +50,7 @@ class Modify_Queries {
 			$orderby_check = (bool) apply_filters( 'just_events/modify_queries/sort_events', $orderby_check, $query );
 
 			if ( $orderby_check ) {
-				self::sort_events( $query, 'start', ! (bool) get_option( 'hide_past_events', false ) );
+				self::sort_events( $query, 'start', ! (bool) get_option( 'hide_past_events', true ) );
 			}
 
 			/**
@@ -59,7 +59,7 @@ class Modify_Queries {
 			 * @param bool $check Whether to hide the past events.
 			 * @param object $query The WordPress query object.
 			 */
-			$hide_past_check = ( $is_event_archive || $query->is_search() ) && (bool) get_option( 'hide_past_events', false );
+			$hide_past_check = ( $is_event_archive || $query->is_search() ) && (bool) get_option( 'hide_past_events', true );
 			$hide_past_check = (bool) apply_filters( 'just_events/modify_queries/hide_past_events', $hide_past_check, $query );
 
 			if ( $hide_past_check ) {
@@ -138,11 +138,11 @@ class Modify_Queries {
 		}
 
 		if ( ! $query->get( 'order' ) ) {
-			$query->set( 'order', 'DESC' );
+			$order = wp_validate_boolean( get_option( 'hide_past_events', true ) ) ? 'ASC' : 'DESC';
+			$query->set( 'order', $order );
 		}
 
 		$query->set( 'orderby', 'meta_value date' );
-	//	$query->set( 'meta_key', $meta_key ); 
 
 		$clause = [
 			'relation' => 'OR',

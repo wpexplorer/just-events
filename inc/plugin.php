@@ -9,7 +9,7 @@ class Plugin {
 	/**
 	 * The plugin version.
 	 */
-	public const VERSION = '1.0.0';
+	public const VERSION = '1.0';
 
 	/**
 	 * The events post type name.

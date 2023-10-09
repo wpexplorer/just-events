@@ -5,7 +5,7 @@
  * Description: Adds an Event post type to your WordPress powered site.
  * Author: WPExplorer
  * Author URI: https://www.wpexplorer.com/
- * Version: 1.0.0
+ * Version: 1.0
  *
  * Text Domain: just-events
  * Domain Path: /languages/
@@ -36,6 +36,10 @@ if ( ! defined( 'JUST_EVENTS_PLUGIN_FILE' ) ) {
 function just_events_plugin_activation_hook() {
 	if ( ! get_option( 'just_events_flush_rewrite_rules_flag' ) ) {
 		add_option( 'just_events_flush_rewrite_rules_flag', true );
+	}
+	// Fixes issues with #https://core.trac.wordpress.org/ticket/21989
+	if ( ! get_option( 'just_events' ) ) {
+		add_option( 'just_events', [], false );
 	}
 }
 register_activation_hook( JUST_EVENTS_PLUGIN_FILE, 'just_events_plugin_activation_hook' );
