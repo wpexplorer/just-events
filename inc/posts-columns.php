@@ -36,7 +36,7 @@ final class Posts_Columns {
 			'just-events-post-status', 
 			\untrailingslashit( \plugin_dir_url( JUST_EVENTS_PLUGIN_FILE ) ) . '/assets/css/admin/posts-columns.css',
 			[],
-			\filemtime( plugin_dir_path( JUST_EVENTS_PLUGIN_FILE ) . '/assets/css/admin/posts-columns.css')
+			\filemtime( \plugin_dir_path( JUST_EVENTS_PLUGIN_FILE ) . '/assets/css/admin/posts-columns.css')
 		);
 	}
 

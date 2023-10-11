@@ -35,8 +35,9 @@ class Plugin {
 			require_once self::dir_path() . 'inc/posts-columns.php';
 		}
 
-		// Hooks.
 		\register_activation_hook( JUST_EVENTS_PLUGIN_FILE, [ self::class, 'on_activation' ] );
+		\register_deactivation_hook( JUST_EVENTS_PLUGIN_FILE, 'flush_rewrite_rules' );
+
 		\add_filter( 'block_categories_all', [ self::class, 'filter_block_categories_all' ], 10, 2 );
 		\add_action( 'init', [ self::class, 'on_init' ] );
 		\add_action( 'plugins_loaded', [ self::class, 'integrations' ] );
@@ -46,12 +47,17 @@ class Plugin {
 	 * Runs when the plugin is activated.
 	 */
 	public static function on_activation(): void {
+		if ( ! \get_option( 'just_events_flush_rewrite_rules_flag' ) ) {
+			\add_option( 'just_events_flush_rewrite_rules_flag', true );
+		}
+
+		// Fixes issues with #https://core.trac.wordpress.org/ticket/21989
+		if ( ! \get_option( 'just_events' ) ) {
+			\add_option( 'just_events', [], '', false );
+		}
 
 		// Make sure our post type is registered before flushing rewrite rules.
 		Register_Post_Type::init();
-
-		// Flush rewrite rules to prevent 404 errors.
-		\flush_rewrite_rules();
 	}
 
 	/**
@@ -70,7 +76,6 @@ class Plugin {
 			require_once self::dir_path() . 'inc/integration/post-types-unlimited.php';
 		}
 	}
-
 
 	/**
 	 * Register shortcodes.

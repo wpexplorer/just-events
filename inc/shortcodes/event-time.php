@@ -23,7 +23,7 @@ class Event_Time extends Shortcode_Abstract {
 	 * Callback function for the shortcode (aka the output).
 	 */
 	public static function callback( $atts = [] ): string {
-		$event_id = absint( $atts['event'] ?? get_the_ID() );
+		$event_id = \absint( $atts['event'] ?? \get_the_ID() );
 		if ( $event_id && $time = get_event_formatted_time( $event_id, (array) $atts ) ) {
 			return '<div class="just-events-time">' . $time . '</div>';
 		}

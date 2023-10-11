@@ -62,7 +62,7 @@ class Custom_Fields {
 			'just-events-custom-fields-plugin', 
 			\untrailingslashit( \plugin_dir_url( JUST_EVENTS_PLUGIN_FILE ) ) . '/build/custom-fields.js',
 			$assets['dependencies'] ?? [ 'wp-edit-post' ],
-			$assets['version'] ?? Plugin::VERSION
+			$assets['version'] ?? '1.0'
 		);
 	}
 
@@ -122,12 +122,13 @@ class Custom_Fields {
 	 */
 	private static function enqueue_meta_box_scripts(): void {
 		$plugin_dir = \untrailingslashit( \plugin_dir_url( JUST_EVENTS_PLUGIN_FILE ) );
+		$plugin_dir_path = \untrailingslashit( \plugin_dir_path( JUST_EVENTS_PLUGIN_FILE ) );
 
 		\wp_enqueue_script(
 			'just-events-meta-box',
 			"{$plugin_dir}/assets/js/admin/meta-box.js",
 			[],
-			Plugin::VERSION,
+			\filemtime( "{$plugin_dir_path}/assets/js/admin/meta-box.js" ),
 			true
 		);
 
@@ -135,7 +136,7 @@ class Custom_Fields {
 			'just-events-meta-box',
 			"{$plugin_dir}/assets/css/admin/meta-box.css",
 			[],
-			Plugin::VERSION,
+			\filemtime( "{$plugin_dir_path}/assets/css/admin/meta-box.css"  ),
 			'all'
 		);
 	}
@@ -349,6 +350,12 @@ class Custom_Fields {
 			// Get end date.
 			$end_date = ! empty( $_POST['just_events_end_date'] ) ? \sanitize_text_field( $_POST['just_events_end_date'] ) : $start_date;
 			$end_time = ! empty( $_POST['just_events_end_time'] ) ? \sanitize_text_field( $_POST['just_events_end_time'] ) : '23:59';
+
+			// If end date is before start date set the end date equal to the start date.
+			if ( $end_date < $start_date || ( $end_date === $start_date && $end_time < $start_time ) ) {
+				$end_date = $start_date;
+				$end_time = $start_time;
+			}
 
 			// Save dates.
 			\update_post_meta( $post_id, '_just_events_start_date', self::sanitize_date_for_db( $start_date . $start_time ) );

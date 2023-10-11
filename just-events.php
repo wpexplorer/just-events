@@ -31,25 +31,6 @@ if ( ! defined( 'JUST_EVENTS_PLUGIN_FILE' ) ) {
 }
 
 /**
- * Run on plugin activation.
- */
-function just_events_plugin_activation_hook() {
-	if ( ! get_option( 'just_events_flush_rewrite_rules_flag' ) ) {
-		add_option( 'just_events_flush_rewrite_rules_flag', true );
-	}
-	// Fixes issues with #https://core.trac.wordpress.org/ticket/21989
-	if ( ! get_option( 'just_events' ) ) {
-		add_option( 'just_events', [], false );
-	}
-}
-register_activation_hook( JUST_EVENTS_PLUGIN_FILE, 'just_events_plugin_activation_hook' );
-
-/**
- * Flush Rewrite rules on deactivation.
- */
-register_deactivation_hook( JUST_EVENTS_PLUGIN_FILE, 'flush_rewrite_rules' );
-
-/**
  * The magic starts here.
  */
 require_once plugin_dir_path( JUST_EVENTS_PLUGIN_FILE ) . 'inc/plugin.php';

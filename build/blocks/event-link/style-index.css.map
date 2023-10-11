@@ -1,0 +1,1 @@
+{"version":3,"file":"blocks/event-link/style-index.css","mappings":";;;AAAA;EACC;AACD,C","sources":["webpack://just-events/./src/blocks/event-link/style.scss"],"sourcesContent":[".wp-block-just-events-link__a {\n\tdisplay: inline-block;\n}\n"],"names":[],"sourceRoot":""}

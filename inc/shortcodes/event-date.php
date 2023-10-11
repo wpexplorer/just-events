@@ -23,7 +23,7 @@ class Event_Date extends Shortcode_Abstract {
 	 * Callback function for the shortcode (aka the output).
 	 */
 	public static function callback( $atts = [] ): string {
-		$event_id = absint( $atts['event'] ?? get_the_ID() );
+		$event_id = \absint( $atts['event'] ?? \get_the_ID() );
 		if ( $event_id && $date = get_event_formatted_date( $event_id, (array) $atts ) ) {
 			return '<div class="just-events-date">' . $date . '</div>';
 		}

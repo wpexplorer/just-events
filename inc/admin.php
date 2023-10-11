@@ -236,10 +236,10 @@ final class Admin {
 		\settings_errors( self::OPTION_NAME . '_mesages' );
 
 		\wp_enqueue_script(
-			'just-events-admin',
+			'just-events-admin-settings',
 			\untrailingslashit( \plugin_dir_url( JUST_EVENTS_PLUGIN_FILE ) ) . '/assets/js/admin/settings.js',
 			[],
-			Plugin::VERSION,
+			\filemtime( \plugin_dir_path( JUST_EVENTS_PLUGIN_FILE ) . '/assets/js/admin/settings.js' ),
 			true
 		);
 
