@@ -88,19 +88,18 @@ const customFields = ({
     }
   };
   const onEndDateChange = value => {
-    if (undefined !== postMeta._just_events_all_day && postMeta._just_events_all_day) {
-      value = setAllDayDate('end', value);
-    } else {
-      const startDate = postMeta._just_events_start_date;
-      if (!startDate) {
-        return;
-      } else if ((0,_wordpress_date__WEBPACK_IMPORTED_MODULE_2__.format)('Y-m-d H:i:s', value) < (0,_wordpress_date__WEBPACK_IMPORTED_MODULE_2__.format)('Y-m-d H:i:s', startDate)) {
-        value = startDate;
-      }
-      setPostMeta({
-        _just_events_end_date: value
-      });
+    const startDate = postMeta._just_events_start_date;
+    if (!startDate) {
+      return;
+    } else if ((0,_wordpress_date__WEBPACK_IMPORTED_MODULE_2__.format)('Y-m-d H:i:s', value) < (0,_wordpress_date__WEBPACK_IMPORTED_MODULE_2__.format)('Y-m-d H:i:s', startDate)) {
+      value = startDate;
     }
+    if (postMeta._just_events_all_day) {
+      value = setAllDayDate('end', value);
+    }
+    setPostMeta({
+      _just_events_end_date: value
+    });
   };
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_edit_post__WEBPACK_IMPORTED_MODULE_5__.PluginDocumentSettingPanel, {
     title: "Just Events",

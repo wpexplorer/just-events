@@ -28,13 +28,9 @@ if ( ! $event_id && $is_gutenberg ) {
 	$date = get_event_formatted_time( $event_id, $args ?: [] );
 }
 
-if ( ! $date ) {
-	$date = \esc_html__( 'Event date undefined', 'just-events' );
-}
-
 if ( $is_gutenberg ) {
-   echo $date;
-} else {
+   echo $date ?: \esc_html__( 'Event date undefined', 'just-events' );
+} elseif ( $date ) {
 	$wrapper_attributes = [];
 
 	if ( isset( $attributes['textAlign'] ) ) {

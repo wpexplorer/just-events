@@ -40,14 +40,20 @@ class Modify_Queries {
 		} elseif ( $query->is_main_query() ) {
 			$is_event_archive = is_archive();
 
+			// Modifies the number of posts_per_page for event archives.
+			if ( $is_event_archive && $posts_per_page = get_option( 'posts_per_page' ) ) {
+				if ( \is_numeric( $posts_per_page ) ) {
+					$query->set( 'posts_per_page', (int) $posts_per_page );
+				}
+			}
+
 			/**
 			 * Filters whether the posts should be sorted by date.
 			 * 
 			 * @param bool $check Whether to hide the past events.
 			 * @param object $query The WordPress query object.
 			 */
-			$orderby_check = $is_event_archive || ( $query->is_search() && 'just_event' === \get_query_var( 'post_type' ) );
-			$orderby_check = (bool) apply_filters( 'just_events/modify_queries/sort_events', $orderby_check, $query );
+			$orderby_check = (bool) apply_filters( 'just_events/modify_queries/sort_events', $is_event_archive, $query );
 
 			if ( $orderby_check ) {
 				self::sort_events( $query, 'start', ! (bool) get_option( 'hide_past_events', true ) );

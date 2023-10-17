@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Just Events WordPress Plugin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-09 15:29-0700\n"
+"POT-Creation-Date: 2023-10-16 19:26-0700\n"
 "PO-Revision-Date: 2016-08-09 12:06-0800\n"
 "Last-Translator: AJ Clarke <wpexplorer@gmail.com>\n"
 "Language-Team: WPExplorer.com\n"
@@ -23,10 +23,6 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-0: src\n"
 "X-Poedit-SearchPathExcluded-1: node_modules\n"
 
-#: build/blocks/event-date/render.php:33 build/blocks/event-time/render.php:32
-msgid "Event date undefined"
-msgstr ""
-
 #: inc/admin.php:48
 msgid "Enable Archive"
 msgstr ""
@@ -36,8 +32,8 @@ msgid "Enables the automatic archive page for the Events post type."
 msgstr ""
 
 #: inc/admin.php:52 inc/admin.php:60 inc/admin.php:68 inc/admin.php:76
-#: inc/admin.php:83 inc/admin.php:90 inc/admin.php:98 inc/admin.php:107
-#: inc/admin.php:115 inc/admin.php:123
+#: inc/admin.php:84 inc/admin.php:91 inc/admin.php:98 inc/admin.php:106
+#: inc/admin.php:115 inc/admin.php:123 inc/admin.php:131
 msgid "General"
 msgstr ""
 
@@ -71,78 +67,88 @@ msgid "The custom slug for your single events."
 msgstr ""
 
 #: inc/admin.php:80
+msgid "Events Per Page"
+msgstr ""
+
+#: inc/admin.php:83
+msgid ""
+"How many events to display on a per paginated page basis. The default value "
+"is defined under Settings > Reading > Blog pages show at most."
+msgstr ""
+
+#: inc/admin.php:88
 msgid "Date Format"
 msgstr ""
 
-#: inc/admin.php:82
+#: inc/admin.php:90
 msgid ""
 "Enter a custom date format to use for your formatted event date. Leave empty "
 "to use your WordPress defined date format."
 msgstr ""
 
-#: inc/admin.php:82 inc/admin.php:89 inc/admin.php:106
+#: inc/admin.php:90 inc/admin.php:97 inc/admin.php:114
 #, php-format
 msgid "%sDocumentation on date and time formatting%s"
 msgstr ""
 
-#: inc/admin.php:87
+#: inc/admin.php:95
 msgid "Time Format"
 msgstr ""
 
-#: inc/admin.php:89
+#: inc/admin.php:97
 msgid ""
 "Enter a custom date format to use for your formatted event time. Leave empty "
 "to use your WordPress defined time format."
 msgstr ""
 
-#: inc/admin.php:94
+#: inc/admin.php:102
 msgid "Date Separator"
 msgstr ""
 
-#: inc/admin.php:97
+#: inc/admin.php:105
 msgid ""
 "Separator used in the formatted event date between the start and end dates "
 "(include empty spaces if needed). Enter &lt;br&gt; to place the start and "
 "end dates on different lines."
 msgstr ""
 
-#: inc/admin.php:103
+#: inc/admin.php:111
 msgid "Time Prefix"
 msgstr ""
 
-#: inc/admin.php:106
+#: inc/admin.php:114
 msgid ""
 "Prefix shown before the event date time. Important: Value must use proper "
 "string formatting."
 msgstr ""
 
-#: inc/admin.php:111
+#: inc/admin.php:119
 msgid "Time Separator"
 msgstr ""
 
-#: inc/admin.php:114
+#: inc/admin.php:122
 msgid ""
 "Separator used when displaying only the event time between the start and end "
 "times (include empty spaces if needed)."
 msgstr ""
 
-#: inc/admin.php:119
+#: inc/admin.php:127
 msgid "Default Link Text"
 msgstr ""
 
-#: inc/admin.php:121 inc/functions.php:82 inc/register-post-type.php:48
+#: inc/admin.php:129 inc/functions.php:82 inc/register-post-type.php:48
 msgid "View Event"
 msgstr ""
 
-#: inc/admin.php:122
+#: inc/admin.php:130
 msgid "Enter the default text for the event link block."
 msgstr ""
 
-#: inc/admin.php:142
+#: inc/admin.php:150
 msgid "Settings"
 msgstr ""
 
-#: inc/admin.php:231
+#: inc/admin.php:239
 msgid "Settings Saved"
 msgstr ""
 
@@ -150,27 +156,27 @@ msgstr ""
 msgid "Event Settings"
 msgstr ""
 
-#: inc/custom-fields.php:194 inc/posts-columns.php:50
+#: inc/custom-fields.php:195 inc/posts-columns.php:50
 msgid "All Day Event?"
 msgstr ""
 
-#: inc/custom-fields.php:200 inc/posts-columns.php:51
+#: inc/custom-fields.php:201 inc/posts-columns.php:51
 msgid "Start Date"
 msgstr ""
 
-#: inc/custom-fields.php:206 inc/posts-columns.php:52
+#: inc/custom-fields.php:207 inc/posts-columns.php:52
 msgid "End Date"
 msgstr ""
 
-#: inc/custom-fields.php:212 inc/posts-columns.php:53
+#: inc/custom-fields.php:213 inc/posts-columns.php:53
 msgid "Start Time"
 msgstr ""
 
-#: inc/custom-fields.php:217 inc/posts-columns.php:54
+#: inc/custom-fields.php:218 inc/posts-columns.php:54
 msgid "End Time"
 msgstr ""
 
-#: inc/custom-fields.php:222
+#: inc/custom-fields.php:223
 msgid "External Link"
 msgstr ""
 

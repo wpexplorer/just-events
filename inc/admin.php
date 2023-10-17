@@ -56,7 +56,7 @@ final class Admin {
 				'label'       => \__( 'Hide Past Events', 'just-events' ),
 				'type'        => 'checkbox',
 				'default'     => true,
-				'description' => \sprintf( \__( 'Check to hide all past events from archives.%sImportant%s: This option will only hide past events from the event archives and event based search results. It will not hide any events displayed by 3rd party themes or plugins.', 'just-events' ), '<br><strong>', '</strong>' ),
+				'description' => \sprintf( \__( 'Check to hide all past events from archives.%sImportant%s: This option will only hide past events from the event archives and event based search results. It will not hide any events displayed by 3rd party themes or plugins. And if your site is using any form of caching you may want to exclude your event archives from caching or make sure to clear your cache manually as events expire or every so often.', 'just-events' ), '<br><strong>', '</strong>' ),
 				'tab'         => \__( 'General', 'just-events' ),
 			],
 			[
@@ -73,6 +73,14 @@ final class Admin {
 				'type'        => 'text',
 				'placeholder' => 'event',
 				'description' => \__( 'The custom slug for your single events.', 'just-events' ),
+				'tab'         => \__( 'General', 'just-events' ),
+			],
+			[
+				'id'          => 'posts_per_page',
+				'label'       => \__( 'Events Per Page', 'just-events' ),
+				'type'        => 'text',
+				'placeholder' => \get_option( 'posts_per_page', 10 ),
+				'description' => \__( 'How many events to display on a per paginated page basis. The default value is defined under Settings > Reading > Blog pages show at most.', 'just-events' ),
 				'tab'         => \__( 'General', 'just-events' ),
 			],
 			[
