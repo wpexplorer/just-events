@@ -7,7 +7,7 @@ use WPExplorer\Just_Events\Custom_Fields;
 \defined( 'ABSPATH' ) || exit;
 
 /**
- * Returns plugin option value.
+ * Returns a plugin option value.
  */
 function get_option( string $key, $default_value = '' ) {
 	return \get_option( 'just_events' )[ $key ] ?? $default_value;
@@ -18,9 +18,12 @@ function get_option( string $key, $default_value = '' ) {
  * 
  * This is useful if you are registering custom taxonomies and want to apply
  * the same sorting and hiding of past events to your archive.
+ *
+ * Note: is_post_type_archive() may true on is_search() but FSE themes don't actually use the
+ * post type archive template for search results hence the added ! is_search() check.
  */
 function is_archive(): bool {
-	$check = \is_post_type_archive( 'just_event' );
+	$check = \is_post_type_archive( 'just_event' ) && ! is_search();
 	
 	/**
 	 * Filters whether the current page is a Just Events archive.

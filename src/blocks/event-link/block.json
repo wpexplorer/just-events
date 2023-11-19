@@ -9,7 +9,7 @@
     "keywords": [ "event", "link" ],
     "usesContext": [ "postId" ],
     "attributes": {
-        "style": {
+        "design": {
 			"type": "string",
             "default": "none"
 		},

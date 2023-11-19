@@ -23,37 +23,5 @@ registerBlockType( metadata.name, {
 	/**
 	 * @see ./edit.js
 	 */
-	edit: Edit,
-	transforms: {
-		from: [ {
-			type: 'shortcode',
-			tag: 'je_event_date',
-			attributes: {
-				showTime: {
-					type: 'boolean',
-					shortcode: ( { named: { show_time } } ) => {
-						return 'true' === show_time;
-					},
-				},
-				startEnd: {
-					type: 'string',
-					shortcode: ( { named: { start_end } } ) => {
-						return start_end;
-					},
-				},
-				format: {
-					type: 'string',
-					shortcode: ( { format: { format } } ) => {
-						return format;
-					},
-				},
-				separator: {
-					type: 'string',
-					shortcode: ( { named: { separator } } ) => {
-						return separator;
-					},
-				},
-			}
-		} ]
-	}
+	edit: Edit
 } );

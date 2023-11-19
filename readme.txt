@@ -4,15 +4,15 @@ Donate link: https://www.wpexplorer.com/donate/
 Tags: events, event
 Requires at least: 6.0
 Requires PHP: 8.0
-Tested up to: 6.3.1
+Tested up to: 6.3
 Stable Tag: 1.0
 License: GNU Version 2 or Any Later Version.
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
 == Description ==
 The Just Events plugin registers a new event post type to your WordPress site for easily adding events. The plugin is intended to provide only the basic functionality to add event posts to your site for those looking for a very minimal solution without all the extra bloat of "traditional" event plugins. For this reason you won't find features like calendars, repeating events, tons of shortcodes, custom templates, etc.
 
-This plugin works best with a "full site editing" block theme so you can easily create your archives and single event templates using the included Event Date, Event Time, Event Status and Event Link blocks or with a compatible classic WordPress theme such as our Total theme which includes built-in integration (dynamic templates, custom cards, custom overlays, etc).
+This plugin works best with a "Full Site Editing" block theme so you can easily create your archives and single event templates using the included Event Date, Event Time, Event Status and Event Link blocks or with a compatible Classic WordPress theme such as our Total theme.
 
 == Features ==
 
@@ -41,8 +41,8 @@ This plugin works best with a "full site editing" block theme so you can easily 
 = Is the Just Events Plugin Free? =
 Yes. The plugin is completely free of charge under the GPL license.
 
-= If there a premium version? =
-No. We may consider creating addon plugins in the future but the base plugin will always be free.
+= Is there a premium version? =
+No.
 
 = Will the plugin work with my theme? =
 Just Events should work with any theme, however, not all themes may have a system to easily display your events. The plugin works best with FSE (Full Site Editing) block themes or classic theme's that include built-in integration (ask the theme developer).

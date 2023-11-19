@@ -25,7 +25,7 @@ import './editor.scss';
 import metadata from './block.json';
 
 export default function Edit( { context, attributes, setAttributes } ) {
-	const { text, style, targetBlank } = attributes;
+	const { text, design, targetBlank } = attributes;
 
 	const blockProps = useBlockProps();
 
@@ -40,9 +40,9 @@ export default function Edit( { context, attributes, setAttributes } ) {
 		<InspectorControls>
 			<PanelBody>
 				<ToggleGroupControl
-					label={ __( 'Style', 'just-events' ) }
-					value={ style }
-					onChange={ style => { setAttributes( { style } ) } }
+					label={ __( 'Design', 'just-events' ) }
+					value={ design }
+					onChange={ design => { setAttributes( { design } ) } }
 					isBlock
 				>
 					<ToggleGroupControlOption
