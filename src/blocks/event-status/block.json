@@ -8,6 +8,11 @@
     "description": "Displays the current event status.",
     "keywords": [ "event", "status" ],
     "usesContext": [ "postId" ],
+    "attributes": {
+        "textAlign": {
+			"type": "string"
+		}
+    },
     "supports": {
         "customClassName": true,
         "typography": {

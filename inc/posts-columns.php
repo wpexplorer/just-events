@@ -28,7 +28,10 @@ final class Posts_Columns {
 	 * Enqueues css for the admin columns.
 	 */
 	public static function enqueue_admin_columns_css( $hook ): void {
-		if ( 'edit.php' !== $hook || ! isset( $_GET['post_type'] ) || Plugin::POST_TYPE !== $_GET['post_type'] ) {
+		if ( 'edit.php' !== $hook
+			|| ! isset( $_GET['post_type'] )
+			|| Plugin::POST_TYPE !== \sanitize_text_field( $_GET['post_type'] )
+		) {
 			return;
 		}
 
@@ -115,13 +118,11 @@ final class Posts_Columns {
 	 * Custom admin filters.
 	 */
 	public static function admin_filters( $post_type ): void {
-		if( Plugin::POST_TYPE !== $post_type ){
+		if ( Plugin::POST_TYPE !== $post_type ){
 			return;
 		}
 
-		if ( isset( $_REQUEST['event_status'] ) ) {
-			$selected = $_REQUEST['event_status'];
-		}
+		$selected = isset( $_REQUEST['event_status'] ) ? \sanitize_text_field( $_REQUEST['event_status'] ) : '';
 
 		echo '<select name="event_status">';
 			echo '<option value="">' . \esc_html__( 'All Event Statuses', 'just-events' ) . ' </option>';

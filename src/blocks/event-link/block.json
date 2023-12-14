@@ -9,6 +9,9 @@
     "keywords": [ "event", "link" ],
     "usesContext": [ "postId" ],
     "attributes": {
+        "textAlign": {
+			"type": "string"
+		},
         "design": {
 			"type": "string",
             "default": "none"

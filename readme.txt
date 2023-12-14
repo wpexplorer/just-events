@@ -4,8 +4,8 @@ Donate link: https://www.wpexplorer.com/donate/
 Tags: events, event
 Requires at least: 6.0
 Requires PHP: 8.0
-Tested up to: 6.3
-Stable Tag: 1.0
+Tested up to: 6.4
+Stable Tag: 1.0.1
 License: GNU Version 2 or Any Later Version.
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -61,6 +61,12 @@ By default the event posts will take on the default post template layout of your
 If you are using a classic WordPress theme you will need to contact the theme developer and ask how to modify the layout as this will be dependent on the theme you are using.
 
 == Changelog ==
+
+= 1.0.1 =
+
+* Updated the "Tested up to" value.
+* Updated code to use late escaping for variables.
+* Added alignment options added to the "Event Status" and "Event Link" blocks.
 
 = 1.0 =
 

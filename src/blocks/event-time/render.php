@@ -3,8 +3,8 @@
 namespace WPExplorer\Just_Events;
 
 $is_gutenberg = \defined( '\REST_REQUEST' ) && \REST_REQUEST;
-$event_id	  = \absint( $_GET['postId'] ?? $block->context['postId'] ?? $attributes['event'] ?? 0 );
-$event_id	  = $event_id ?: \get_the_ID();
+$event_id	  = \sanitize_text_field( $_GET['postId'] ?? $block->context['postId'] ?? $attributes['event'] ?? 0 );
+$event_id	  = \absint( $event_id ?: \get_the_ID() );
 
 $args = [
 	'format'    => $attributes['format'] ?? '',
@@ -28,8 +28,27 @@ if ( ! $event_id && $is_gutenberg ) {
 	$date = get_event_formatted_time( $event_id, $args ?: [] );
 }
 
+$allowed_html = [
+	'br'     => [],
+	'strong' => [],
+	'div' => [
+		'class' => [],
+		'title' => [],
+		'style' => [],
+	],
+	'span' => [
+		'class' => [],
+		'title' => [],
+		'style' => [],
+	],
+];
+
 if ( $is_gutenberg ) {
-   echo $date ?: \esc_html__( 'Event date undefined', 'just-events' );
+	if ( $date ) {
+		echo wp_kses( $date, $allowed_html );
+	} else {
+		\esc_html_e( 'Event date undefined', 'just-events' );
+	}
 } elseif ( $date ) {
 	$wrapper_attributes = [];
 
@@ -37,5 +56,9 @@ if ( $is_gutenberg ) {
 		$wrapper_attributes['class'] = 'has-text-align-' . \sanitize_html_class( $attributes['textAlign'] );
 	}
 
-	\printf( '<div %s>%s</div>', \get_block_wrapper_attributes( $wrapper_attributes ), $date );
+	\printf(
+		'<div %s>%s</div>',
+		\get_block_wrapper_attributes( $wrapper_attributes ),
+		wp_kses( $date, $allowed_html )
+	);
 }

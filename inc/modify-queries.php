@@ -26,7 +26,7 @@ class Modify_Queries {
 	 */
 	public static function on_pre_get_posts( $query ): void {
 		if ( \is_admin() ) {
-			if ( isset( $_GET['post_type'] ) && Plugin::POST_TYPE === $_GET['post_type'] ) {
+			if ( isset( $_GET['post_type'] ) && Plugin::POST_TYPE === \sanitize_text_field( $_GET['post_type'] ) ) {
 				$orderby = $query->get( 'orderby' );
 				switch ( $orderby ) {
 					case 'just_events_end_date':
@@ -86,7 +86,7 @@ class Modify_Queries {
 		}
 
 		if ( ! empty( $_REQUEST['event_status'] ) ) {
-			switch ( $_REQUEST['event_status'] ) {
+			switch ( \sanitize_text_field( $_REQUEST['event_status'] ) ) {
 				case 'ongoing':
 					$clause = [
 						[
@@ -124,6 +124,7 @@ class Modify_Queries {
 					];
 					break;
 			}
+
 			if ( isset( $clause ) ) {
 				self::add_meta_query_clause( $query, 'just_events_status_clause', $clause );
 			}

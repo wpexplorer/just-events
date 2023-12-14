@@ -5,7 +5,7 @@
  * Description: Adds an Event post type to your WordPress powered site.
  * Author: WPExplorer
  * Author URI: https://www.wpexplorer.com/
- * Version: 1.0
+ * Version: 1.0.1
  *
  * Text Domain: just-events
  * Domain Path: /languages/

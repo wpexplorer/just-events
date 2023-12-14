@@ -324,7 +324,7 @@ class Custom_Fields {
 		}
 
 		// Verify that the nonce is valid.
-		if ( ! \wp_verify_nonce( $_POST['just_events_meta_box_nonce' ], 'just_events_meta_box_action' ) ) {
+		if ( ! \wp_verify_nonce( \sanitize_text_field( $_POST['just_events_meta_box_nonce' ] ), 'just_events_meta_box_action' ) ) {
 			return;
 		}
 

@@ -205,7 +205,7 @@ final class Admin {
 			}
 		}
 		if ( isset( $_POST['je_admin_flush_rewrite_rules'] )
-			&& 1 === (int) $_POST['je_admin_flush_rewrite_rules']
+			&& 1 === (int) sanitize_text_field( $_POST['je_admin_flush_rewrite_rules'] )
 		) {
 			add_option( 'just_events_flush_rewrite_rules_flag', true );
 		}
@@ -296,10 +296,15 @@ final class Admin {
 
 		<h2 class="nav-tab-wrapper just-events-admin-tabs"><?php
 			$first_tab = true;
-			foreach ( $tabs as $id => $label ) {?>
-				<a href="#" data-tab="<?php echo \esc_attr( $id ); ?>" class="nav-tab<?php echo $first_tab ? ' nav-tab-active' : ''; ?>"><?php echo \ucfirst( \esc_html( $label ) ); ?></a>
+			foreach ( $tabs as $id => $label ) {
+				$class = 'nav-tab';
+				if ( $first_tab ) {
+					$class .= ' nav-tab-active';
+					$first_tab = false;
+				}
+				?>
+				<a href="#" data-tab="<?php echo \esc_attr( $id ); ?>" class="<?php echo \esc_attr( $class ); ?>"><?php echo \ucfirst( \esc_html( $label ) ); ?></a>
 				<?php
-				$first_tab = false;
 			}
 		?></h2>
 

@@ -25,9 +25,13 @@ import './editor.scss';
 import metadata from './block.json';
 
 export default function Edit( { context, attributes, setAttributes } ) {
-	const { text, design, targetBlank } = attributes;
+	const { text, design, targetBlank, textAlign } = attributes;
 
-	const blockProps = useBlockProps();
+	const blockProps = useBlockProps( {
+		className: classnames( {
+			[ `has-text-align-${ textAlign }` ]: textAlign,
+		} ),
+	} );
 
 	// Provides fix for known issue: https://github.com/WordPress/gutenberg/issues/34882
 	let urlQueryArgs = {};
@@ -77,6 +81,14 @@ export default function Edit( { context, attributes, setAttributes } ) {
 		</InspectorControls>
 
 		<div { ...blockProps }>
+			<BlockControls>
+				<AlignmentToolbar
+					value={ textAlign }
+					onChange={ ( newAlign ) =>
+						setAttributes( { textAlign: newAlign } )
+					}
+				/>
+			</BlockControls>
 			<ServerSideRender
 				block="just-events/event-link"
 				attributes={ attributes }

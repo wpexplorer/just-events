@@ -13,6 +13,11 @@
   "usesContext": [
     "postId"
   ],
+  "attributes": {
+    "textAlign": {
+      "type": "string"
+    }
+  },
   "supports": {
     "customClassName": true,
     "typography": {
