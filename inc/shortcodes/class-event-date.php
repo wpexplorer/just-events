@@ -1,18 +1,20 @@
 <?php declare(strict_types=1);
 
-namespace WPExplorer\Just_Events\Shortcodes;
+namespace Just_Events\Shortcodes;
 
-use WPExplorer\Just_Events\Shortcode_Abstract;
-use function WPExplorer\Just_Events\get_event_formatted_date;
+use Just_Events\Shortcode_Abstract;
+use function Just_Events\get_event_formatted_date;
 
-\defined( 'ABSPATH' ) || exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly
+}
 
 class Event_Date extends Shortcode_Abstract {
 
 	/**
 	 * Shortcode tag (name).
 	 */
-	public const TAG = 'je_event_date';
+	public const TAG = 'just_events_event_date';
 
 	/**
 	 * Static-only class.

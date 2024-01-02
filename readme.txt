@@ -2,11 +2,11 @@
 Contributors: WPExplorer
 Donate link: https://www.wpexplorer.com/donate/
 Tags: events, event
-Requires at least: 6.0
+Requires at least: 6.3
 Requires PHP: 8.0
 Tested up to: 6.4
-Stable Tag: 1.0.1
-License: GNU Version 2 or Any Later Version.
+Stable Tag: 1.0.2
+License: GPL v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
 == Description ==
@@ -61,6 +61,12 @@ By default the event posts will take on the default post template layout of your
 If you are using a classic WordPress theme you will need to contact the theme developer and ask how to modify the layout as this will be dependent on the theme you are using.
 
 == Changelog ==
+
+= 1.0.2 =
+
+* Updated namespace from WPExplorer/Just_Events to Just_Events.
+* Updated some code to use late escaping for variables.
+* Added License and License URI to main plugin file.
 
 = 1.0.1 =
 

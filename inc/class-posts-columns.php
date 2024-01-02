@@ -1,10 +1,12 @@
 <?php declare(strict_types=1);
 
-namespace WPExplorer\Just_Events;
+namespace Just_Events;
 
-use WPExplorer\Just_Events\Plugin;
+use Just_Events\Plugin;
 
-\defined( 'ABSPATH' ) || exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly
+}
 
 final class Posts_Columns {
 
@@ -21,26 +23,24 @@ final class Posts_Columns {
 		\add_filter( 'manage_' . Plugin::POST_TYPE . '_posts_columns', [ self::class, 'register_admin_columns' ] );
 		\add_filter( 'manage_edit-' . Plugin::POST_TYPE . '_sortable_columns', [ self::class, 'sortable_columns' ], 10, 2 );
 		\add_filter( 'manage_' . Plugin::POST_TYPE . '_posts_custom_column', [ self::class, 'display_admin_columns' ], 10, 2 );
-		\add_filter( 'restrict_manage_posts', [ self::class, 'admin_filters' ] );
+		\add_filter( 'restrict_manage_posts', [ self::class, 'admin_filters' ], 10, 2 );
 	}
 
 	/**
 	 * Enqueues css for the admin columns.
 	 */
-	public static function enqueue_admin_columns_css( $hook ): void {
-		if ( 'edit.php' !== $hook
-			|| ! isset( $_GET['post_type'] )
-			|| Plugin::POST_TYPE !== \sanitize_text_field( $_GET['post_type'] )
-		) {
-			return;
+	public static function enqueue_admin_columns_css( $hook_suffix ): void {
+		if ( 'edit.php' === $hook_suffix ) {
+			$screen = \get_current_screen();
+			if ( \is_object( $screen ) && isset( $screen->post_type ) && Plugin::POST_TYPE === $screen->post_type ) {
+				wp_enqueue_style(
+					'just-events-post-status', 
+					\untrailingslashit( \plugin_dir_url( JUST_EVENTS_PLUGIN_FILE ) ) . '/assets/css/admin/posts-columns.css',
+					[],
+					\filemtime( \plugin_dir_path( JUST_EVENTS_PLUGIN_FILE ) . '/assets/css/admin/posts-columns.css')
+				);
+			}
 		}
-
-		wp_enqueue_style(
-			'just-events-post-status', 
-			\untrailingslashit( \plugin_dir_url( JUST_EVENTS_PLUGIN_FILE ) ) . '/assets/css/admin/posts-columns.css',
-			[],
-			\filemtime( \plugin_dir_path( JUST_EVENTS_PLUGIN_FILE ) . '/assets/css/admin/posts-columns.css')
-		);
 	}
 
 	/**
@@ -96,8 +96,14 @@ final class Posts_Columns {
 				break;
 			case 'just_events_all_day':
 				$dashicon = is_all_day_event( $post_id ) ? 'yes' : 'no-alt';
-				$screen_text = 'yes' === $dashicon ? \esc_html__( 'yes', 'just-events' ) : \esc_html__( 'no', 'just-events' );
-				echo "<span class='dashicons dashicons-{$dashicon}' aria-hidden'true'></span><span class='screen-reader-text'>{$screen_text}</span>";
+				echo '<span class="dashicons dashicons-'. esc_attr( sanitize_html_class( $dashicon ) ) . '" aria-hidden="true"></span>';
+				echo '<span class="screen-reader-text">';
+					if ( 'yes' === $dashicon ) {
+						\esc_html_e( 'yes', 'just-events' );
+					} else {
+						\esc_html_e( 'no', 'just-events' );
+					}
+				echo '</span>';
 				break;
 			case 'just_events_start_date':
 				echo ( $start_date = get_event_start_date( $post_id, false ) ) ? \esc_html( $start_date ) : '&dash;';
@@ -117,14 +123,14 @@ final class Posts_Columns {
 	/**
 	 * Custom admin filters.
 	 */
-	public static function admin_filters( $post_type ): void {
-		if ( Plugin::POST_TYPE !== $post_type ){
+	public static function admin_filters( $post_type, $which ): void {
+		if ( 'top' !== $which || Plugin::POST_TYPE !== $post_type ) {
 			return;
 		}
 
-		$selected = isset( $_REQUEST['event_status'] ) ? \sanitize_text_field( $_REQUEST['event_status'] ) : '';
+		$selected = isset( $_REQUEST['just_events_status'] ) ? \sanitize_text_field( $_REQUEST['just_events_status'] ) : '';
 
-		echo '<select name="event_status">';
+		echo '<select name="just_events_status">';
 			echo '<option value="">' . \esc_html__( 'All Event Statuses', 'just-events' ) . ' </option>';
 			foreach( get_event_statuses() as $k => $v ) {
 				echo '<option value="' . \esc_attr( $k ) . '"' . \selected( $k, $selected, false ) . '>' . \esc_html( $v ). ' </option>';

@@ -1,10 +1,12 @@
 <?php declare(strict_types=1);
 
-namespace WPExplorer\Just_Events;
+namespace Just_Events;
 
-use WPExplorer\Just_Events\Plugin;
+use Just_Events\Plugin;
 
-\defined( 'ABSPATH' ) || exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly
+}
 
 final class Admin {
 
@@ -194,6 +196,7 @@ final class Admin {
 	public static function sanitize_fields( $value ): array {
 		$value = (array) $value;
 		$new_value = [];
+		
 		foreach ( self::get_settings() as $args ) {
 			$field_type = $args['type'];
 			$new_option_value = $value[ $args['id'] ] ?? '';
@@ -204,11 +207,21 @@ final class Admin {
 				$new_value[ $args['id'] ] = 0;
 			}
 		}
-		if ( isset( $_POST['je_admin_flush_rewrite_rules'] )
-			&& 1 === (int) sanitize_text_field( $_POST['je_admin_flush_rewrite_rules'] )
+
+		\add_settings_error(
+			self::OPTION_NAME . '_mesages',
+			self::OPTION_NAME . '_message',
+			\esc_html__( 'Settings Saved', 'just-events' ),
+			'updated'
+		);
+
+		if ( \wp_verify_nonce( $_POST['_wpnonce'] ?? '', self::OPTION_GROUP . '-options' )
+			&& isset( $_POST['just_events_admin_flush_rewrite_rules'] )
+			&& 1 === (int) \sanitize_text_field( $_POST['just_events_admin_flush_rewrite_rules'] )
 		) {
-			add_option( 'just_events_flush_rewrite_rules_flag', true );
+			\add_option( 'just_events_flush_rewrite_rules_flag', true );
 		}
+
 		return $new_value;
 	}
 
@@ -232,15 +245,6 @@ final class Admin {
 			return;
 		}
 
-		if ( isset( $_GET['settings-updated'] ) ) {
-		   \add_settings_error(
-			   self::OPTION_NAME . '_mesages',
-			   self::OPTION_NAME . '_message',
-			   \esc_html__( 'Settings Saved', 'just-events' ),
-			   'updated'
-			);
-		}
-
 		\settings_errors( self::OPTION_NAME . '_mesages' );
 
 		\wp_enqueue_script(
@@ -259,7 +263,7 @@ final class Admin {
 				\settings_fields( self::OPTION_GROUP );
 				\do_settings_sections( self::OPTION_NAME );
 				\submit_button( 'Save Settings' );
-				echo '<input type="hidden" name="je_admin_flush_rewrite_rules" value="0">';
+				echo '<input type="hidden" name="just_events_admin_flush_rewrite_rules" value="0">';
 			?></form>
 		</div>
 		<?php
@@ -467,9 +471,11 @@ final class Admin {
 		$placeholder = $field_args['placeholder'] ?? '';
 		?>
 			<input type="text" class="regular-text" id="<?php echo \esc_attr( $args['label_for'] ); ?>" name="<?php echo \esc_attr( self::OPTION_NAME ); ?>[<?php echo \esc_attr( $args['setting_id'] ); ?>]" value="<?php echo \esc_attr( $value ); ?>" placeholder="<?php echo \esc_attr( $field_args['placeholder'] ?? '' ); ?>">
-			<?php if ( $description ) { ?>
+			<?php if ( $description ) {
+				?>
 				<p class="description"><?php echo \wp_kses_post( $description ); ?></p>
-			<?php } ?>
+				<?php
+			} ?>
 		<?php
 	}
 
@@ -484,9 +490,11 @@ final class Admin {
 		$cols        = $field_args['cols'] ?? '50';
 		?>
 			<textarea type="text" id="<?php echo \esc_attr( $args['label_for'] ); ?>" rows="<?php echo \esc_attr( absint( $rows ) ); ?>" cols="<?php echo \esc_attr( absint( $cols ) ); ?>" name="<?php echo \esc_attr( self::OPTION_NAME ); ?>[<?php echo \esc_attr( $args['setting_id'] ); ?>]"><?php echo \esc_attr( $value ); ?></textarea>
-			<?php if ( $description ) { ?>
+			<?php if ( $description ) {
+				?>
 				<p class="description"><?php echo \wp_kses_post( $description ); ?></p>
-			<?php } ?>
+				<?php
+			} ?>
 		<?php
 	}
 
@@ -499,9 +507,11 @@ final class Admin {
 		$description = $field_args['description'] ?? '';
 		?>
 			<input type="checkbox" id="<?php echo \esc_attr( $args['label_for'] ); ?>" name="<?php echo \esc_attr( self::OPTION_NAME ); ?>[<?php echo \esc_attr( $args['setting_id'] ); ?>]" <?php checked( $value, 1, true ); ?>>
-			<?php if ( $description ) { ?>
+			<?php if ( $description ) {
+				?>
 				<p class="description"><?php echo \wp_kses_post( $description ); ?></p>
-			<?php } ?>
+				<?php
+			} ?>
 		<?php
 	}
 
@@ -519,13 +529,17 @@ final class Admin {
 		}
 		?>
 			<select id="<?php echo \esc_attr( $args['label_for'] ); ?>" name="<?php echo \esc_attr( self::OPTION_NAME ); ?>[<?php echo \esc_attr( $args['setting_id'] ); ?>]">
-				<?php foreach ( $choices as $choice_v => $label ) { ?>
+				<?php foreach ( $choices as $choice_v => $label ) {
+					?>
 					<option value="<?php echo \esc_attr( \sanitize_key( $choice_v ) ); ?>" <?php \selected( $choice_v, $value, true ); ?>><?php echo \esc_html( $label ); ?></option>
-				<?php } ?>
+					<?php
+				} ?>
 			</select>
-			<?php if ( $description ) { ?>
+			<?php if ( $description ) {
+				?>
 				<p class="description"><?php echo \wp_kses_post( $description ); ?></p>
-			<?php } ?>
+				<?php
+			} ?>
 		<?php
 	}
 

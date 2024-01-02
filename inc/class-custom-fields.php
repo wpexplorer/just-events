@@ -1,10 +1,12 @@
 <?php declare(strict_types=1);
 
-namespace WPExplorer\Just_Events;
+namespace Just_Events;
 
-use WPExplorer\Just_Events\Plugin;
+use Just_Events\Plugin;
 
-\defined( 'ABSPATH' ) || exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly
+}
 
 class Custom_Fields {
 
@@ -280,13 +282,13 @@ class Custom_Fields {
 				case 'start_date':
 				case 'end_date':
 					if ( $value = \strtotime( $value ) ) {
-						$value = \date( $format ?: 'Y-m-d', $value );
+						$value = \gmdate( $format ?: 'Y-m-d', $value );
 					}
 					break;
 				case 'start_time':
 				case 'end_time':
 					if ( $value = \strtotime( $value ) ) {
-						$value = \date( $format ?: 'H:i:s', $value );
+						$value = \gmdate( $format ?: 'H:i:s', $value );
 					}
 					break;
 				case 'all_day':
@@ -397,10 +399,10 @@ class Custom_Fields {
 	/**
 	 * Sanitize date for db.
 	 *
-	 * @note We use date() instead of wp_date() for a consistent timezone across all sites.
+	 * @note We use gmdate() instead of wp_date() for a consistent timezone across all sites.
 	 */
 	public static function sanitize_date_for_db( $date ) {
-		return $date ? \sanitize_text_field( \date( 'Y-m-d H:i:s', \strtotime( $date ) ) ) : '';
+		return $date ? \sanitize_text_field( \gmdate( 'Y-m-d H:i:s', \strtotime( $date ) ) ) : '';
 	}
 
 }

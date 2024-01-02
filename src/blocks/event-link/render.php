@@ -1,6 +1,6 @@
 <?php
 
-namespace WPExplorer\Just_Events;
+namespace Just_Events;
 
 $is_gutenberg = \defined( '\REST_REQUEST' ) && \REST_REQUEST;
 

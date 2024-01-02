@@ -1,10 +1,12 @@
 <?php declare(strict_types=1);
 
-namespace WPExplorer\Just_Events;
+namespace Just_Events;
 
-use WPExplorer\Just_Events\Plugin;
+use Just_Events\Plugin;
 
-\defined( 'ABSPATH' ) || exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly
+}
 
 class Register_Post_Type {
 

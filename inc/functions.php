@@ -1,10 +1,12 @@
 <?php declare(strict_types=1);
 
-namespace WPExplorer\Just_Events;
+namespace Just_Events;
 
-use WPExplorer\Just_Events\Custom_Fields;
+use Just_Events\Custom_Fields;
 
-\defined( 'ABSPATH' ) || exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly
+}
 
 /**
  * Returns a plugin option value.

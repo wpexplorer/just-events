@@ -1,10 +1,12 @@
 <?php declare(strict_types=1);
 
-namespace WPExplorer\Just_Events;
+namespace Just_Events;
 
-use WPExplorer\Just_Events\Plugin;
+use Just_Events\Plugin;
 
-\defined( 'ABSPATH' ) || exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly
+}
 
 class Modify_Queries {
 
@@ -26,7 +28,7 @@ class Modify_Queries {
 	 */
 	public static function on_pre_get_posts( $query ): void {
 		if ( \is_admin() ) {
-			if ( isset( $_GET['post_type'] ) && Plugin::POST_TYPE === \sanitize_text_field( $_GET['post_type'] ) ) {
+			if ( isset( $query->query['post_type'] ) && Plugin::POST_TYPE === $query->query['post_type'] ) {
 				$orderby = $query->get( 'orderby' );
 				switch ( $orderby ) {
 					case 'just_events_end_date':
@@ -80,13 +82,14 @@ class Modify_Queries {
 	public static function on_parse_query( $query ) {
 		if ( ! is_admin()
 			|| ! $query->is_main_query()
+			|| ! isset( $query->query['post_type'] )
 			|| Plugin::POST_TYPE !== $query->query['post_type']
 		) {
 			return $query;
 		}
 
-		if ( ! empty( $_REQUEST['event_status'] ) ) {
-			switch ( \sanitize_text_field( $_REQUEST['event_status'] ) ) {
+		if ( ! empty( $_REQUEST['just_events_status'] ) ) {
+			switch ( \sanitize_text_field( $_REQUEST['just_events_status'] ) ) {
 				case 'ongoing':
 					$clause = [
 						[

@@ -1,5 +1,5 @@
 ( function() {
-	const flushRewriteField = document.querySelector( 'input[name="je_admin_flush_rewrite_rules"]' );
+	const flushRewriteField = document.querySelector( 'input[name="just_events_admin_flush_rewrite_rules"]' );
 
 	const getFieldVals = () => {
 		let fieldVals = '';
