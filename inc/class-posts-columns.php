@@ -128,12 +128,10 @@ final class Posts_Columns {
 			return;
 		}
 
-		$selected = isset( $_REQUEST['just_events_status'] ) ? \sanitize_text_field( $_REQUEST['just_events_status'] ) : '';
-
 		echo '<select name="just_events_status">';
 			echo '<option value="">' . \esc_html__( 'All Event Statuses', 'just-events' ) . ' </option>';
-			foreach( get_event_statuses() as $k => $v ) {
-				echo '<option value="' . \esc_attr( $k ) . '"' . \selected( $k, $selected, false ) . '>' . \esc_html( $v ). ' </option>';
+			foreach ( get_event_statuses() as $k => $v ) {
+				echo '<option value="' . \esc_attr( $k ) . '"' . \selected( $k, \filter_input( INPUT_GET, 'just_events_status', FILTER_SANITIZE_STRING ), false ) . '>' . \esc_html( $v ). ' </option>';
 			}
 		echo '</select>';
 	}

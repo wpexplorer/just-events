@@ -66,6 +66,7 @@ If you are using a classic WordPress theme you will need to contact the theme de
 
 * Updated namespace from WPExplorer/Just_Events to Just_Events.
 * Updated some code to use late escaping for variables.
+* Updated class file names to be prepended with "class-".
 * Added License and License URI to main plugin file.
 
 = 1.0.1 =

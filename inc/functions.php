@@ -426,3 +426,12 @@ function get_event_formatted_time( int $event = 0, array $args = [] ): string {
 
 	return \wp_kses( $prefix . $start_time . $end_time, $allowed_html );
 }
+
+/**
+ * Check if currently in gutenberg edit mode.
+ * 
+ * Internal use only.
+ */
+function is_gutenberg_edit_mode(): bool {
+	return \defined( '\REST_REQUEST' ) && true === \REST_REQUEST && isset( $_GET['context'] ) && 'edit' === \sanitize_text_field( \wp_unslash( $_GET['context'] ) );
+}

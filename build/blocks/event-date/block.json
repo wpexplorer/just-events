@@ -1,0 +1,77 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "just-events/event-date",
+  "version": "1.0",
+  "title": "Event Date",
+  "category": "just-events",
+  "description": "Displays the current event date.",
+  "keywords": [
+    "event",
+    "date"
+  ],
+  "usesContext": [
+    "postId"
+  ],
+  "attributes": {
+    "textAlign": {
+      "type": "string"
+    },
+    "showTime": {
+      "type": "boolean",
+      "default": "true"
+    },
+    "startEnd": {
+      "type": "string"
+    },
+    "format": {
+      "type": "string"
+    },
+    "separator": {
+      "type": "string"
+    },
+    "prefix": {
+      "type": "string"
+    }
+  },
+  "supports": {
+    "customClassName": true,
+    "__experimentalBorder": {
+      "color": true,
+      "radius": true,
+      "style": true,
+      "width": true
+    },
+    "position": {
+      "sticky": true
+    },
+    "color": {
+      "gradients": true,
+      "background": true,
+      "text": true,
+      "__experimentalDefaultControls": {
+        "background": true,
+        "text": true
+      }
+    },
+    "typography": {
+      "fontSize": true,
+      "__experimentalFontFamily": true,
+      "__experimentalFontWeight": true,
+      "__experimentalFontStyle": true,
+      "__experimentalTextTransform": true,
+      "__experimentalLetterSpacing": true,
+      "__experimentalDefaultControls": {
+        "fontSize": true
+      }
+    },
+    "spacing": {
+      "margin": true,
+      "padding": true
+    }
+  },
+  "textdomain": "just-events",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "render": "file:./render.php"
+}

@@ -326,7 +326,7 @@ class Custom_Fields {
 		}
 
 		// Verify that the nonce is valid.
-		if ( ! \wp_verify_nonce( \sanitize_text_field( $_POST['just_events_meta_box_nonce' ] ), 'just_events_meta_box_action' ) ) {
+		if ( ! \wp_verify_nonce( \sanitize_text_field( \wp_unslash( $_POST['just_events_meta_box_nonce' ] ) ), 'just_events_meta_box_action' ) ) {
 			return;
 		}
 
@@ -341,17 +341,17 @@ class Custom_Fields {
 		$all_day = \array_key_exists( 'just_events_all_day', $_POST );
 
 		// Get start date.
-		$start_date = isset( $_POST['just_events_start_date'] ) ? \sanitize_text_field( $_POST['just_events_start_date'] ) : '';
+		$start_date = isset( $_POST['just_events_start_date'] ) ? \sanitize_text_field( \wp_unslash( $_POST['just_events_start_date'] ) ) : '';
 
 		// Save dates.
 		if ( $start_date ) {
 
 			// Get start date.
-			$start_time = ( ! $all_day && isset( $_POST['just_events_start_time'] ) ) ? \sanitize_text_field( $_POST['just_events_start_time'] ) : '00:00';
+			$start_time = ( ! $all_day && isset( $_POST['just_events_start_time'] ) ) ? \sanitize_text_field( \wp_unslash( $_POST['just_events_start_time'] ) ) : '00:00';
 
 			// Get end date.
-			$end_date = ! empty( $_POST['just_events_end_date'] ) ? \sanitize_text_field( $_POST['just_events_end_date'] ) : $start_date;
-			$end_time = ! empty( $_POST['just_events_end_time'] ) ? \sanitize_text_field( $_POST['just_events_end_time'] ) : '23:59';
+			$end_date = ! empty( $_POST['just_events_end_date'] ) ? \sanitize_text_field( \wp_unslash( $_POST['just_events_end_date'] ) ) : $start_date;
+			$end_time = ! empty( $_POST['just_events_end_time'] ) ? \sanitize_text_field( \wp_unslash( $_POST['just_events_end_time'] ) ) : '23:59';
 
 			// If end date is before start date set the end date equal to the start date.
 			if ( $end_date < $start_date || ( $end_date === $start_date && $end_time < $start_time ) ) {
@@ -367,8 +367,9 @@ class Custom_Fields {
 
 		// Save link field.
 		if ( \array_key_exists( 'just_events_link', $_POST ) ) {
-			if ( $_POST['just_events_link'] ) {
-				\update_post_meta( $post_id, '_just_events_link', \esc_url( \sanitize_text_field( $_POST['just_events_link'] ) ) );
+			$escaped_event_link = \esc_url( \sanitize_text_field( \wp_unslash( $_POST['just_events_link'] ) ) );
+			if ( $escaped_event_link ) {
+				\update_post_meta( $post_id, '_just_events_link', $escaped_event_link );
 			} else {
 				\delete_post_meta( $post_id, '_just_events_link' );
 			}

@@ -217,7 +217,7 @@ final class Admin {
 
 		if ( \wp_verify_nonce( $_POST['_wpnonce'] ?? '', self::OPTION_GROUP . '-options' )
 			&& isset( $_POST['just_events_admin_flush_rewrite_rules'] )
-			&& 1 === (int) \sanitize_text_field( $_POST['just_events_admin_flush_rewrite_rules'] )
+			&& 1 === (int) \sanitize_text_field( \wp_unslash( $_POST['just_events_admin_flush_rewrite_rules'] ) )
 		) {
 			\add_option( 'just_events_flush_rewrite_rules_flag', true );
 		}
