@@ -27,14 +27,14 @@ class Plugin {
 	 * Initialize.
 	 */
 	public static function init(): void {
-		require_once self::dir_path() . 'inc/functions.php';
-		require_once self::dir_path() . 'inc/class-custom-fields.php';
-		require_once self::dir_path() . 'inc/class-modify-queries.php';
-		require_once self::dir_path() . 'inc/class-register-post-type.php';
+		require_once self::dir_path() . 'includes/functions.php';
+		require_once self::dir_path() . 'includes/class-custom-fields.php';
+		require_once self::dir_path() . 'includes/class-modify-queries.php';
+		require_once self::dir_path() . 'includes/class-register-post-type.php';
 
 		if ( \is_admin() ) {
-			require_once self::dir_path() . 'inc/class-admin.php';
-			require_once self::dir_path() . 'inc/class-posts-columns.php';
+			require_once self::dir_path() . 'includes/class-admin.php';
+			require_once self::dir_path() . 'includes/class-posts-columns.php';
 		}
 
 		\register_activation_hook( JUST_EVENTS_PLUGIN_FILE, [ self::class, 'on_activation' ] );
@@ -75,7 +75,7 @@ class Plugin {
 	 */
 	public static function integrations(): void {
 		if ( \class_exists( 'Post_Types_Unlimited', false ) ) {
-			require_once self::dir_path() . 'inc/integration/class-post-types-unlimited.php';
+			require_once self::dir_path() . 'includes/integration/class-post-types-unlimited.php';
 		}
 	}
 
@@ -83,9 +83,9 @@ class Plugin {
 	 * Register shortcodes.
 	 */
 	public static function register_shortcodes(): void {
-		require_once self::dir_path() . 'inc/class-shortcode-abstract.php';
-		require_once self::dir_path() . 'inc/shortcodes/class-event-date.php';
-		require_once self::dir_path() . 'inc/shortcodes/class-event-time.php';
+		require_once self::dir_path() . 'includes/class-shortcode-abstract.php';
+		require_once self::dir_path() . 'includes/shortcodes/class-event-date.php';
+		require_once self::dir_path() . 'includes/shortcodes/class-event-time.php';
 	}
 
 	/**

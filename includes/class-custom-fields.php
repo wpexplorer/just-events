@@ -62,7 +62,7 @@ class Custom_Fields {
 
 		wp_enqueue_script(
 			'just-events-custom-fields-plugin', 
-			\untrailingslashit( \plugin_dir_url( JUST_EVENTS_PLUGIN_FILE ) ) . '/build/custom-fields.js',
+			\plugins_url( 'build/custom-fields.js', JUST_EVENTS_PLUGIN_FILE ),
 			$assets['dependencies'] ?? [ 'wp-edit-post' ],
 			$assets['version'] ?? '1.0'
 		);
@@ -123,7 +123,7 @@ class Custom_Fields {
 	 * Enqueues the meta box scripts.
 	 */
 	private static function enqueue_meta_box_scripts(): void {
-		$plugin_dir = \untrailingslashit( \plugin_dir_url( JUST_EVENTS_PLUGIN_FILE ) );
+		$plugin_dir      = \untrailingslashit( \plugin_dir_url( JUST_EVENTS_PLUGIN_FILE ) );
 		$plugin_dir_path = \untrailingslashit( \plugin_dir_path( JUST_EVENTS_PLUGIN_FILE ) );
 
 		\wp_enqueue_script(
@@ -181,8 +181,7 @@ class Custom_Fields {
 		$value      = self::get_field_value( $post_id, $field_id );
 
 		if ( 'all_day' === $field_id ) {
-			$checked = checked( $value, true, false );
-			echo '<input id="just-events-' . \esc_attr( $field_id ) . '" name="just_events_' . \esc_attr( $field_id ) . '" type="' . \esc_attr( $input_type ) . '" ' . $checked . '>';
+			echo '<input id="just-events-' . \esc_attr( $field_id ) . '" name="just_events_' . \esc_attr( $field_id ) . '" type="' . \esc_attr( $input_type ) . '" ' . checked( $value, true, false ) . '>';
 		} else {
 			echo '<input id="just-events-' . \esc_attr( $field_id ) . '" name="just_events_' . \esc_attr( $field_id ) . '" type="' . \esc_attr( $input_type ) . '" value="'. \esc_attr( $value ) . '">';
 		}
@@ -277,7 +276,7 @@ class Custom_Fields {
 
 		$value = \get_post_meta( $post_id, $meta_key, true );
 
-		if ( $format_value && $value ) {
+		if ( true === $format_value && $value ) {
 			switch ( $key ) {
 				case 'start_date':
 				case 'end_date':

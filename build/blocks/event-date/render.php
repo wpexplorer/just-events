@@ -12,30 +12,25 @@ if ( ! isset( $block ) && ! empty( $attributes['event'] ) ) {
 	// Fix for Gutenberg issue: https://github.com/WordPress/gutenberg/issues/34882
 	$event_id = \absint( \sanitize_text_field( \wp_unslash( $_GET['postId'] ) ) );
 } else {
-	$event_id = get_the_ID();;
+	$event_id = get_the_ID();
 }
 
-$args = [
+$args = \array_filter( [
 	'format'	=> $attributes['format'] ?? '',
 	'prefix'	=> $attributes['prefix'] ?? '',
 	'separator' => $attributes['separator'] ?? '',
 	'start_end' => $attributes['startEnd'] ?? '',
 	'show_time' => $attributes['showTime'] ?? true,
-];
+] );
 
 if ( ! $event_id && $is_gutenberg ) {
-	$date = (string) \wp_date( $args['format'] ?: get_default_date_format( $args['show_time'] ), current_time( 'timestamp' ) );
+	$date = (string) \wp_date( $args['format'] ?? get_default_date_format( $args['show_time'] ), current_time( 'timestamp' ) );
 	if ( $args['prefix'] ) {
 		$date = $args['prefix'] . ' ' . $date;
 	}
 	$date = \wp_kses_post( $date );
 } else {
-	foreach ( $args as $k => $v ) {
-		if ( '' === $v ) {
-			unset( $args[ $k ] );
-		}
-	}
-	$date = get_event_formatted_date( $event_id, $args ?: [] );
+	$date = get_event_formatted_date( $event_id, $args );
 }
 
 $allowed_html = [

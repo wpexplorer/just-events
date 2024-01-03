@@ -12,7 +12,7 @@ if ( ! isset( $block ) && ! empty( $attributes['event'] ) ) {
 	// Fix for Gutenberg issue: https://github.com/WordPress/gutenberg/issues/34882
 	$event_id = \absint( \sanitize_text_field( \wp_unslash( $_GET['postId'] ) ) );
 } else {
-	$event_id = get_the_ID();;
+	$event_id = get_the_ID();
 }
 
 if ( ! $event_id && $is_gutenberg ) {

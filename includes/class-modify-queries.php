@@ -28,9 +28,8 @@ class Modify_Queries {
 	 */
 	public static function on_pre_get_posts( $query ): void {
 		if ( \is_admin() ) {
-			if ( isset( $query->query['post_type'] ) && Plugin::POST_TYPE === $query->query['post_type'] ) {
-				$orderby = $query->get( 'orderby' );
-				switch ( $orderby ) {
+			if ( Plugin::POST_TYPE === $query->get( 'post_type' ) ) {
+				switch ( $query->get( 'orderby' ) ) {
 					case 'just_events_end_date':
 						self::sort_events( $query, 'end' );
 						break;
@@ -82,14 +81,13 @@ class Modify_Queries {
 	public static function on_parse_query( $query ) {
 		if ( ! is_admin()
 			|| ! $query->is_main_query()
-			|| ! isset( $query->query['post_type'] )
-			|| Plugin::POST_TYPE !== $query->query['post_type']
+			|| Plugin::POST_TYPE !== $query->get( 'post_type' )
 		) {
 			return $query;
 		}
 
 		if ( ! empty( $_REQUEST['just_events_status'] ) ) {
-			switch ( \sanitize_text_field( $_REQUEST['just_events_status'] ) ) {
+			switch ( \sanitize_text_field( \wp_unslash( $_REQUEST['just_events_status'] ) ) ) {
 				case 'ongoing':
 					$clause = [
 						[

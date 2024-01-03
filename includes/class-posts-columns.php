@@ -35,7 +35,7 @@ final class Posts_Columns {
 			if ( \is_object( $screen ) && isset( $screen->post_type ) && Plugin::POST_TYPE === $screen->post_type ) {
 				wp_enqueue_style(
 					'just-events-post-status', 
-					\untrailingslashit( \plugin_dir_url( JUST_EVENTS_PLUGIN_FILE ) ) . '/assets/css/admin/posts-columns.css',
+					\plugins_url( '/assets/css/admin/posts-columns.css', JUST_EVENTS_PLUGIN_FILE ),
 					[],
 					\filemtime( \plugin_dir_path( JUST_EVENTS_PLUGIN_FILE ) . '/assets/css/admin/posts-columns.css')
 				);
@@ -128,10 +128,12 @@ final class Posts_Columns {
 			return;
 		}
 
+		$selected = isset( $_REQUEST['just_events_status'] ) ? \sanitize_text_field( \wp_unslash( $_REQUEST['just_events_status'] ) ) : '';
+
 		echo '<select name="just_events_status">';
 			echo '<option value="">' . \esc_html__( 'All Event Statuses', 'just-events' ) . ' </option>';
 			foreach ( get_event_statuses() as $k => $v ) {
-				echo '<option value="' . \esc_attr( $k ) . '"' . \selected( $k, \filter_input( INPUT_GET, 'just_events_status', FILTER_SANITIZE_STRING ), false ) . '>' . \esc_html( $v ). ' </option>';
+				echo '<option value="' . \esc_attr( $k ) . '"' . \selected( $k, $selected, false ) . '>' . \esc_html( $v ). ' </option>';
 			}
 		echo '</select>';
 	}

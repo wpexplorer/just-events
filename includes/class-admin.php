@@ -62,58 +62,63 @@ final class Admin {
 				'tab'         => \__( 'General', 'just-events' ),
 			],
 			[
-				'id'          => 'post_type_archive_slug',
-				'label'       => \__( 'Archive Slug', 'just-events' ),
-				'type'        => 'text',
-				'placeholder' => 'events',
-				'description' => \__( 'The custom slug for the archive page if enabled.', 'just-events' ),
-				'tab'         => \__( 'General', 'just-events' ),
+				'id'                => 'post_type_archive_slug',
+				'label'             => \__( 'Archive Slug', 'just-events' ),
+				'type'              => 'text',
+				'placeholder'       => 'events',
+				'sanitize_callback' => 'sanitize_title',
+				'description'       => \__( 'The custom slug for the archive page if enabled.', 'just-events' ),
+				'tab'               => \__( 'General', 'just-events' ),
 			],
 			[
-				'id'          => 'post_type_rewrite_slug',
-				'label'       => \__( 'Single Slug', 'just-events' ),
-				'type'        => 'text',
-				'placeholder' => 'event',
-				'description' => \__( 'The custom slug for your single events.', 'just-events' ),
-				'tab'         => \__( 'General', 'just-events' ),
+				'id'                => 'post_type_rewrite_slug',
+				'label'             => \__( 'Single Slug', 'just-events' ),
+				'type'              => 'text',
+				'placeholder'       => 'event',
+				'sanitize_callback' => 'sanitize_title',
+				'description'       => \__( 'The custom slug for your single events.', 'just-events' ),
+				'tab'               => \__( 'General', 'just-events' ),
 			],
 			[
-				'id'          => 'posts_per_page',
-				'label'       => \__( 'Events Per Page', 'just-events' ),
-				'type'        => 'text',
-				'placeholder' => \get_option( 'posts_per_page', 10 ),
-				'description' => \__( 'How many events to display on a per paginated page basis. The default value is defined under Settings > Reading > Blog pages show at most.', 'just-events' ),
-				'tab'         => \__( 'General', 'just-events' ),
+				'id'                => 'posts_per_page',
+				'label'             => \__( 'Events Per Page', 'just-events' ),
+				'type'              => 'text',
+				'sanitize_callback' => [ self::class, 'sanitize_posts_per_page' ],
+				'placeholder'       => \get_option( 'posts_per_page', 10 ),
+				'description'       => \__( 'How many events to display on a per paginated page basis. The default value is defined under Settings > Reading > Blog pages show at most.', 'just-events' ),
+				'tab'               => \__( 'General', 'just-events' ),
 			],
 			[
-				'id'          => 'date_format',
-				'label'       => \__( 'Date Format', 'just-events' ),
-				'type'        => 'text',
-				'description' => \__( 'Enter a custom date format to use for your formatted event date. Leave empty to use your WordPress defined date format.', 'just-events' ) . '<br>' . \sprintf( \__( '%sDocumentation on date and time formatting%s', 'just-events' ), '<a href="https://wordpress.org/documentation/article/customize-date-and-time-format/" target="_blank" rel="noopener noreferrer">', ' &#8599;</a>' ),
-				'tab'         => \__( 'General', 'just-events' ),
+				'id'                => 'date_format',
+				'label'             => \__( 'Date Format', 'just-events' ),
+				'type'              => 'text',
+				'sanitize_callback' => [ self::class, 'sanitize_date_format_field' ],
+				'description'       => \__( 'Enter a custom date format to use for your formatted event date. Leave empty to use your WordPress defined date format.', 'just-events' ) . '<br>' . \sprintf( \__( '%sDocumentation on date and time formatting%s', 'just-events' ), '<a href="https://wordpress.org/documentation/article/customize-date-and-time-format/" target="_blank" rel="noopener noreferrer">', ' &#8599;</a>' ),
+				'tab'                => \__( 'General', 'just-events' ),
 			],
 			[
-				'id'          => 'time_format',
-				'label'       => \__( 'Time Format', 'just-events' ),
-				'type'        => 'text',
-				'description' => \__( 'Enter a custom date format to use for your formatted event time. Leave empty to use your WordPress defined time format.', 'just-events' ) . '<br>' . \sprintf( \__( '%sDocumentation on date and time formatting%s', 'just-events' ), '<a href="https://wordpress.org/documentation/article/customize-date-and-time-format/" target="_blank" rel="noopener noreferrer">', ' &#8599;</a>' ),
-				'tab'         => \__( 'General', 'just-events' ),
+				'id'                => 'time_format',
+				'label'             => \__( 'Time Format', 'just-events' ),
+				'type'              => 'text',
+				'sanitize_callback' => [ self::class, 'sanitize_time_format_field' ],
+				'description'       => \__( 'Enter a custom date format to use for your formatted event time. Leave empty to use your WordPress defined time format.', 'just-events' ) . '<br>' . \sprintf( \__( '%sDocumentation on date and time formatting%s', 'just-events' ), '<a href="https://wordpress.org/documentation/article/customize-date-and-time-format/" target="_blank" rel="noopener noreferrer">', ' &#8599;</a>' ),
+				'tab'               => \__( 'General', 'just-events' ),
 			],
 			[
 				'id'                => 'date_separator',
 				'label'             => \__( 'Date Separator', 'just-events' ),
 				'type'              => 'text',
 				'placeholder'       => ' - ',
+				'sanitize_callback' => [ self::class, 'sanitize_date_separator_field' ],
 				'description'       => \__( 'Separator used in the formatted event date between the start and end dates (include empty spaces if needed). Enter &lt;br&gt; to place the start and end dates on different lines.', 'just-events' ),
 				'tab'               => \__( 'General', 'just-events' ),
-				'sanitize_callback' => [ self::class, 'sanitize_date_separator_field' ],
 			],
 			[
 				'id'          => 'time_prefix',
 				'label'       => \__( 'Time Prefix', 'just-events' ),
 				'type'        => 'text',
 				'placeholder' => ' @ ',
-				'description' => \__( 'Prefix shown before the event date time. Important: Value must use proper string formatting.', 'just-events' ) . '<br>' . \sprintf( \__( '%sDocumentation on date and time formatting%s', 'just-events' ), '<a href="https://wordpress.org/documentation/article/customize-date-and-time-format/" target="_blank" rel="noopener noreferrer">', ' &#8599;</a>' ),
+				'description' => \__( 'Prefix shown before the event date time. Value must use proper string formatting with backslashes added between letters.', 'just-events' ) . '<br>' . \sprintf( \__( '%sDocumentation on date and time formatting%s', 'just-events' ), '<a href="https://wordpress.org/documentation/article/customize-date-and-time-format/#format-string-examples" target="_blank" rel="noopener noreferrer">', ' &#8599;</a>' ),
 				'tab'         => \__( 'General', 'just-events' ),
 			],
 			[
@@ -208,12 +213,9 @@ final class Admin {
 			}
 		}
 
-		\add_settings_error(
-			self::OPTION_NAME . '_mesages',
-			self::OPTION_NAME . '_message',
-			\esc_html__( 'Settings Saved', 'just-events' ),
-			'updated'
-		);
+		if ( $new_value ) {
+			self::add_settings_error( \esc_html__( 'Settings Saved', 'just-events' ), 'updated' );
+		}
 
 		if ( \wp_verify_nonce( $_POST['_wpnonce'] ?? '', self::OPTION_GROUP . '-options' )
 			&& isset( $_POST['just_events_admin_flush_rewrite_rules'] )
@@ -249,7 +251,7 @@ final class Admin {
 
 		\wp_enqueue_script(
 			'just-events-admin-settings',
-			\untrailingslashit( \plugin_dir_url( JUST_EVENTS_PLUGIN_FILE ) ) . '/assets/js/admin/settings.js',
+			\plugins_url( 'assets/js/admin/settings.js', JUST_EVENTS_PLUGIN_FILE ),
 			[],
 			\filemtime( \plugin_dir_path( JUST_EVENTS_PLUGIN_FILE ) . '/assets/js/admin/settings.js' ),
 			true
@@ -296,8 +298,6 @@ final class Admin {
 
 		?>
 
-		<style>.just-events-admin-tab-item{ display: none; ?></style>
-
 		<h2 class="nav-tab-wrapper just-events-admin-tabs"><?php
 			$first_tab = true;
 			foreach ( $tabs as $id => $label ) {
@@ -311,33 +311,6 @@ final class Admin {
 				<?php
 			}
 		?></h2>
-
-		<script>
-			( function() {
-				document.addEventListener( 'click', ( event ) => {
-					const target = event.target;
-					if ( ! target.closest( '.just-events-admin-tabs a' ) ) {
-						return;
-					}
-					event.preventDefault();
-					document.querySelectorAll( '.just-events-admin-tabs a' ).forEach( ( tablink ) => {
-						tablink.classList.remove( 'nav-tab-active' );
-					} );
-					target.classList.add( 'nav-tab-active' );
-					targetTab = target.getAttribute( 'data-tab' );
-					document.querySelectorAll( '.just-events-admin-options-form .just-events-admin-tab-item' ).forEach( ( item ) => {
-						if ( item.classList.contains( `just-events-admin-tab-item--${targetTab}` ) ) {
-							item.style.display = 'block';
-						} else {
-							item.style.display = 'none';
-						}
-					} );
-				} );
-				document.addEventListener( 'DOMContentLoaded', function () {
-					document.querySelector( '.just-events-admin-tabs .nav-tab' ).click();
-				}, false );
-			} )();
-		</script>
 
 		<?php
 	}
@@ -359,7 +332,7 @@ final class Admin {
 	 * Note: We don't use the core sanitize_text_field() function
 	 * 		 because it strips out whitespace via trim().
 	 */
-	private static function sanitize_text_field( string $value = '' ): string {
+	private static function sanitize_text_field( string $value ): string {
 		$filtered = wp_check_invalid_utf8( $value );
 
 		if ( ! $filtered ) {
@@ -397,9 +370,42 @@ final class Admin {
 	}
 
 	/**
+	 * Sanitizes the posts per page field.
+	 */
+	private static function sanitize_posts_per_page( string $value = '' ): ?int {
+		if ( ! \is_numeric( $value ) ) {
+			self::add_settings_error( \esc_html__( 'Incorrect value added for the "Events Per Page" field. Please enter a numeric value.', 'just-events' ) );
+			return null;
+		}
+		return (int) $value;
+	}
+
+	/**
+	 * Sanitizes the date format field.
+	 */
+	private static function sanitize_date_format_field( string $value, array $args ): string {
+		if ( false === \strtotime( \wp_date( $value ) ) ) {
+			self::add_settings_error( \esc_html__( 'Incorrect date format.', 'just-events' ) );
+			return '';
+		}
+		return \sanitize_text_field( $value );
+	}
+
+	/**
+	 * Sanitizes the time format field.
+	 */
+	private static function sanitize_time_format_field( string $value, array $args ): string {
+		if ( false === \strtotime( \wp_date( $value ) ) ) {
+			self::add_settings_error( \esc_html__( 'Incorrect time format.', 'just-events' ) );
+			return '';
+		}
+		return \sanitize_text_field( $value );
+	}
+
+	/**
 	 * Sanitizes the "separator" fields.
 	 */
-	private static function sanitize_date_separator_field( string $value = '' ): string {
+	private static function sanitize_date_separator_field( string $value ): string {
 		if ( '<br>' === $value ) {
 			return '<br>';
 		} else {
@@ -410,14 +416,14 @@ final class Admin {
 	/**
 	 * Sanitizes the checkbox field.
 	 */
-	private static function sanitize_checkbox_field( $value = '' ): int {
+	private static function sanitize_checkbox_field( $value ): int {
 		return ( 'on' === $value ) ? 1 : 0;
 	}
 
 	 /**
 	 * Sanitizes the select field.
 	 */
-	private static function sanitize_select_field( $value = '', $field_args = [] ): string {
+	private static function sanitize_select_field( string $value, $field_args = [] ): string {
 		$choices = self::parse_choices( $field_args['choices'] ?? [] );
 		return \array_key_exists( $value, $choices ) ? \sanitize_key( $value ) : '';
 	}
@@ -489,7 +495,7 @@ final class Admin {
 		$rows        = $field_args['rows'] ?? '4';
 		$cols        = $field_args['cols'] ?? '50';
 		?>
-			<textarea type="text" id="<?php echo \esc_attr( $args['label_for'] ); ?>" rows="<?php echo \esc_attr( absint( $rows ) ); ?>" cols="<?php echo \esc_attr( absint( $cols ) ); ?>" name="<?php echo \esc_attr( self::OPTION_NAME ); ?>[<?php echo \esc_attr( $args['setting_id'] ); ?>]"><?php echo \esc_attr( $value ); ?></textarea>
+			<textarea type="text" id="<?php echo \esc_attr( $args['label_for'] ); ?>" rows="<?php echo \esc_attr( absint( $rows ) ); ?>" cols="<?php echo \esc_attr( absint( $cols ) ); ?>" name="<?php echo \esc_attr( self::OPTION_NAME ); ?>[<?php echo \esc_attr( $args['setting_id'] ); ?>]"><?php echo \esc_textarea( $value ); ?></textarea>
 			<?php if ( $description ) {
 				?>
 				<p class="description"><?php echo \wp_kses_post( $description ); ?></p>
@@ -554,6 +560,18 @@ final class Admin {
 			return (array) \call_user_func( $choices );
 		}
 		return $choices;
+	}
+
+	/**
+	 * Adds a new setting error.
+	 */
+	public static function add_settings_error( string $message, string $type = 'error' ): void {
+		\add_settings_error(
+			self::OPTION_NAME . '_mesages',
+			self::OPTION_NAME . '_message',
+			$message,
+			$type
+		);
 	}
 
 }
