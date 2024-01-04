@@ -430,8 +430,8 @@ function get_event_formatted_time( int $event = 0, array $args = [] ): string {
 /**
  * Check if currently in gutenberg edit mode.
  * 
- * Internal use only.
+ * Internal use only for the custom blocks render.php files.
  */
 function is_gutenberg_edit_mode(): bool {
-	return \defined( '\REST_REQUEST' ) && true === \REST_REQUEST && isset( $_GET['context'] ) && 'edit' === \sanitize_text_field( \wp_unslash( $_GET['context'] ) );
+	return \defined( '\REST_REQUEST' ) && true === \REST_REQUEST;
 }
