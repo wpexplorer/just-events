@@ -259,7 +259,6 @@ class Custom_Fields {
 	 * Returns a field value.
 	 */
 	public static function get_field_value( int $post_id, string $key, bool $format_value = true, string $format = '' ): string {
-
 		switch ( $key ) {
 			case 'start_date':
 			case 'start_time':
@@ -385,14 +384,17 @@ class Custom_Fields {
 	/**
 	 * Sanitize URL for db.
 	 */
-	public static function sanitize_url_for_db( $input ) {
-		return $input ? \esc_url( \sanitize_text_field( $input ) ) : '';
+	public static function sanitize_url_for_db( $input ): string {
+		if ( $input && \is_string( $input ) ) {
+			return (string) \esc_url( \sanitize_text_field( $input ) );
+		}
+		return '';
 	}
 
 	/**
 	 * Sanitize checkbox for db.
 	 */
-	public static function sanitize_checkbox_for_db( $input ) {
+	public static function sanitize_checkbox_for_db( $input ): int {
 		return $input ? 1 : 0;
 	}
 
@@ -401,8 +403,11 @@ class Custom_Fields {
 	 *
 	 * @note We use gmdate() instead of wp_date() for a consistent timezone across all sites.
 	 */
-	public static function sanitize_date_for_db( $date ) {
-		return $date ? \sanitize_text_field( \gmdate( 'Y-m-d H:i:s', \strtotime( $date ) ) ) : '';
+	public static function sanitize_date_for_db( $input ): string {
+		if ( $input && \is_string( $input ) ) {
+			return (string) \sanitize_text_field( \gmdate( 'Y-m-d H:i:s', \strtotime( $input ) ) ); 
+		}
+		return '';
 	}
 
 }

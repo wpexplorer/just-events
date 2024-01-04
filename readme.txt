@@ -68,8 +68,8 @@ If you are using a classic WordPress theme you will need to contact the theme de
 * Updated some code to use late escaping for variables.
 * Updated class file names to be prepended with "class-".
 * Updated renamed the "inc" folder to "includes".
-* Updated moved inline script from class-admin.php to settings.js
-* Added extra validation to the Admin settings fields.
+* Updated moved inline script from class-admin.php to settings.js and removed inline style tag.
+* Added extra validation to the admin settings fields.
 * Added License, License URI and License comment block to main plugin file.
 
 = 1.0.1 =

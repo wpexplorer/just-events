@@ -36,7 +36,7 @@ final class Admin {
 	public static function init(): void {
 		add_action( 'admin_menu', [ self::class, 'register_menu_page' ] );
 
-		// Note: Use late hook so devs can hook into admin_init early to add their own settings.
+		// Note: Use late hook so devs can hook into admin_init early to add their own settings via the hook.
 		add_action( 'admin_init', [ self::class, 'register_settings' ], 100 );
 	}
 
@@ -58,7 +58,11 @@ final class Admin {
 				'label'       => \__( 'Hide Past Events', 'just-events' ),
 				'type'        => 'checkbox',
 				'default'     => true,
-				'description' => \sprintf( \__( 'Check to hide all past events from archives.%sImportant%s: This option will only hide past events from the event archives and event based search results. It will not hide any events displayed by 3rd party themes or plugins. And if your site is using any form of caching you may want to exclude your event archives from caching or make sure to clear your cache manually as events expire or every so often.', 'just-events' ), '<br><strong>', '</strong>' ),
+				'description' => \sprintf(
+					\__( 'Check to hide all past events from archives.%sImportant%s: This option will only hide past events from the event archives and event based search results. It will not hide any events displayed by 3rd party themes or plugins. And if your site is using any form of caching you may want to exclude your event archives from caching or make sure to clear your cache manually as events expire or every so often.', 'just-events' ),
+					'<br><strong>',
+					'</strong>'
+				),
 				'tab'         => \__( 'General', 'just-events' ),
 			],
 			[
@@ -93,7 +97,11 @@ final class Admin {
 				'label'             => \__( 'Date Format', 'just-events' ),
 				'type'              => 'text',
 				'sanitize_callback' => [ self::class, 'sanitize_date_format_field' ],
-				'description'       => \__( 'Enter a custom date format to use for your formatted event date. Leave empty to use your WordPress defined date format.', 'just-events' ) . '<br>' . \sprintf( \__( '%sDocumentation on date and time formatting%s', 'just-events' ), '<a href="https://wordpress.org/documentation/article/customize-date-and-time-format/" target="_blank" rel="noopener noreferrer">', ' &#8599;</a>' ),
+				'description'       => \__( 'Enter a custom date format to use for your formatted event date. Leave empty to use your WordPress defined date format.', 'just-events' ) . '<br>' . \sprintf(
+					\__( '%sDocumentation on date and time formatting%s', 'just-events' ),
+					'<a href="https://wordpress.org/documentation/article/customize-date-and-time-format/" target="_blank" rel="noopener noreferrer">',
+					' &#8599;</a>'
+				),
 				'tab'                => \__( 'General', 'just-events' ),
 			],
 			[
@@ -101,7 +109,11 @@ final class Admin {
 				'label'             => \__( 'Time Format', 'just-events' ),
 				'type'              => 'text',
 				'sanitize_callback' => [ self::class, 'sanitize_time_format_field' ],
-				'description'       => \__( 'Enter a custom date format to use for your formatted event time. Leave empty to use your WordPress defined time format.', 'just-events' ) . '<br>' . \sprintf( \__( '%sDocumentation on date and time formatting%s', 'just-events' ), '<a href="https://wordpress.org/documentation/article/customize-date-and-time-format/" target="_blank" rel="noopener noreferrer">', ' &#8599;</a>' ),
+				'description'       => \__( 'Enter a custom date format to use for your formatted event time. Leave empty to use your WordPress defined time format.', 'just-events' ) . '<br>' . \sprintf(
+					\__( '%sDocumentation on date and time formatting%s', 'just-events' ),
+					'<a href="https://wordpress.org/documentation/article/customize-date-and-time-format/" target="_blank" rel="noopener noreferrer">',
+					' &#8599;</a>'
+				),
 				'tab'               => \__( 'General', 'just-events' ),
 			],
 			[
@@ -118,7 +130,11 @@ final class Admin {
 				'label'       => \__( 'Time Prefix', 'just-events' ),
 				'type'        => 'text',
 				'placeholder' => ' @ ',
-				'description' => \__( 'Prefix shown before the event date time. Value must use proper string formatting with backslashes added between letters.', 'just-events' ) . '<br>' . \sprintf( \__( '%sDocumentation on date and time formatting%s', 'just-events' ), '<a href="https://wordpress.org/documentation/article/customize-date-and-time-format/#format-string-examples" target="_blank" rel="noopener noreferrer">', ' &#8599;</a>' ),
+				'description' => \__( 'Prefix shown before the event date time. Value must use proper string formatting with backslashes added between letters.', 'just-events' ) . '<br>' . \sprintf(
+					\__( '%sDocumentation on date and time formatting%s', 'just-events' ),
+					'<a href="https://wordpress.org/documentation/article/customize-date-and-time-format/#format-string-examples" target="_blank" rel="noopener noreferrer">',
+					' &#8599;</a>'
+				),
 				'tab'         => \__( 'General', 'just-events' ),
 			],
 			[
