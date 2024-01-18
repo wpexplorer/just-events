@@ -3,7 +3,7 @@
  * Plugin Name:       Just Events
  * Plugin URI:        https://wordpress.org/plugins/just-events/
  * Description:       Adds an Event post type to your WordPress powered site.
- * Version:           1.0.2
+ * Version:           1.0.3
  * Requires at least: 6.3
  * Requires PHP:      8.0
  * Author:            WPExplorer

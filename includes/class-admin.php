@@ -233,8 +233,9 @@ final class Admin {
 			self::add_settings_error( \esc_html__( 'Settings Saved', 'just-events' ), 'updated' );
 		}
 
-		if ( \wp_verify_nonce( $_POST['_wpnonce'] ?? '', self::OPTION_GROUP . '-options' )
-			&& isset( $_POST['just_events_admin_flush_rewrite_rules'] )
+		if ( \array_key_exists( '_wpnonce', $_POST )
+			&& \wp_verify_nonce( \sanitize_text_field( \wp_unslash( $_POST['_wpnonce'] ) ), self::OPTION_GROUP . '-options' )
+			&& \array_key_exists( 'just_events_admin_flush_rewrite_rules', $_POST )
 			&& 1 === (int) \sanitize_text_field( \wp_unslash( $_POST['just_events_admin_flush_rewrite_rules'] ) )
 		) {
 			\add_option( 'just_events_flush_rewrite_rules_flag', true );
