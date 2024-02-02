@@ -5,7 +5,7 @@ Tags: events, event
 Requires at least: 6.3
 Requires PHP: 8.0
 Tested up to: 6.4
-Stable Tag: 1.0.3
+Stable Tag: 1.0.4
 License: GPL v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -61,6 +61,10 @@ By default the event posts will take on the default post template layout of your
 If you are using a classic WordPress theme you will need to contact the theme developer and ask how to modify the layout as this will be dependent on the theme you are using.
 
 == Changelog ==
+
+= 1.0.4 =
+
+* Fixed render_block instance was not escaped.
 
 = 1.0.3 =
 
