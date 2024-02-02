@@ -82,7 +82,16 @@ final class Posts_Columns {
 							'event' => $post_id,
 						],
 					];
-					echo \render_block( $parsed_block );
+					echo \wp_kses( \render_block( $parsed_block ), [
+						'div' => [
+							'class' => true,
+						],
+						'span' => [
+							'class' => true,
+						],
+					] );
+				} else {
+					echo \esc_html( $status );
 				}
 				break;
 			case 'just_events_thumbnail':
