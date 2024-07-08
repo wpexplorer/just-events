@@ -11,7 +11,7 @@ class Plugin {
 	/**
 	 * The plugin version.
 	 */
-	public const VERSION = '1.0.4';
+	public const VERSION = '1.0.5';
 
 	/**
 	 * The events post type name.
