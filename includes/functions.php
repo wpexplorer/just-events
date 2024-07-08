@@ -12,7 +12,8 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Returns a plugin option value.
  */
 function get_option( string $key, $default_value = '' ) {
-	return \get_option( 'just_events' )[ $key ] ?? $default_value;
+	$value = \get_option( 'just_events' )[ $key ] ?? '';
+	return ( '' !== $value ) ? $value : $default_value;
 }
 
 /**
