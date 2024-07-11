@@ -4,23 +4,24 @@ Donate link: https://www.wpexplorer.com/donate/
 Tags: events, event
 Requires at least: 6.3
 Requires PHP: 8.0
-Tested up to: 6.4
-Stable Tag: 1.0.4
+Tested up to: 6.5
+Stable Tag: 1.0.5
 License: GPL v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
 == Description ==
-The Just Events plugin registers a new event post type to your WordPress site for easily adding events. The plugin is intended to provide only the basic functionality to add event posts to your site for those looking for a very minimal solution without all the extra bloat of "traditional" event plugins. For this reason you won't find features like calendars, repeating events, tons of shortcodes, custom templates, etc.
+The Just Events plugin registers a new event post type (just_event) to your WordPress site for easily adding events. The plugin provides the basic functionality to add events to your site for those looking for a very minimal solution without all the extra bloat of "traditional" event/calendar plugins. For this reason you won't find features like calendars, repeating events, tons of shortcodes, tickets, custom templates, etc.
 
-This plugin works best with a "Full Site Editing" block theme so you can easily create your archives and single event templates using the included Event Date, Event Time, Event Status and Event Link blocks or with a compatible Classic WordPress theme such as our Total theme.
+This plugin works best with a "Full Site Editing" block theme so you can easily create your archives and single event templates using the included Event Date, Event Time, Event Status and Event Link blocks or with a compatible Classic WordPress theme such as our [Total WordPress theme](https://total.wpexplorer.com/).
 
 == Features ==
 
 * Event post type.
 * Event fields for setting event details (all day, start date, end date, start time, end time and link).
-* Event Date, Event Time, Event Status and Event Link blocks.
-* Works with Full Site Editing and Classic themes.
-* Makes use of theme templates and styles rather then using it's own template files and CSS (unlike other plugins) which keeps things slim, faster and more compatible.
+* Works with Block and Classic themes.
+* Uses theme templates and styles for a slim, fast and more compatible plugin.
+* Four useful blocks: Event Date, Event Time, Event Link and Event Status.
+* Two useful shortcodes: [just_events_event_date] and [just_events_event_time].
 * Option to hide past events from event archives.
 * Options to customize the event post type single and archive slugs.
 * Options to set your default event date and time format.
@@ -60,7 +61,20 @@ By default the event posts will take on the default post template layout of your
 
 If you are using a classic WordPress theme you will need to contact the theme developer and ask how to modify the layout as this will be dependent on the theme you are using.
 
+== Screenshots ==
+
+1. Events dashboard.
+2. Settings page. Minimal options.
+3. Event Archive template using the WordPress theme block editor.
+4. Single Event meta settings (Gutenberg editor).
+5. Example of a customized single event template using the Twenty Twenty Four theme.
+
 == Changelog ==
+
+= 1.0.5 =
+
+* Updated the tested up to WP version number.
+* Fixed when disabling the "Enable Archive" or "Hide Past Events" settings they were not actually being disabled.
 
 = 1.0.4 =
 
