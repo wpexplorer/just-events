@@ -9,6 +9,8 @@ Stable Tag: 1.0.5
 License: GPL v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
+Adds an Event post type to your WordPress powered site.
+
 == Description ==
 The Just Events plugin registers a new event post type (just_event) to your WordPress site for easily adding events. The plugin provides the basic functionality to add events to your site for those looking for a very minimal solution without all the extra bloat of "traditional" event/calendar plugins. For this reason you won't find features like calendars, repeating events, tons of shortcodes, tickets, custom templates, etc.
 
