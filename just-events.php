@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Plugin Name:       Just Events
  * Plugin URI:        https://wordpress.org/plugins/just-events/
  * Description:       Adds an Event post type to your WordPress powered site.
@@ -11,7 +11,7 @@
  * License:           GPL v2 or later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain:       just-events
- * Domain Path:       /languages
+ * Domain Path:       /languages/
  */
 
 /*
