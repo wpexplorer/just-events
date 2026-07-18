@@ -1,3 +1,24 @@
+# OS files
+.DS_Store
+Thumbs.db
+
+# Dependencies
+node_modules/
+vendor/
+
+# Build artifacts
 build
-node_modules
-**/.DS_Store
+*.zip
+
+# Environment / secrets
+.env
+.env.*
+
+# Logs
+*.log
+
+# Editor / IDE
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
