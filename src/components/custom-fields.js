@@ -2,7 +2,7 @@ import { __ } from '@wordpress/i18n';
 import { format as dateFormat } from '@wordpress/date';
 import { compose } from '@wordpress/compose';
 import { withSelect, withDispatch } from '@wordpress/data';
-import { PluginDocumentSettingPanel } from '@wordpress/edit-post';
+import { PluginDocumentSettingPanel } from '@wordpress/editor';
 import { PanelRow, CheckboxControl, TextControl, DateTimePicker, Dropdown, Button } from '@wordpress/components';
 
 const customFields = ( { postType, postMeta, setPostMeta } ) => {

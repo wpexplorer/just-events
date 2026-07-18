@@ -4,8 +4,8 @@ Donate link: https://www.wpexplorer.com/donate/
 Tags: events, event
 Requires at least: 6.3
 Requires PHP: 8.0
-Tested up to: 6.5
-Stable Tag: 1.0.5
+Tested up to: 6.8
+Stable Tag: 1.0.6
 License: GPL v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -72,6 +72,10 @@ If you are using a classic WordPress theme you will need to contact the theme de
 5. Example of a customized single event template using the Twenty Twenty Four theme.
 
 == Changelog ==
+
+= 1.0.6 =
+* Updated the tested up to WP version number.
+* Added short description to the readme.txt file.
 
 = 1.0.5 =
 
