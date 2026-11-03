@@ -8,9 +8,12 @@ if ( ! isset( $block ) && ! empty( $attributes['event'] ) ) {
 	$event_id = \absint( $attributes['event']);
 } elseif ( ! empty( $block->context['postId'] ) ) {
 	$event_id = \absint( \sanitize_text_field( $block->context['postId'] ) );
-} elseif ( $is_gutenberg && isset( $_GET['postId'] ) ) {
+} elseif ( $is_gutenberg
+	&& ! empty( $_GET['postId'] )
+	&& \current_user_can( 'edit_post', \absint( \wp_unslash( $_GET['postId'] ) ) )
+) {
 	// Fix for Gutenberg issue: https://github.com/WordPress/gutenberg/issues/34882
-	$event_id = \absint( \sanitize_text_field( \wp_unslash( $_GET['postId'] ) ) );
+	$event_id = \absint( \wp_unslash( $_GET['postId'] ) );
 } else {
 	$event_id = get_the_ID();
 }
